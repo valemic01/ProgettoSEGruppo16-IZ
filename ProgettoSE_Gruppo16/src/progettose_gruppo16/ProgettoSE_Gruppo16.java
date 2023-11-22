@@ -21,7 +21,7 @@ public class ProgettoSE_Gruppo16 extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         
         Scene scene = new Scene(root);
-        System.out.println("interfaccia grafica");
+        System.out.println("interfaccia");
         stage.setScene(scene);
         stage.show();
     }
