@@ -6,21 +6,22 @@ package progettose_gruppo16;
 
 import java.io.File;
 import java.net.URL;
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -39,13 +40,13 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TableView<Rule> allRulesTable;
     @FXML
-    private TableColumn<Rule, String> allRulesIDClm;
+    private TableColumn<Rule, Integer> allRulesIDClm;
     @FXML
     private TableColumn<Rule, String> allRulesNameClm;
     @FXML
-    private TableColumn<Rule, String> allRulesTrigClm;
+    private TableColumn<Rule, Trigger> allRulesTrigClm;
     @FXML
-    private TableColumn<Rule, String> allRulesActClm;
+    private TableColumn<Rule, Action> allRulesActClm;
     private ObservableList<Rule> allRulesList; //observable list of all rules, created to manage the respective TableView
     
     @FXML
@@ -71,21 +72,14 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TableColumn<Rule, String> inactRulesActClm;
     private ObservableList<Rule> inactRulesList; //observable list of inactive rules, created to manage the respective TableView
-    
-    @FXML
-    private Button createRuleBtn;
     @FXML
     private Button delRuleBtn;
-    @FXML
-    private Button counterBtn;
     @FXML
     private AnchorPane ruleCreatePane;
     @FXML
     private ComboBox<String> trigDD1;
     @FXML
     private CheckBox notCB1;
-    @FXML
-    private Button closeBtn1;
     @FXML
     private ComboBox<String> actionDD1;
     @FXML
@@ -103,11 +97,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button delActBtn1;
     @FXML
-    private Button addRuleBtn;
-    @FXML
     private CheckBox onlyOnceCB;
-    @FXML
-    private Button closeBtn2;
     @FXML
     private TextField slepPerDays;
     @FXML
@@ -128,8 +118,6 @@ public class FXMLDocumentController implements Initializable {
     private TextField counterValTxtBox;
     @FXML
     private Button createCounterBtn;
-    @FXML
-    private Button closeBtn3;
     @FXML
     private AnchorPane trigCompose2;
     @FXML
@@ -185,79 +173,49 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button delActBtn5;
     @FXML
-    private AnchorPane trigTimeOfDay1;
-    @FXML
     private ComboBox<String> hoursDD1;
     @FXML
     private ComboBox<String> minsDD1;
-    @FXML
-    private AnchorPane trigDayOfWeek1;
-    @FXML
-    private ComboBox<?> dayOfWeekDD1;
-    @FXML
-    private AnchorPane trigFileSize1;
-    @FXML
-    private Button chooseFileBtn1;
-    @FXML
-    private TextField fileSizeTxtBox1;
-    @FXML
-    private AnchorPane trigFileExists1;
-    @FXML
-    private Button choosePathBtn1;
-    @FXML
-    private TextField fileNameTxtBox1;
-    @FXML
-    private AnchorPane trigDate1;
-    @FXML
-    private DatePicker datePicker1;
-    @FXML
-    private AnchorPane trigDayOfMonth1;
-    @FXML
-    private TextField dayOfMonthTxtBox1;
-    @FXML
-    private AnchorPane trigExitStatus1;
-    @FXML
-    private TextField progNameTxtBox1;
-    @FXML
-    private TextField argsListTxtBox1;
-    @FXML
-    private TextField expValueTxtBox1;
-    @FXML
-    private AnchorPane trigCounterValue1;
-    @FXML
-    private ComboBox<?> countValDD1;
-    @FXML
-    private TextField countValTxtBox1;
-    @FXML
-    private AnchorPane trigCounters1;
-    @FXML
-    private ComboBox<?> countsDD11;
-    @FXML
-    private ComboBox<?> countsDD12;
     @FXML
     private TextField ruleNameTxtBox;
     @FXML
     private TextField messTxtBox;
     @FXML
     private Button selectAudioBtn;
-    
-    private FileChooser fileChooser;
-    
-    private Action action;
-    private Trigger trigger;
-    
     @FXML
     private MenuItem delRuleContextMenu1;
     @FXML
     private MenuItem delRuleContextMenu2;
     @FXML
     private MenuItem delRuleContextMenu3;
+    @FXML
+    private TabPane trigg_actTab;
+    @FXML
+    private Tab triggerTab;
+    @FXML
+    private AnchorPane trigTimeOfDay;
     
+    private TimeOfDayTrigger timeOfDay;
+    int selectHour, selectMinute;
+     
     private RulesChecker rulesChecker;
     private Thread threadRulesChecker;
     
+    private FileChooser fileChooser;
+    
+    private Action action;
+    private Trigger trigger;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        //listener that creates a new ShowMessage action every time the message is changed
+        messTxtBox.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                action = new ShowMessageAction(newValue); //incorrect for sequence of action (TECHNICAL DEBT!)
+            }
+        });
         
         //setup process of the three TableView, linked with the respective observable list
         inizializeTables();
@@ -273,6 +231,11 @@ public class FXMLDocumentController implements Initializable {
         actionDD1.getItems().add("Show message");
         actionDD1.getItems().add("Play audio");
         
+        //bindings to show the trigger/action settings when selected
+        trigTimeOfDay.visibleProperty().bind(Bindings.createBooleanBinding(() ->"Time of day".equals(trigDD1.getSelectionModel().getSelectedItem()),trigDD1.getSelectionModel().selectedItemProperty()));
+        messTxtBox.visibleProperty().bind(Bindings.createBooleanBinding(() ->"Show message".equals(actionDD1.getSelectionModel().getSelectedItem()),actionDD1.getSelectionModel().selectedItemProperty()));
+        selectAudioBtn.visibleProperty().bind(Bindings.createBooleanBinding(() ->"Play audio".equals(actionDD1.getSelectionModel().getSelectedItem()),actionDD1.getSelectionModel().selectedItemProperty()));
+
         //inizialization of the combo boxes for the time selection (TECHNICAL DEBT!)
         for (int i = 0; i <= 23; i++) {
             if(i<10)
@@ -319,58 +282,29 @@ public class FXMLDocumentController implements Initializable {
         inactRulesTable.setItems(inactRulesList);
     }
 
-    //make the trigger settings visibile
-    @FXML
-    private void onChangeTrigger(ActionEvent event) {
-        //TECHNICAL DEBT!
-        trigTimeOfDay1.setVisible(true);
-        
-    }
-
     //make the rule creation panel visible
     @FXML
     private void showCreateRule(ActionEvent event) {
-        
         ruleListPane.setVisible(false);
         ruleCreatePane.setVisible(true);
-        
     }
 
     //make the counters pane visible
     @FXML
     private void showCounters(ActionEvent event) {
-        
         ruleListPane.setVisible(false);
         counterPane.setVisible(true);
-        
     }
 
     //close the current pane and goes back to the rule list pane
     @FXML
     private void goBack(ActionEvent event) {
-        
+        messTxtBox.clear();
+        ruleNameTxtBox.clear();
+        trigg_actTab.getSelectionModel().select(triggerTab);
         ruleCreatePane.setVisible(false);
         counterPane.setVisible(false);
         ruleListPane.setVisible(true);
-        
-    }
-
-    //make the selected action settings visible 
-    @FXML
-    private void onChangeAction(ActionEvent event) {
-        
-        //TECHNICAL DEBT!
-        ComboBox cb = (ComboBox)event.getSource();
-        if(cb.getValue().toString() == "Show message"){
-            selectAudioBtn.setVisible(false);
-            messTxtBox.setVisible(true);
-        }
-        else{
-            messTxtBox.setText(null);
-            messTxtBox.setVisible(false);
-            selectAudioBtn.setVisible(true);
-        }
-        
     }
 
     //open a window to select the audio fil and create the respective action
@@ -387,31 +321,20 @@ public class FXMLDocumentController implements Initializable {
     //add rule to the list with the trigger and action previously set
     @FXML
     private void addRuleAction(ActionEvent event) {
-        
         String name = ruleNameTxtBox.getText();
+        LocalTime time = LocalTime.of(selectHour, selectMinute);
+        timeOfDay = new TimeOfDayTrigger(time);
         
-        if(name == null){
+        if(name == null || action == null || timeOfDay == null){
             return;
         }
         
-        Rule rule = new Rule(name, trigger, action, false, null);
+        Rule rule = new Rule(name, timeOfDay, action, false, null);
         allRulesList.add(rule);
-        
     }
 
-    //when the user press enter a new ShowMessageAction is created
-    @FXML
-    private void messChangeAction(ActionEvent event) {
-        
-        TextField tb = (TextField)event.getSource();
-        String message = tb.getText();
-        
-        action = new ShowMessageAction(message);         //incorrect for sequence of action (TECHNICAL DEBT!)
-        
-    }
-
-    //create a new trigger when the user change its settings
-    @FXML
+    /*create a new trigger when the user change its settings
+    
     private void timeChangeAction(ActionEvent event) {
         
         ComboBox cb = (ComboBox)event.getSource();
@@ -423,10 +346,10 @@ public class FXMLDocumentController implements Initializable {
         //trigger = new TimeOfDayTrigger(time);
         
     }
+    */
 
     @FXML
     private void deleteRuleAction(ActionEvent event) {
-        
         if(allRulesTable.getSelectionModel().selectedItemProperty().isNotNull().get()){
             allRulesList.remove(allRulesTable.getSelectionModel().getSelectedItem());
         }
@@ -436,7 +359,18 @@ public class FXMLDocumentController implements Initializable {
         else if(inactRulesTable.getSelectionModel().selectedItemProperty().isNotNull().get()){
             inactRulesList.remove(inactRulesTable.getSelectionModel().getSelectedItem());
         }
-        
+    }
+
+    //incorrect for sequence of action (TECHNICAL DEBT!)
+    @FXML
+    private void selectHour(ActionEvent event) {
+        selectHour = Integer.parseInt(hoursDD1.getValue());
+    }
+
+    //incorrect for sequence of action (TECHNICAL DEBT!)
+    @FXML
+    private void selectMinute(ActionEvent event) {
+        selectMinute = Integer.parseInt(minsDD1.getValue());
     }
     
 }

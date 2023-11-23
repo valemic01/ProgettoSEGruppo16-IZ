@@ -50,5 +50,43 @@ public class Rule {
         }
         return false;
     }
+
+    public int getID() {
+        return ID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Trigger getTrigger() {
+        return trigger;
+    }
+
+    public Action getAction() {
+        return action;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public Boolean getRepeatable() {
+        return repeatable;
+    }
+
+    public Time getSleepPeriod() {
+        return sleepPeriod;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public static int getCounter() {
+        return counter;
+    }
+    
+    
     
 }

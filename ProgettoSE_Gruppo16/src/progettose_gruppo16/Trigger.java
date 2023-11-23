@@ -12,4 +12,7 @@ public interface Trigger {
     
     public abstract boolean checkCondition();
     
+    @Override
+    public abstract String toString();
+    
 }

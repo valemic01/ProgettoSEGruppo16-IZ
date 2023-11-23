@@ -4,7 +4,6 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ContextMenu?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
@@ -93,7 +92,7 @@
                   </Tab>
                </tabs>
             </TabPane>
-            <Button fx:id="createRuleBtn" layoutX="29.0" layoutY="456.0" mnemonicParsing="false" onAction="#showCreateRule" prefHeight="44.0" prefWidth="164.0" text="Create a rule">
+            <Button layoutX="29.0" layoutY="456.0" mnemonicParsing="false" onAction="#showCreateRule" prefHeight="44.0" prefWidth="164.0" text="Create a rule">
                <font>
                   <Font size="19.0" />
                </font>
@@ -103,7 +102,7 @@
                   <Font size="19.0" />
                </font>
             </Button>
-            <Button fx:id="counterBtn" layoutX="614.0" layoutY="456.0" mnemonicParsing="false" onAction="#showCounters" prefHeight="44.0" prefWidth="164.0" text="Counter list">
+            <Button layoutX="614.0" layoutY="456.0" mnemonicParsing="false" onAction="#showCounters" prefHeight="44.0" prefWidth="164.0" text="Counter list">
                <font>
                   <Font size="19.0" />
                </font>
@@ -112,30 +111,30 @@
       </AnchorPane>
       <AnchorPane fx:id="ruleCreatePane" prefHeight="200.0" prefWidth="200.0" visible="false">
          <children>
-            <TabPane prefHeight="529.0" prefWidth="826.0" tabClosingPolicy="UNAVAILABLE" tabMaxWidth="500.0" tabMinWidth="388.0">
+            <TabPane fx:id="trigg_actTab" prefHeight="529.0" prefWidth="826.0" tabClosingPolicy="UNAVAILABLE" tabMaxWidth="500.0" tabMinWidth="388.0">
                <tabs>
-                  <Tab text="Trigger">
+                  <Tab fx:id="triggerTab" text="Trigger">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <AnchorPane fx:id="trigCompose2" layoutX="15.0" layoutY="230.0" visible="false">
                                  <children>
-                                    <ComboBox fx:id="trigDD4" layoutX="100.0" onAction="#onChangeTrigger" prefHeight="31.0" prefWidth="140.0" promptText="Time of the day" />
+                                    <ComboBox fx:id="trigDD4" layoutX="100.0" prefHeight="31.0" prefWidth="140.0" promptText="Time of the day" />
                                     <CheckBox fx:id="notCB4" layoutX="33.0" layoutY="6.0" mnemonicParsing="false" text="NOT" />
                                     <ComboBox fx:id="logOps2" layoutX="276.0" layoutY="1.0" prefHeight="31.0" prefWidth="86.0" promptText="AND" />
-                                    <ComboBox fx:id="trigDD5" layoutX="100.0" layoutY="55.0" onAction="#onChangeTrigger" prefHeight="31.0" prefWidth="140.0" promptText="File exists" />
+                                    <ComboBox fx:id="trigDD5" layoutX="100.0" layoutY="55.0" prefHeight="31.0" prefWidth="140.0" promptText="File exists" />
                                     <CheckBox fx:id="notCB5" layoutX="33.0" layoutY="61.0" mnemonicParsing="false" text="NOT" />
                                     <Label layoutY="31.0" text="(2)" />
                                  </children>
                               </AnchorPane>
-                              <ComboBox fx:id="trigDD1" layoutX="90.0" layoutY="68.0" onAction="#onChangeTrigger" prefHeight="31.0" prefWidth="140.0" promptText="Trigger..." />
+                              <ComboBox fx:id="trigDD1" layoutX="90.0" layoutY="68.0" prefHeight="31.0" prefWidth="140.0" promptText="Trigger..." />
                               <CheckBox fx:id="notCB1" layoutX="23.0" layoutY="74.0" mnemonicParsing="false" text="NOT" visible="false" />
                               <AnchorPane fx:id="trigCompose1" layoutX="14.0" layoutY="120.0" visible="false">
                                  <children>
                                     <ComboBox fx:id="logOps1" layoutX="278.0" layoutY="1.0" prefHeight="31.0" prefWidth="86.0" promptText="AND" />
-                                    <ComboBox fx:id="trigDD2" layoutX="97.0" onAction="#onChangeTrigger" prefHeight="31.0" prefWidth="140.0" promptText="Day of the week" />
+                                    <ComboBox fx:id="trigDD2" layoutX="97.0" prefHeight="31.0" prefWidth="140.0" promptText="Day of the week" />
                                     <CheckBox fx:id="notCB2" layoutX="30.0" layoutY="6.0" mnemonicParsing="false" selected="true" text="NOT" />
-                                    <ComboBox fx:id="trigDD3" layoutX="99.0" layoutY="52.0" onAction="#onChangeTrigger" prefHeight="31.0" prefWidth="140.0" promptText="Composed" />
+                                    <ComboBox fx:id="trigDD3" layoutX="99.0" layoutY="52.0" prefHeight="31.0" prefWidth="140.0" promptText="Composed" />
                                     <CheckBox fx:id="notCB3" layoutX="32.0" layoutY="58.0" mnemonicParsing="false" text="NOT" />
                                     <Label layoutY="27.0" text="(1)" />
                                     <Label layoutX="249.0" layoutY="58.0" text="(3)" />
@@ -148,73 +147,23 @@
                                  </font>
                               </Label>
                               <Label layoutX="238.0" layoutY="73.0" text="(1)" visible="false" />
-                              <Button fx:id="closeBtn1" layoutX="773.0" layoutY="443.0" mnemonicParsing="false" onAction="#goBack" text="X" />
+                              <Button layoutX="773.0" layoutY="443.0" mnemonicParsing="false" onAction="#goBack" text="X" />
                               <Label layoutX="729.0" layoutY="448.0" text="Close" />
                               <AnchorPane fx:id="trigCompose3" layoutX="17.0" layoutY="341.0" visible="false">
                                  <children>
                                     <ComboBox fx:id="logOps3" layoutX="273.0" layoutY="1.0" prefHeight="31.0" prefWidth="86.0" promptText="AND" />
-                                    <ComboBox fx:id="trigDD6" layoutX="97.0" onAction="#onChangeTrigger" prefHeight="31.0" prefWidth="140.0" promptText="Day of the week" />
+                                    <ComboBox fx:id="trigDD6" layoutX="97.0" prefHeight="31.0" prefWidth="140.0" promptText="Day of the week" />
                                     <CheckBox fx:id="notCB6" layoutX="30.0" layoutY="6.0" mnemonicParsing="false" selected="true" text="NOT" />
-                                    <ComboBox fx:id="trigDD7" layoutX="97.0" layoutY="52.0" onAction="#onChangeTrigger" prefHeight="31.0" prefWidth="140.0" promptText="Composed" />
+                                    <ComboBox fx:id="trigDD7" layoutX="97.0" layoutY="52.0" prefHeight="31.0" prefWidth="140.0" promptText="Composed" />
                                     <CheckBox fx:id="notCB7" layoutX="30.0" layoutY="58.0" mnemonicParsing="false" text="NOT" />
                                     <Label layoutY="27.0" text="(3)" />
                                  </children>
                               </AnchorPane>
-                              <AnchorPane layoutX="464.0" layoutY="69.0" prefHeight="21.0" prefWidth="344.0">
+                              <AnchorPane fx:id="trigTimeOfDay" layoutX="464.0" layoutY="69.0" prefHeight="21.0" prefWidth="344.0" visible="false">
                                  <children>
-                                    <AnchorPane fx:id="trigTimeOfDay1" layoutX="97.0" layoutY="-8.0" visible="false">
-                                       <children>
-                                          <ComboBox fx:id="hoursDD1" layoutY="12.0" onAction="#timeChangeAction" prefHeight="28.0" prefWidth="75.0" promptText="00" />
-                                          <Label layoutX="87.0" prefHeight="52.0" prefWidth="10.0" text=":" />
-                                          <ComboBox fx:id="minsDD1" layoutX="97.0" layoutY="13.0" prefHeight="28.0" prefWidth="75.0" promptText="00" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane fx:id="trigDayOfWeek1" layoutX="132.0" layoutY="85.0" visible="false">
-                                       <children>
-                                          <ComboBox fx:id="dayOfWeekDD1" prefHeight="31.0" prefWidth="128.0" promptText="Monday" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane fx:id="trigFileSize1" layoutX="74.0" layoutY="123.0" visible="false">
-                                       <children>
-                                          <Button fx:id="chooseFileBtn1" mnemonicParsing="false" text="Choose file" />
-                                          <TextField fx:id="fileSizeTxtBox1" layoutX="122.0" prefHeight="31.0" prefWidth="128.0" promptText="max size" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane fx:id="trigFileExists1" layoutX="69.0" layoutY="165.0" visible="false">
-                                       <children>
-                                          <Button fx:id="choosePathBtn1" mnemonicParsing="false" text="Choose path" />
-                                          <TextField fx:id="fileNameTxtBox1" layoutX="127.0" prefHeight="31.0" prefWidth="128.0" promptText="file name" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane fx:id="trigDate1" layoutX="92.0" layoutY="203.0" visible="false">
-                                       <children>
-                                          <DatePicker fx:id="datePicker1" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane fx:id="trigDayOfMonth1" layoutX="129.0" layoutY="244.0" visible="false">
-                                       <children>
-                                          <TextField fx:id="dayOfMonthTxtBox1" prefHeight="31.0" prefWidth="135.0" promptText="day of the month" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane fx:id="trigExitStatus1" layoutX="1.0" layoutY="286.0" visible="false">
-                                       <children>
-                                          <TextField fx:id="progNameTxtBox1" prefHeight="31.0" prefWidth="119.0" promptText="program name" />
-                                          <TextField fx:id="argsListTxtBox1" layoutX="126.0" prefHeight="31.0" prefWidth="91.0" promptText="arguments" />
-                                          <TextField fx:id="expValueTxtBox1" layoutX="225.0" prefHeight="31.0" prefWidth="119.0" promptText="expected value" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane fx:id="trigCounterValue1" layoutX="97.0" layoutY="326.0" visible="false">
-                                       <children>
-                                          <ComboBox fx:id="countValDD1" prefHeight="31.0" prefWidth="113.0" promptText="Counter" />
-                                          <TextField fx:id="countValTxtBox1" layoutX="133.0" prefHeight="31.0" prefWidth="58.0" promptText="value" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane fx:id="trigCounters1" layoutX="50.0" layoutY="1.0" visible="false">
-                                       <children>
-                                          <ComboBox fx:id="countsDD11" prefHeight="31.0" prefWidth="113.0" promptText="Counter" />
-                                          <ComboBox fx:id="countsDD12" layoutX="127.0" prefHeight="31.0" prefWidth="113.0" promptText="Counter" />
-                                       </children>
-                                    </AnchorPane>
+                                    <ComboBox fx:id="hoursDD1" layoutX="97.0" layoutY="4.0" onAction="#selectHour" prefHeight="28.0" prefWidth="75.0" promptText="00" />
+                                    <Label layoutX="184.0" layoutY="-8.0" prefHeight="52.0" prefWidth="10.0" text=":" />
+                                    <ComboBox fx:id="minsDD1" layoutX="194.0" layoutY="5.0" onAction="#selectMinute" prefHeight="28.0" prefWidth="75.0" promptText="00" />
                                  </children>
                               </AnchorPane>
                            </children>
@@ -225,8 +174,8 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <ComboBox fx:id="actionDD1" layoutX="88.0" layoutY="71.0" onAction="#onChangeAction" prefHeight="31.0" prefWidth="140.0" promptText="Action..." />
-                              <TextField fx:id="messTxtBox" layoutX="542.0" layoutY="71.0" onAction="#messChangeAction" promptText="Your text..." visible="false" />
+                              <ComboBox fx:id="actionDD1" layoutX="88.0" layoutY="71.0" prefHeight="31.0" prefWidth="140.0" promptText="Action..." />
+                              <TextField fx:id="messTxtBox" layoutX="542.0" layoutY="71.0" promptText="Your text..." visible="false" />
                               <Button fx:id="addActBtn1" disable="true" layoutX="243.0" layoutY="71.0" mnemonicParsing="false" text="+" visible="false" />
                               <AnchorPane layoutX="44.0" layoutY="121.0" visible="false">
                                  <children>
@@ -254,13 +203,13 @@
                                     <Font name="System Italic" size="15.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="addRuleBtn" layoutX="344.0" layoutY="420.0" mnemonicParsing="false" onAction="#addRuleAction" prefHeight="45.0" prefWidth="138.0" text="Add rule">
+                              <Button layoutX="344.0" layoutY="420.0" mnemonicParsing="false" onAction="#addRuleAction" prefHeight="45.0" prefWidth="138.0" text="Add rule">
                                  <font>
                                     <Font name="System Bold" size="21.0" />
                                  </font>
                               </Button>
                               <CheckBox fx:id="onlyOnceCB" layoutX="367.0" layoutY="390.0" mnemonicParsing="false" text="Only once" visible="false" />
-                              <Button fx:id="closeBtn2" layoutX="773.0" layoutY="443.0" mnemonicParsing="false" onAction="#goBack" text="X" />
+                              <Button layoutX="773.0" layoutY="443.0" mnemonicParsing="false" onAction="#goBack" text="X" />
                               <Label layoutX="729.0" layoutY="448.0" text="Close" />
                               <AnchorPane layoutX="66.0" layoutY="390.0" visible="false">
                                  <children>
@@ -337,7 +286,7 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Button fx:id="closeBtn3" layoutX="771.0" layoutY="480.0" mnemonicParsing="false" onAction="#goBack" text="X" />
+            <Button layoutX="771.0" layoutY="480.0" mnemonicParsing="false" onAction="#goBack" text="X" />
             <Label layoutX="727.0" layoutY="485.0" text="Close" />
          </children>
       </AnchorPane>

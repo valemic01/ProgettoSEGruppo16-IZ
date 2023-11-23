@@ -12,4 +12,7 @@ public interface Action {
     
     public abstract void executeAction();
     
+    @Override
+    public abstract String toString();
+    
 }
