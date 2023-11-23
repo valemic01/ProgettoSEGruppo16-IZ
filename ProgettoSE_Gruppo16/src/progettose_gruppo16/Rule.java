@@ -19,6 +19,7 @@ public class Rule {
     private Boolean active;
     private Boolean repeatable; //false if the rule can be fired only once
     private Time sleepPeriod; // if repeatible is true the rule will be periodically checked again after this time
+    private boolean done;
     
     private static int counter = 1;
 
@@ -31,17 +32,23 @@ public class Rule {
         this.repeatable = repeatable;
         this.sleepPeriod = sleepPeriod;
         counter++;
+        done=false;
     }
     
     public boolean evaluate(){
         
         if(trigger.checkCondition()){
-            action.executeAction();
-            return true;
+            
+            if(!done){
+                action.executeAction();
+                done=true;
+                return true;
+            }
         }
         else{
-            return false;
+            done=false;
         }
+        return false;
     }
     
 }
