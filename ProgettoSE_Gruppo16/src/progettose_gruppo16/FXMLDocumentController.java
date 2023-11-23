@@ -253,7 +253,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private MenuItem delRuleContextMenu3;
     
-    
+    private RulesChecker rulesChecker;
+    private Thread threadRulesChecker;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -286,6 +287,13 @@ public class FXMLDocumentController implements Initializable {
             else
                 minsDD1.getItems().add(String.valueOf(i));
         }
+        
+        //Initialization and start of the thread for automatic condition checking
+        rulesChecker = new RulesChecker(allRulesList);
+        threadRulesChecker = new Thread(rulesChecker);
+        threadRulesChecker.setName("Thread Rules Checker");
+        threadRulesChecker.setDaemon(true);
+        threadRulesChecker.start();
     }
     
     private void inizializeTables(){

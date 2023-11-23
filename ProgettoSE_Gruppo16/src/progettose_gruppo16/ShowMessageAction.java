@@ -1,5 +1,6 @@
 package progettose_gruppo16;
 
+import java.io.Serializable;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -10,7 +11,7 @@ import javafx.scene.control.ButtonType;
  *  scritto dall'utente a schermo all'attivazione del trigger. Il messaggio deve essere
  *  esplicitamente chiuso dall'utente.
  */
-public class ShowMessageAction implements Action{
+public class ShowMessageAction implements Action, Serializable{
     
     private final String message;
 
