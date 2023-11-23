@@ -398,7 +398,7 @@ public class FXMLDocumentController implements Initializable {
         TextField tb = (TextField)event.getSource();
         String message = tb.getText();
         
-        //action = new ShowMessageAction(message); //incorrect for sequence of action (TECHNICAL DEBT!)
+        action = new ShowMessageAction(message);         //incorrect for sequence of action (TECHNICAL DEBT!)
         
     }
 
