@@ -36,5 +36,10 @@ public class ShowMessageAction implements Action, Serializable{
             dialogBox.show();
         });
     }
+
+    @Override
+    public String toString() {
+        return "Show the message: " + message;
+    }
     
 }
