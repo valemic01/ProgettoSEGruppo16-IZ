@@ -20,6 +20,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -245,6 +246,13 @@ public class FXMLDocumentController implements Initializable {
     private Action action;
     private Trigger trigger;
     
+    @FXML
+    private MenuItem delRuleContextMenu1;
+    @FXML
+    private MenuItem delRuleContextMenu2;
+    @FXML
+    private MenuItem delRuleContextMenu3;
+    
     
     
     @Override
@@ -253,9 +261,12 @@ public class FXMLDocumentController implements Initializable {
         //setup process of the three TableView, linked with the respective observable list
         inizializeTables();
         
-        //binding to disable the delete button when no rule is selected
+        //binding to disable the delete button and context menus when no rule is selected
         delRuleBtn.disableProperty().bind(allRulesTable.getSelectionModel().selectedItemProperty().isNull().and(activeRulesTable.getSelectionModel().selectedItemProperty().isNull()).and(inactRulesTable.getSelectionModel().selectedItemProperty().isNull()));
-        
+        delRuleContextMenu1.disableProperty().bind(allRulesTable.getSelectionModel().selectedItemProperty().isNull().and(activeRulesTable.getSelectionModel().selectedItemProperty().isNull()).and(inactRulesTable.getSelectionModel().selectedItemProperty().isNull()));
+        delRuleContextMenu2.disableProperty().bind(allRulesTable.getSelectionModel().selectedItemProperty().isNull().and(activeRulesTable.getSelectionModel().selectedItemProperty().isNull()).and(inactRulesTable.getSelectionModel().selectedItemProperty().isNull()));
+        delRuleContextMenu3.disableProperty().bind(allRulesTable.getSelectionModel().selectedItemProperty().isNull().and(activeRulesTable.getSelectionModel().selectedItemProperty().isNull()).and(inactRulesTable.getSelectionModel().selectedItemProperty().isNull()));
+
         //inizialization of the combo boxes for trigger and actions(TECHNICAL DEBT!)
         trigDD1.getItems().add("Time of day");
         actionDD1.getItems().add("Show message");
@@ -402,6 +413,21 @@ public class FXMLDocumentController implements Initializable {
         
         Time time = Time.valueOf(cb1.getValue()+":"+cb2.getValue()+":0");
         //trigger = new TimeOfDayTrigger(time);
+        
+    }
+
+    @FXML
+    private void deleteRuleAction(ActionEvent event) {
+        
+        if(allRulesTable.getSelectionModel().selectedItemProperty().isNotNull().get()){
+            allRulesList.remove(allRulesTable.getSelectionModel().getSelectedItem());
+        }
+        else if(activeRulesTable.getSelectionModel().selectedItemProperty().isNotNull().get()){
+            activeRulesList.remove(activeRulesTable.getSelectionModel().getSelectedItem());
+        }
+        else if(inactRulesTable.getSelectionModel().selectedItemProperty().isNotNull().get()){
+            inactRulesList.remove(inactRulesTable.getSelectionModel().getSelectedItem());
+        }
         
     }
     
