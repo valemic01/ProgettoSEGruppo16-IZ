@@ -251,26 +251,7 @@ public class FXML_ProgettoSEController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         //setup process of the three TableView, linked with the respective observable list
-        allRulesList = FXCollections.observableArrayList();
-        allRulesIDClm.setCellValueFactory(new PropertyValueFactory("ID"));
-        allRulesNameClm.setCellValueFactory(new PropertyValueFactory("name"));
-        allRulesTrigClm.setCellValueFactory(new PropertyValueFactory("trigger"));
-        allRulesActClm.setCellValueFactory(new PropertyValueFactory("action"));
-        allRulesTable.setItems(allRulesList);
-        
-        activeRulesList = FXCollections.observableArrayList();
-        activeRulesIDClm.setCellValueFactory(new PropertyValueFactory("ID"));
-        activeRulesNameClm.setCellValueFactory(new PropertyValueFactory("name"));
-        activeRulesTrigClm.setCellValueFactory(new PropertyValueFactory("trigger"));
-        activeRulesActClm.setCellValueFactory(new PropertyValueFactory("action"));
-        activeRulesTable.setItems(activeRulesList);
-        
-        inactRulesList = FXCollections.observableArrayList();
-        inactRulesIDClm.setCellValueFactory(new PropertyValueFactory("ID"));
-        inactRulesNameClm.setCellValueFactory(new PropertyValueFactory("name"));
-        inactRulesTrigClm.setCellValueFactory(new PropertyValueFactory("trigger"));
-        inactRulesActClm.setCellValueFactory(new PropertyValueFactory("action"));
-        inactRulesTable.setItems(inactRulesList);
+        inizializeTables();
         
         //binding to disable the delete button when no rule is selected
         delRuleBtn.disableProperty().bind(allRulesTable.getSelectionModel().selectedItemProperty().isNull().and(activeRulesTable.getSelectionModel().selectedItemProperty().isNull()).and(inactRulesTable.getSelectionModel().selectedItemProperty().isNull()));
@@ -294,8 +275,32 @@ public class FXML_ProgettoSEController implements Initializable {
             else
                 minsDD1.getItems().add(String.valueOf(i));
         }
-    }    
+    }
+    
+    private void inizializeTables(){
+        allRulesList = FXCollections.observableArrayList();
+        allRulesIDClm.setCellValueFactory(new PropertyValueFactory("ID"));
+        allRulesNameClm.setCellValueFactory(new PropertyValueFactory("name"));
+        allRulesTrigClm.setCellValueFactory(new PropertyValueFactory("trigger"));
+        allRulesActClm.setCellValueFactory(new PropertyValueFactory("action"));
+        allRulesTable.setItems(allRulesList);
+        
+        activeRulesList = FXCollections.observableArrayList();
+        activeRulesIDClm.setCellValueFactory(new PropertyValueFactory("ID"));
+        activeRulesNameClm.setCellValueFactory(new PropertyValueFactory("name"));
+        activeRulesTrigClm.setCellValueFactory(new PropertyValueFactory("trigger"));
+        activeRulesActClm.setCellValueFactory(new PropertyValueFactory("action"));
+        activeRulesTable.setItems(activeRulesList);
+        
+        inactRulesList = FXCollections.observableArrayList();
+        inactRulesIDClm.setCellValueFactory(new PropertyValueFactory("ID"));
+        inactRulesNameClm.setCellValueFactory(new PropertyValueFactory("name"));
+        inactRulesTrigClm.setCellValueFactory(new PropertyValueFactory("trigger"));
+        inactRulesActClm.setCellValueFactory(new PropertyValueFactory("action"));
+        inactRulesTable.setItems(inactRulesList);
+    }
 
+    //make the trigger settings visibile
     @FXML
     private void onChangeTrigger(ActionEvent event) {
         //TECHNICAL DEBT!
@@ -303,6 +308,7 @@ public class FXML_ProgettoSEController implements Initializable {
         
     }
 
+    //make the rule creation panel visible
     @FXML
     private void showCreateRule(ActionEvent event) {
         
@@ -311,6 +317,7 @@ public class FXML_ProgettoSEController implements Initializable {
         
     }
 
+    //make the counters pane visible
     @FXML
     private void showCounters(ActionEvent event) {
         
@@ -319,6 +326,7 @@ public class FXML_ProgettoSEController implements Initializable {
         
     }
 
+    //close the current pane and goes back to the rule list pane
     @FXML
     private void goBack(ActionEvent event) {
         
@@ -328,6 +336,7 @@ public class FXML_ProgettoSEController implements Initializable {
         
     }
 
+    //make the selected action settings visible 
     @FXML
     private void onChangeAction(ActionEvent event) {
         
@@ -345,6 +354,7 @@ public class FXML_ProgettoSEController implements Initializable {
         
     }
 
+    //open a window to select the audio fil and create the respective action
     @FXML
     private void chooseAudio(ActionEvent event) {
         
@@ -355,6 +365,7 @@ public class FXML_ProgettoSEController implements Initializable {
         
     }
 
+    //add rule to the list with the trigger and action previously set
     @FXML
     private void addRuleAction(ActionEvent event) {
         
@@ -369,6 +380,7 @@ public class FXML_ProgettoSEController implements Initializable {
         
     }
 
+    //when the user press enter a new ShowMessageAction is created
     @FXML
     private void messChangeAction(ActionEvent event) {
         
@@ -379,6 +391,7 @@ public class FXML_ProgettoSEController implements Initializable {
         
     }
 
+    //create a new trigger when the user change its settings
     @FXML
     private void timeChangeAction(ActionEvent event) {
         
