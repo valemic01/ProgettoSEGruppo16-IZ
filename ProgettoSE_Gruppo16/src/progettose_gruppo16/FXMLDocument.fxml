@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="progettose_gruppo16.FXMLDocumentController">
+   <children>
+      <AnchorPane fx:id="ruleListPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="826.0">
+         <children>
+            <TabPane layoutX="14.0" layoutY="14.0" prefHeight="421.0" prefWidth="804.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="246.0">
+               <tabs>
+                  <Tab text="All rules">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="allRulesTable" prefHeight="383.0" prefWidth="804.0">
+                                 <columns>
+                                    <TableColumn fx:id="allRulesIDClm" prefWidth="73.0" text="ID" />
+                                    <TableColumn fx:id="allRulesNameClm" prefWidth="234.0" text="Nome" />
+                                    <TableColumn fx:id="allRulesTrigClm" minWidth="0.0" prefWidth="252.0" text="Trigger" />
+                                    <TableColumn fx:id="allRulesActClm" prefWidth="244.0" text="Action" />
+                                 </columns>
+                                 <contextMenu>
+                                    <ContextMenu>
+                                      <items>
+                                        <MenuItem fx:id="delRuleContextMenu1" mnemonicParsing="false" onAction="#deleteRuleAction" text="Delete rule" />
+                                      </items>
+                                    </ContextMenu>
+                                 </contextMenu>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Active">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="activeRulesTable" prefHeight="383.0" prefWidth="804.0">
+                                 <columns>
+                                    <TableColumn fx:id="activeRulesIDClm" prefWidth="69.0" text="ID" />
+                                    <TableColumn fx:id="activeRulesNameClm" prefWidth="215.0" text="Nome" />
+                                    <TableColumn fx:id="activeRulesTrigClm" minWidth="0.0" prefWidth="267.0" text="Trigger" />
+                                    <TableColumn fx:id="activeRulesActClm" prefWidth="252.0" text="Azione" />
+                                 </columns>
+                                 <contextMenu>
+                                    <ContextMenu>
+                                      <items>
+                                        <MenuItem fx:id="delRuleContextMenu2" mnemonicParsing="false" onAction="#deleteRuleAction" text="Delete rule" />
+                                      </items>
+                                    </ContextMenu>
+                                 </contextMenu>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Inactive">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="inactRulesTable" prefHeight="383.0" prefWidth="804.0">
+                                 <columns>
+                                    <TableColumn fx:id="inactRulesIDClm" prefWidth="61.0" text="ID" />
+                                    <TableColumn fx:id="inactRulesNameClm" prefWidth="275.0" text="Name" />
+                                    <TableColumn fx:id="inactRulesTrigClm" minWidth="0.0" prefWidth="231.0" text="Trigger" />
+                                    <TableColumn fx:id="inactRulesActClm" prefWidth="236.0" text="Action" />
+                                 </columns>
+                                 <contextMenu>
+                                    <ContextMenu>
+                                      <items>
+                                        <MenuItem fx:id="delRuleContextMenu3" mnemonicParsing="false" onAction="#deleteRuleAction" text="Delete rule" />
+                                      </items>
+                                    </ContextMenu>
+                                 </contextMenu>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+            <Button layoutX="29.0" layoutY="456.0" mnemonicParsing="false" onAction="#showCreateRule" prefHeight="44.0" prefWidth="164.0" text="Create a rule">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Button>
+            <Button fx:id="delRuleBtn" disable="true" layoutX="221.0" layoutY="456.0" mnemonicParsing="false" onAction="#deleteRuleAction" prefHeight="44.0" prefWidth="105.0" text="Delete">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Button>
+            <Button layoutX="614.0" layoutY="456.0" mnemonicParsing="false" onAction="#showCounters" prefHeight="44.0" prefWidth="164.0" text="Counter list">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="ruleCreatePane" prefHeight="200.0" prefWidth="200.0" visible="false">
+         <children>
+            <TabPane fx:id="trigg_actTab" prefHeight="529.0" prefWidth="826.0" tabClosingPolicy="UNAVAILABLE" tabMaxWidth="500.0" tabMinWidth="388.0">
+               <tabs>
+                  <Tab fx:id="triggerTab" text="Trigger">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <AnchorPane fx:id="trigCompose2" layoutX="15.0" layoutY="230.0" visible="false">
+                                 <children>
+                                    <ComboBox fx:id="trigDD4" layoutX="100.0" prefHeight="31.0" prefWidth="140.0" promptText="Time of the day" />
+                                    <CheckBox fx:id="notCB4" layoutX="33.0" layoutY="6.0" mnemonicParsing="false" text="NOT" />
+                                    <ComboBox fx:id="logOps2" layoutX="276.0" layoutY="1.0" prefHeight="31.0" prefWidth="86.0" promptText="AND" />
+                                    <ComboBox fx:id="trigDD5" layoutX="100.0" layoutY="55.0" prefHeight="31.0" prefWidth="140.0" promptText="File exists" />
+                                    <CheckBox fx:id="notCB5" layoutX="33.0" layoutY="61.0" mnemonicParsing="false" text="NOT" />
+                                    <Label layoutY="31.0" text="(2)" />
+                                 </children>
+                              </AnchorPane>
+                              <ComboBox fx:id="trigDD1" layoutX="90.0" layoutY="68.0" prefHeight="31.0" prefWidth="140.0" promptText="Trigger..." />
+                              <CheckBox fx:id="notCB1" layoutX="23.0" layoutY="74.0" mnemonicParsing="false" text="NOT" visible="false" />
+                              <AnchorPane fx:id="trigCompose1" layoutX="14.0" layoutY="120.0" visible="false">
+                                 <children>
+                                    <ComboBox fx:id="logOps1" layoutX="278.0" layoutY="1.0" prefHeight="31.0" prefWidth="86.0" promptText="AND" />
+                                    <ComboBox fx:id="trigDD2" layoutX="97.0" prefHeight="31.0" prefWidth="140.0" promptText="Day of the week" />
+                                    <CheckBox fx:id="notCB2" layoutX="30.0" layoutY="6.0" mnemonicParsing="false" selected="true" text="NOT" />
+                                    <ComboBox fx:id="trigDD3" layoutX="99.0" layoutY="52.0" prefHeight="31.0" prefWidth="140.0" promptText="Composed" />
+                                    <CheckBox fx:id="notCB3" layoutX="32.0" layoutY="58.0" mnemonicParsing="false" text="NOT" />
+                                    <Label layoutY="27.0" text="(1)" />
+                                    <Label layoutX="249.0" layoutY="58.0" text="(3)" />
+                                    <Label layoutX="248.0" layoutY="6.0" text="(2)" />
+                                 </children>
+                              </AnchorPane>
+                              <Label layoutX="23.0" layoutY="14.0" prefHeight="44.0" prefWidth="765.0" text="Select &quot;Composed&quot; to combine triggers. When combining you can choose from &quot;AND&quot; (both true) and OR (at least one true). For each trigger you can invert its condition by checking the &quot;NOT&quot; option. " visible="false" wrapText="true">
+                                 <font>
+                                    <Font name="System Italic" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="238.0" layoutY="73.0" text="(1)" visible="false" />
+                              <Button layoutX="773.0" layoutY="443.0" mnemonicParsing="false" onAction="#goBack" text="X" />
+                              <Label layoutX="729.0" layoutY="448.0" text="Close" />
+                              <AnchorPane fx:id="trigCompose3" layoutX="17.0" layoutY="341.0" visible="false">
+                                 <children>
+                                    <ComboBox fx:id="logOps3" layoutX="273.0" layoutY="1.0" prefHeight="31.0" prefWidth="86.0" promptText="AND" />
+                                    <ComboBox fx:id="trigDD6" layoutX="97.0" prefHeight="31.0" prefWidth="140.0" promptText="Day of the week" />
+                                    <CheckBox fx:id="notCB6" layoutX="30.0" layoutY="6.0" mnemonicParsing="false" selected="true" text="NOT" />
+                                    <ComboBox fx:id="trigDD7" layoutX="97.0" layoutY="52.0" prefHeight="31.0" prefWidth="140.0" promptText="Composed" />
+                                    <CheckBox fx:id="notCB7" layoutX="30.0" layoutY="58.0" mnemonicParsing="false" text="NOT" />
+                                    <Label layoutY="27.0" text="(3)" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane fx:id="trigTimeOfDay" layoutX="464.0" layoutY="69.0" prefHeight="21.0" prefWidth="344.0" visible="false">
+                                 <children>
+                                    <ComboBox fx:id="hoursDD1" layoutX="97.0" layoutY="4.0" onAction="#selectHour" prefHeight="28.0" prefWidth="75.0" promptText="00" />
+                                    <Label layoutX="184.0" layoutY="-8.0" prefHeight="52.0" prefWidth="10.0" text=":" />
+                                    <ComboBox fx:id="minsDD1" layoutX="194.0" layoutY="5.0" onAction="#selectMinute" prefHeight="28.0" prefWidth="75.0" promptText="00" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Action">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <ComboBox fx:id="actionDD1" layoutX="88.0" layoutY="71.0" prefHeight="31.0" prefWidth="140.0" promptText="Action..." />
+                              <TextField fx:id="messTxtBox" layoutX="542.0" layoutY="71.0" promptText="Your text..." visible="false" />
+                              <Button fx:id="addActBtn1" disable="true" layoutX="243.0" layoutY="71.0" mnemonicParsing="false" text="+" visible="false" />
+                              <AnchorPane layoutX="44.0" layoutY="121.0" visible="false">
+                                 <children>
+                                    <ComboBox fx:id="actionDD2" layoutX="44.0" prefHeight="31.0" prefWidth="140.0" promptText="Play audio" />
+                                    <Button fx:id="addActBtn2" disable="true" layoutX="199.0" mnemonicParsing="false" text="+" />
+                                    <Button fx:id="delActBtn1" mnemonicParsing="false" text="X" />
+                                 </children>
+                              </AnchorPane>
+                              <Button fx:id="selectAudioBtn" layoutX="585.0" layoutY="72.0" mnemonicParsing="false" onAction="#chooseAudio" text="Select audio" visible="false" />
+                              <AnchorPane layoutX="44.0" layoutY="171.0" visible="false">
+                                 <children>
+                                    <ComboBox fx:id="actionDD3" layoutX="44.0" prefHeight="31.0" prefWidth="140.0" promptText="Move file" />
+                                    <Button fx:id="addActBtn3" layoutX="199.0" mnemonicParsing="false" text="+" />
+                                    <Button fx:id="delActBtn2" mnemonicParsing="false" text="X" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="525.0" layoutY="171.0" visible="false">
+                                 <children>
+                                    <Button mnemonicParsing="false" text="Select file" />
+                                    <Button layoutX="119.0" mnemonicParsing="false" text="Select destination" />
+                                 </children>
+                              </AnchorPane>
+                              <Label layoutX="31.0" layoutY="14.0" prefHeight="44.0" prefWidth="765.0" text="To add an action cliclk on the &quot;+&quot; button. To delete an action click on the &quot;X&quot; button" visible="false" wrapText="true">
+                                 <font>
+                                    <Font name="System Italic" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="344.0" layoutY="420.0" mnemonicParsing="false" onAction="#addRuleAction" prefHeight="45.0" prefWidth="138.0" text="Add rule">
+                                 <font>
+                                    <Font name="System Bold" size="21.0" />
+                                 </font>
+                              </Button>
+                              <CheckBox fx:id="onlyOnceCB" layoutX="367.0" layoutY="390.0" mnemonicParsing="false" text="Only once" visible="false" />
+                              <Button layoutX="773.0" layoutY="443.0" mnemonicParsing="false" onAction="#goBack" text="X" />
+                              <Label layoutX="729.0" layoutY="448.0" text="Close" />
+                              <AnchorPane layoutX="66.0" layoutY="390.0" visible="false">
+                                 <children>
+                                    <Label layoutX="38.0" text="Sleeping period:" />
+                                    <TextField fx:id="slepPerDays" layoutY="38.0" prefHeight="31.0" prefWidth="51.0" promptText="days" />
+                                    <TextField fx:id="slepPerHours" layoutX="68.0" layoutY="38.0" prefHeight="31.0" prefWidth="56.0" promptText="hours" />
+                                    <TextField fx:id="slepPerMins" layoutX="140.0" layoutY="38.0" prefHeight="31.0" prefWidth="51.0" promptText="mins" />
+                                    <Label layoutX="57.0" layoutY="42.0" text=":" />
+                                    <Label layoutX="130.0" layoutY="42.0" text=":" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="43.0" layoutY="220.0" visible="false">
+                                 <children>
+                                    <ComboBox fx:id="actionDD4" layoutX="44.0" prefHeight="31.0" prefWidth="140.0" promptText="Move file" />
+                                    <Button fx:id="addActBtn4" layoutX="199.0" mnemonicParsing="false" text="+" />
+                                    <Button fx:id="delActBtn3" mnemonicParsing="false" text="X" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="43.0" layoutY="268.0" visible="false">
+                                 <children>
+                                    <ComboBox fx:id="actionDD5" layoutX="44.0" prefHeight="31.0" prefWidth="140.0" promptText="Move file" />
+                                    <Button fx:id="addActBtn5" layoutX="199.0" mnemonicParsing="false" text="+" />
+                                    <Button fx:id="delActBtn4" mnemonicParsing="false" text="X" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="43.0" layoutY="315.0" visible="false">
+                                 <children>
+                                    <ComboBox fx:id="actionDD6" layoutX="44.0" prefHeight="31.0" prefWidth="140.0" promptText="Move file" />
+                                    <Button fx:id="addActBtn6" layoutX="199.0" mnemonicParsing="false" text="+" />
+                                    <Button fx:id="delActBtn5" mnemonicParsing="false" text="X" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="534.0" layoutY="390.0">
+                                 <children>
+                                    <TextField fx:id="ruleNameTxtBox" layoutY="37.0" prefHeight="31.0" prefWidth="164.0" />
+                                    <Label layoutX="45.0" text="Rule name:" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="counterPane" prefHeight="200.0" prefWidth="200.0" visible="false">
+         <children>
+            <TableView fx:id="counterList" layoutX="14.0" layoutY="66.0" prefHeight="454.0" prefWidth="411.0">
+               <columns>
+                  <TableColumn fx:id="counterLIstNameClm" prefWidth="246.0" text="Name" />
+                  <TableColumn fx:id="counterListValClm" prefWidth="164.0" text="Value" />
+               </columns>
+            </TableView>
+            <Label layoutX="581.0" layoutY="104.0" prefHeight="44.0" prefWidth="67.0" text="Name">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="581.0" layoutY="206.0" prefHeight="44.0" prefWidth="67.0" text="Value">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="counterNameTxtBox" layoutX="521.0" layoutY="148.0" />
+            <TextField fx:id="counterValTxtBox" layoutX="521.0" layoutY="250.0" />
+            <Button fx:id="createCounterBtn" layoutX="544.0" layoutY="328.0" mnemonicParsing="false" text="Create counter">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Button>
+            <Label layoutX="14.0" layoutY="14.0" prefHeight="44.0" prefWidth="135.0" text="Counter list">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Button layoutX="771.0" layoutY="480.0" mnemonicParsing="false" onAction="#goBack" text="X" />
+            <Label layoutX="727.0" layoutY="485.0" text="Close" />
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>
