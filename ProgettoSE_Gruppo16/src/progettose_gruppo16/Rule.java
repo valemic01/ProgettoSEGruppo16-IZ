@@ -86,7 +86,10 @@ public class Rule {
     public static int getCounter() {
         return counter;
     }
-    
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
     
     
 }

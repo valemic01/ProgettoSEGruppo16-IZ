@@ -26,6 +26,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 
@@ -205,6 +206,12 @@ public class FXMLDocumentController implements Initializable {
     
     private Action action;
     private Trigger trigger;
+    @FXML
+    private MenuItem inactiveRuleContextMenu2;
+    @FXML
+    private MenuItem activeRuleContextMenu3;
+    @FXML
+    private MenuItem activeRuleContextMenu1;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -225,7 +232,10 @@ public class FXMLDocumentController implements Initializable {
         delRuleContextMenu1.disableProperty().bind(allRulesTable.getSelectionModel().selectedItemProperty().isNull().and(activeRulesTable.getSelectionModel().selectedItemProperty().isNull()).and(inactRulesTable.getSelectionModel().selectedItemProperty().isNull()));
         delRuleContextMenu2.disableProperty().bind(allRulesTable.getSelectionModel().selectedItemProperty().isNull().and(activeRulesTable.getSelectionModel().selectedItemProperty().isNull()).and(inactRulesTable.getSelectionModel().selectedItemProperty().isNull()));
         delRuleContextMenu3.disableProperty().bind(allRulesTable.getSelectionModel().selectedItemProperty().isNull().and(activeRulesTable.getSelectionModel().selectedItemProperty().isNull()).and(inactRulesTable.getSelectionModel().selectedItemProperty().isNull()));
-
+        activeRuleContextMenu1.disableProperty().bind(allRulesTable.getSelectionModel().selectedItemProperty().isNull().and(activeRulesTable.getSelectionModel().selectedItemProperty().isNull()).and(inactRulesTable.getSelectionModel().selectedItemProperty().isNull()));
+        inactiveRuleContextMenu2.disableProperty().bind(allRulesTable.getSelectionModel().selectedItemProperty().isNull().and(activeRulesTable.getSelectionModel().selectedItemProperty().isNull()).and(inactRulesTable.getSelectionModel().selectedItemProperty().isNull()));
+        activeRuleContextMenu3.disableProperty().bind(allRulesTable.getSelectionModel().selectedItemProperty().isNull().and(activeRulesTable.getSelectionModel().selectedItemProperty().isNull()).and(inactRulesTable.getSelectionModel().selectedItemProperty().isNull()));
+        
         //inizialization of the combo boxes for trigger and actions(TECHNICAL DEBT!)
         trigDD1.getItems().add("Time of day");
         actionDD1.getItems().add("Show message");
@@ -252,7 +262,7 @@ public class FXMLDocumentController implements Initializable {
         }
         
         //Initialization and start of the thread for automatic condition checking
-        rulesChecker = new RulesChecker(allRulesList);
+        rulesChecker = new RulesChecker(activeRulesList);
         threadRulesChecker = new Thread(rulesChecker);
         threadRulesChecker.setName("Thread Rules Checker");
         threadRulesChecker.setDaemon(true);
@@ -331,6 +341,8 @@ public class FXMLDocumentController implements Initializable {
         
         Rule rule = new Rule(name, timeOfDay, action, false, null);
         allRulesList.add(rule);
+        activeRulesList.add(rule);
+        
     }
 
     /*create a new trigger when the user change its settings
@@ -351,7 +363,12 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void deleteRuleAction(ActionEvent event) {
         if(allRulesTable.getSelectionModel().selectedItemProperty().isNotNull().get()){
-            allRulesList.remove(allRulesTable.getSelectionModel().getSelectedItem());
+            Rule rule= allRulesTable.getSelectionModel().getSelectedItem();
+            allRulesList.remove(rule);
+            if (rule.getActive())
+                activeRulesList.remove(rule);
+            else
+                inactRulesList.remove(rule);
         }
         else if(activeRulesTable.getSelectionModel().selectedItemProperty().isNotNull().get()){
             activeRulesList.remove(activeRulesTable.getSelectionModel().getSelectedItem());
@@ -372,5 +389,57 @@ public class FXMLDocumentController implements Initializable {
     private void selectMinute(ActionEvent event) {
         selectMinute = Integer.parseInt(minsDD1.getValue());
     }
-    
+
+    @FXML
+    private void setActiveInactive(MouseEvent event) {
+        Rule rule= allRulesTable.getSelectionModel().getSelectedItem();
+        if(inactRulesList.contains(rule)){
+            activeRuleContextMenu1.setText("Activate Rule");
+        }
+        else if(activeRulesList.contains(rule))
+            activeRuleContextMenu1.setText("Disable Rule");
+    }
+
+    @FXML
+    private void activeInactivateRuleAction(ActionEvent event) {
+        Rule rule= allRulesTable.getSelectionModel().getSelectedItem();
+
+        if(inactRulesList.contains(rule)){
+            inactRulesList.remove(rule);
+            inactRulesTable.getSelectionModel().clearSelection();
+            activeRulesList.add(rule);
+            activeRulesTable.setItems(activeRulesList);  
+            rule.setActive(true);
+        }
+        else if(activeRulesList.contains(rule)){
+            activeRulesList.remove(rule);
+            activeRulesTable.getSelectionModel().clearSelection();
+            inactRulesList.add(rule);
+            inactRulesTable.setItems(inactRulesList);
+            rule.setActive(false);            
+        }
+    }
+
+    @FXML
+    private void InactivateRuleAction(ActionEvent event) {
+        Rule rule= activeRulesTable.getSelectionModel().getSelectedItem();
+
+        activeRulesList.remove(rule);
+        activeRulesTable.getSelectionModel().clearSelection();
+        inactRulesList.add(rule);
+        inactRulesTable.setItems(inactRulesList);  
+        rule.setActive(false); 
+    }
+
+    @FXML
+    private void activateRuleAction(ActionEvent event) {
+      
+        Rule rule= inactRulesTable.getSelectionModel().getSelectedItem();
+
+        inactRulesList.remove(rule);
+        inactRulesTable.getSelectionModel().clearSelection();
+        activeRulesList.add(rule);
+        activeRulesTable.setItems(activeRulesList);
+        rule.setActive(true);
+    }
 }
