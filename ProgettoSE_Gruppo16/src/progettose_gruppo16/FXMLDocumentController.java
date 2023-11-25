@@ -4,11 +4,19 @@
  */
 package progettose_gruppo16;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URL;
 import java.sql.Time;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -124,6 +132,7 @@ public class FXMLDocumentController implements Initializable {
     private String fileAudio;
     private String messageToShow;
     private Action action;
+    private final String backupFile = "RulesBackup.dat";
     
     @FXML
     private MenuItem inactiveRuleContextMenu2;
@@ -137,9 +146,21 @@ public class FXMLDocumentController implements Initializable {
     private CheckBox repetableCB;
     
     
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        allRulesList = FXCollections.observableArrayList();
+        activeRulesList = FXCollections.observableArrayList();
+        inactRulesList = FXCollections.observableArrayList();
+        
+        if(new File(backupFile).exists()){
+            try {
+                importRulesFromFile();
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         
         //setup process of the three TableView, linked with the respective observable list
         inizializeTables();
@@ -189,29 +210,51 @@ public class FXMLDocumentController implements Initializable {
         threadRulesChecker.start();
     }
     
+    private void importRulesFromFile() throws IOException{
+        ObjectInputStream ois = null;
+        ArrayList importedRules = new ArrayList();
+
+        try {
+            ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(backupFile)));
+            importedRules = (ArrayList) ois.readObject();
+        } catch (FileNotFoundException | ClassNotFoundException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            ois.close();
+        }
+ 
+        allRulesList.addAll(importedRules);
+        
+        for(Rule r : allRulesList){
+            if(r.getActive())
+                activeRulesList.add(r);
+            else
+                inactRulesList.add(r);
+        }
+    }
+    
     private void inizializeTables(){
-        allRulesList = FXCollections.observableArrayList();
         allRulesIDClm.setCellValueFactory(new PropertyValueFactory("ID"));
         allRulesNameClm.setCellValueFactory(new PropertyValueFactory("name"));
         allRulesTrigClm.setCellValueFactory(new PropertyValueFactory("trigger"));
         allRulesActClm.setCellValueFactory(new PropertyValueFactory("action"));
         allRulesTable.setItems(allRulesList);
         
-        activeRulesList = FXCollections.observableArrayList();
         activeRulesIDClm.setCellValueFactory(new PropertyValueFactory("ID"));
         activeRulesNameClm.setCellValueFactory(new PropertyValueFactory("name"));
         activeRulesTrigClm.setCellValueFactory(new PropertyValueFactory("trigger"));
         activeRulesActClm.setCellValueFactory(new PropertyValueFactory("action"));
         activeRulesTable.setItems(activeRulesList);
         
-        inactRulesList = FXCollections.observableArrayList();
         inactRulesIDClm.setCellValueFactory(new PropertyValueFactory("ID"));
         inactRulesNameClm.setCellValueFactory(new PropertyValueFactory("name"));
         inactRulesTrigClm.setCellValueFactory(new PropertyValueFactory("trigger"));
         inactRulesActClm.setCellValueFactory(new PropertyValueFactory("action"));
         inactRulesTable.setItems(inactRulesList);
+        
     }
-
+    
+    
     //make the rule creation panel visible
     @FXML
     private void showCreateRule(ActionEvent event) {
@@ -289,11 +332,14 @@ public class FXMLDocumentController implements Initializable {
         activeRulesList.add(rule);        
         goBack(null);
         
-        BackupFileService backupService = new BackupFileService(allRulesList);
-        backupService.start();
-        System.out.println("Lista regole dal backup" + allRulesList);
+        saveRules();
     }
-
+    
+    private void saveRules(){
+        BackupFileService backupService = new BackupFileService(allRulesList, backupFile);
+        backupService.start();
+    }
+    
     /*create a new trigger when the user change its settings
     
     private void timeChangeAction(ActionEvent event) {
@@ -313,6 +359,7 @@ public class FXMLDocumentController implements Initializable {
     delete the selected rule from the corresponding table and update
     the related tables to keep them synchronized
     */
+    
     @FXML
     private void deleteRuleAction(ActionEvent event) {
         Rule rule;
@@ -335,6 +382,8 @@ public class FXMLDocumentController implements Initializable {
             allRulesList.remove(rule);
             inactRulesList.remove(rule);
         }
+        
+        saveRules();
     }
 
     //incorrect for sequence of action (TECHNICAL DEBT!)
@@ -391,6 +440,8 @@ public class FXMLDocumentController implements Initializable {
             inactRulesTable.setItems(inactRulesList);
             rule.setActive(false);            
         }
+        
+        saveRules();
     }
 
     /*
@@ -406,6 +457,8 @@ public class FXMLDocumentController implements Initializable {
         inactRulesList.add(rule);
         inactRulesTable.setItems(inactRulesList);  
         rule.setActive(false); 
+        
+        saveRules();
     }
 
     /*
@@ -422,5 +475,7 @@ public class FXMLDocumentController implements Initializable {
         activeRulesList.add(rule);
         activeRulesTable.setItems(activeRulesList);
         rule.setActive(true);
+        
+        saveRules();
     }
 }
