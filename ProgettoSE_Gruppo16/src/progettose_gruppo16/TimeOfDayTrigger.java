@@ -9,23 +9,29 @@ import java.util.Objects;
 
 
 /**
- * 
+ * TimeOfDayTrigger rappresenta il trigger che confronta il tempo corrente con l'ora e i minuti passati dall'utente
+ *
  */
 public class TimeOfDayTrigger implements Trigger{
     private LocalTime time;
 
-    
+    /**
+     * costruttore
+     * @param time  --> Ora e minuti selezionati dall'utente
+     */
     public TimeOfDayTrigger(LocalTime time) {
         this.time = time;
     }    
 
+    //Override del metodo equals e hashcode per effettuare il confronto dei tempi considerando solo minuti e ore
+    
     @Override
     public int hashCode() {
         int hash = 5;
         hash = 17 * hash + Objects.hashCode(this.time);
         return hash;
     }
-
+     
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -41,7 +47,10 @@ public class TimeOfDayTrigger implements Trigger{
         return this.time.getHour() == other.time.getHour() && this.time.getMinute() == other.time.getMinute();
     }
     
-    
+    /**
+     * Implementazione metodo dell'interfaccia Trigger
+     * @return --> restituisce true se i tempi coincidono; false altrimenti
+     */
     @Override
     public boolean checkCondition() {
         TimeOfDayTrigger currentTimeTrigger = new TimeOfDayTrigger(LocalTime.now());

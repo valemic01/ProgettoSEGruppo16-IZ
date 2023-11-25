@@ -35,6 +35,11 @@ public class Rule {
         done=false;
     }
     
+    /**
+     * Il metodo esegue l'azione selezionata dall'utente quando la condizione del trigger è verificata.
+     * Si utilizza un booleano per eseguire una sola volta l'azione.
+     * @return  --> restituisce true se l'azione viene eseguita; false altrimenti
+     */
     public boolean evaluate(){
         
         if(trigger.checkCondition()){

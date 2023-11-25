@@ -206,6 +206,7 @@ public class FXMLDocumentController implements Initializable {
     
     private Action action;
     private Trigger trigger;
+    
     @FXML
     private MenuItem inactiveRuleContextMenu2;
     @FXML
@@ -389,7 +390,12 @@ public class FXMLDocumentController implements Initializable {
     private void selectMinute(ActionEvent event) {
         selectMinute = Integer.parseInt(minsDD1.getValue());
     }
-
+    
+    /*
+    Si possono attivare o disattivare le regole presenti nella tabella generale.
+    Se la regola è attiva, si setta il menu item a "Disable Rule" per disattivarla.
+    se la regole è disattivata, si setta il menu item a "Activate Rule" per attivarla.
+    */
     @FXML
     private void setActiveInactive(MouseEvent event) {
         Rule rule= allRulesTable.getSelectionModel().getSelectedItem();
@@ -400,6 +406,11 @@ public class FXMLDocumentController implements Initializable {
             activeRuleContextMenu1.setText("Disable Rule");
     }
 
+    /*
+    In questo metodo vengono aggiornate le liste osservabili e le tabelle quando, nella tebella
+    contenente tutte le regole, l'utente decide di attivare o disattivare una regola.
+    una regola
+    */
     @FXML
     private void activeInactivateRuleAction(ActionEvent event) {
         Rule rule= allRulesTable.getSelectionModel().getSelectedItem();
@@ -420,6 +431,10 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
+    /*
+    Il metodo aggiorna tutte le liste osservabili e le tabelle quando, nella tabella contentente le
+    regole attive, l'utente decide di disattivare una regola.
+    */
     @FXML
     private void InactivateRuleAction(ActionEvent event) {
         Rule rule= activeRulesTable.getSelectionModel().getSelectedItem();
@@ -431,6 +446,10 @@ public class FXMLDocumentController implements Initializable {
         rule.setActive(false); 
     }
 
+    /*
+    Il metodo aggiorna tutte le liste osservabili e le tabelle quando, nella tabella contentente le
+    regole disattive, l'utente decide di attivare una regola.
+    */
     @FXML
     private void activateRuleAction(ActionEvent event) {
       
