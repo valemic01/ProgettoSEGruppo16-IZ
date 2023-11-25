@@ -363,8 +363,9 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void deleteRuleAction(ActionEvent event) {
+        Rule rule;
         if(allRulesTable.getSelectionModel().selectedItemProperty().isNotNull().get()){
-            Rule rule= allRulesTable.getSelectionModel().getSelectedItem();
+            rule= allRulesTable.getSelectionModel().getSelectedItem();
             allRulesList.remove(rule);
             if (rule.getActive())
                 activeRulesList.remove(rule);
@@ -372,10 +373,15 @@ public class FXMLDocumentController implements Initializable {
                 inactRulesList.remove(rule);
         }
         else if(activeRulesTable.getSelectionModel().selectedItemProperty().isNotNull().get()){
-            activeRulesList.remove(activeRulesTable.getSelectionModel().getSelectedItem());
+            rule= activeRulesTable.getSelectionModel().getSelectedItem();
+            allRulesList.remove(rule);
+            activeRulesList.remove(rule);
+            
         }
         else if(inactRulesTable.getSelectionModel().selectedItemProperty().isNotNull().get()){
-            inactRulesList.remove(inactRulesTable.getSelectionModel().getSelectedItem());
+            rule= inactRulesTable.getSelectionModel().getSelectedItem();
+            allRulesList.remove(rule);
+            inactRulesList.remove(rule);
         }
     }
 
