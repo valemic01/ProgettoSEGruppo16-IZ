@@ -33,6 +33,7 @@ public class ShowMessageAction implements Action, Serializable{
     public void executeAction() {        
         Platform.runLater(() -> {
             Alert dialogBox = new Alert(AlertType.NONE, message, ButtonType.OK);
+            dialogBox.setTitle("Notification");
             dialogBox.show();
         });
     }
