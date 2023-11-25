@@ -6,6 +6,7 @@ package progettose_gruppo16;
 
 import java.io.File;
 import java.net.URL;
+import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
@@ -80,99 +81,13 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private ComboBox<String> trigDD1;
     @FXML
-    private CheckBox notCB1;
-    @FXML
     private ComboBox<String> actionDD1;
-    @FXML
-    private Button addActBtn1;
-    @FXML
-    private ComboBox<?> actionDD2;
-    @FXML
-    private Button addActBtn2;
-    @FXML
-    private ComboBox<?> actionDD3;
-    @FXML
-    private Button addActBtn3;
-    @FXML
-    private Button delActBtn2;
-    @FXML
-    private Button delActBtn1;
-    @FXML
-    private CheckBox onlyOnceCB;
     @FXML
     private TextField slepPerDays;
     @FXML
     private TextField slepPerHours;
     @FXML
     private TextField slepPerMins;
-    @FXML
-    private AnchorPane counterPane;
-    @FXML
-    private TableView<?> counterList;
-    @FXML
-    private TableColumn<?, ?> counterLIstNameClm;
-    @FXML
-    private TableColumn<?, ?> counterListValClm;
-    @FXML
-    private TextField counterNameTxtBox;
-    @FXML
-    private TextField counterValTxtBox;
-    @FXML
-    private Button createCounterBtn;
-    @FXML
-    private AnchorPane trigCompose2;
-    @FXML
-    private ComboBox<?> trigDD4;
-    @FXML
-    private CheckBox notCB4;
-    @FXML
-    private ComboBox<?> logOps2;
-    @FXML
-    private ComboBox<?> trigDD5;
-    @FXML
-    private CheckBox notCB5;
-    @FXML
-    private AnchorPane trigCompose1;
-    @FXML
-    private ComboBox<?> logOps1;
-    @FXML
-    private ComboBox<?> trigDD2;
-    @FXML
-    private CheckBox notCB2;
-    @FXML
-    private ComboBox<?> trigDD3;
-    @FXML
-    private CheckBox notCB3;
-    @FXML
-    private AnchorPane trigCompose3;
-    @FXML
-    private ComboBox<?> logOps3;
-    @FXML
-    private ComboBox<?> trigDD6;
-    @FXML
-    private CheckBox notCB6;
-    @FXML
-    private ComboBox<?> trigDD7;
-    @FXML
-    private CheckBox notCB7;
-    @FXML
-    private ComboBox<?> actionDD4;
-    @FXML
-    private Button addActBtn4;
-    @FXML
-    private Button delActBtn3;
-    @FXML
-    private ComboBox<?> actionDD5;
-    @FXML
-    private Button addActBtn5;
-    @FXML
-    private Button delActBtn4;
-    @FXML
-    private ComboBox<?> actionDD6;
-    @FXML
-    private Button addActBtn6;
-    @FXML
-    private Button delActBtn5;
     @FXML
     private ComboBox<String> hoursDD1;
     @FXML
@@ -206,6 +121,7 @@ public class FXMLDocumentController implements Initializable {
     
     private Action action;
     private Trigger trigger;
+    private Time sleepingPeriod;
     
     @FXML
     private MenuItem inactiveRuleContextMenu2;
@@ -213,6 +129,10 @@ public class FXMLDocumentController implements Initializable {
     private MenuItem activeRuleContextMenu3;
     @FXML
     private MenuItem activeRuleContextMenu1;
+    @FXML
+    private AnchorPane sleepingPeriodPane;
+    @FXML
+    private CheckBox repetableCB;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -247,6 +167,9 @@ public class FXMLDocumentController implements Initializable {
         messTxtBox.visibleProperty().bind(Bindings.createBooleanBinding(() ->"Show message".equals(actionDD1.getSelectionModel().getSelectedItem()),actionDD1.getSelectionModel().selectedItemProperty()));
         selectAudioBtn.visibleProperty().bind(Bindings.createBooleanBinding(() ->"Play audio".equals(actionDD1.getSelectionModel().getSelectedItem()),actionDD1.getSelectionModel().selectedItemProperty()));
 
+        //binding to show the sleeping period settings when the "Repetable" check box is selected
+        sleepingPeriodPane.visibleProperty().bind(repetableCB.selectedProperty());
+        
         //inizialization of the combo boxes for the time selection (TECHNICAL DEBT!)
         for (int i = 0; i <= 23; i++) {
             if(i<10)
@@ -300,21 +223,25 @@ public class FXMLDocumentController implements Initializable {
         ruleCreatePane.setVisible(true);
     }
 
-    //make the counters pane visible
-    @FXML
-    private void showCounters(ActionEvent event) {
-        ruleListPane.setVisible(false);
-        counterPane.setVisible(true);
-    }
-
-    //close the current pane and goes back to the rule list pane
+    /*
+    Set to default all the element in the rule creation pane, then 
+    close the current pane and goes back to the rule list pane
+    */
     @FXML
     private void goBack(ActionEvent event) {
         messTxtBox.clear();
         ruleNameTxtBox.clear();
+        slepPerDays.clear();
+        slepPerHours.clear();
+        slepPerMins.clear();
+        repetableCB.setSelected(false);
+        hoursDD1.getSelectionModel().clearSelection();
+        minsDD1.getSelectionModel().clearSelection();
+        trigDD1.getSelectionModel().clearSelection();
+        actionDD1.getSelectionModel().clearSelection();
+        
         trigg_actTab.getSelectionModel().select(triggerTab);
         ruleCreatePane.setVisible(false);
-        counterPane.setVisible(false);
         ruleListPane.setVisible(true);
     }
 
@@ -329,21 +256,31 @@ public class FXMLDocumentController implements Initializable {
         
     }
 
-    //add rule to the list with the trigger and action previously set
+    /*
+    add rule to the list with the trigger and action previously set
+    after checking that all the necessary input are valid
+    */
     @FXML
     private void addRuleAction(ActionEvent event) {
+        String hours;
         String name = ruleNameTxtBox.getText();
         LocalTime time = LocalTime.of(selectHour, selectMinute);
         timeOfDay = new TimeOfDayTrigger(time);
+        trigger = timeOfDay;
         
         if(name == null || action == null || timeOfDay == null){
             return;
         }
         
-        Rule rule = new Rule(name, timeOfDay, action, false, null);
+        if(repetableCB.isSelected()){
+            hours = String.valueOf(Integer.parseInt(slepPerDays.getText())*24 + Integer.parseInt(slepPerHours.getText()));
+            sleepingPeriod = Time.valueOf(hours + ":" + slepPerMins.getText() + ":00");
+        }
+        
+        Rule rule = new Rule(name, trigger, action, repetableCB.isSelected(), sleepingPeriod);
         allRulesList.add(rule);
         activeRulesList.add(rule);
-        
+        goBack(null);
     }
 
     /*create a new trigger when the user change its settings
@@ -361,6 +298,10 @@ public class FXMLDocumentController implements Initializable {
     }
     */
 
+    /*
+    delete the selected rule from the corresponding table and update
+    the related tables to keep them synchronized
+    */
     @FXML
     private void deleteRuleAction(ActionEvent event) {
         Rule rule;
@@ -388,13 +329,17 @@ public class FXMLDocumentController implements Initializable {
     //incorrect for sequence of action (TECHNICAL DEBT!)
     @FXML
     private void selectHour(ActionEvent event) {
-        selectHour = Integer.parseInt(hoursDD1.getValue());
+        if(!hoursDD1.getSelectionModel().isEmpty()){
+            selectHour = Integer.parseInt(hoursDD1.getValue());
+        }
     }
 
     //incorrect for sequence of action (TECHNICAL DEBT!)
     @FXML
     private void selectMinute(ActionEvent event) {
-        selectMinute = Integer.parseInt(minsDD1.getValue());
+        if(!minsDD1.getSelectionModel().isEmpty()){
+            selectMinute = Integer.parseInt(minsDD1.getValue());
+        }
     }
     
     /*

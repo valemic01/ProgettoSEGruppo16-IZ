@@ -141,10 +141,10 @@
                                     <Font name="System Bold" size="21.0" />
                                  </font>
                               </Button>
-                              <CheckBox fx:id="onlyOnceCB" layoutX="367.0" layoutY="390.0" mnemonicParsing="false" text="Only once" visible="false" />
+                              <CheckBox fx:id="repetableCB" layoutX="367.0" layoutY="390.0" mnemonicParsing="false" text="Repetable" />
                               <Button layoutX="773.0" layoutY="443.0" mnemonicParsing="false" onAction="#goBack" text="X" />
                               <Label layoutX="729.0" layoutY="448.0" text="Close" />
-                              <AnchorPane layoutX="66.0" layoutY="390.0" visible="false">
+                              <AnchorPane fx:id="sleepingPeriodPane" layoutX="66.0" layoutY="390.0" visible="false">
                                  <children>
                                     <Label layoutX="38.0" text="Sleeping period:" />
                                     <TextField fx:id="slepPerDays" layoutY="38.0" prefHeight="31.0" prefWidth="51.0" promptText="days" />
