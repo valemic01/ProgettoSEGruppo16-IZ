@@ -13,7 +13,7 @@ import javafx.scene.media.MediaPlayer;
  *
  * @author valentina <your.name at your.org>
  */
-public class PlayAudioAction implements Action, Serializable{
+public class PlayAudioAction implements Action{
     private String filePath;
     private Media audioFile;
     private MediaPlayer player;

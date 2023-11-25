@@ -4,11 +4,13 @@
  */
 package progettose_gruppo16;
 
+import java.io.Serializable;
+
 /**
  *
  * @author raffa
  */
-public interface Action {
+public interface Action extends Serializable{
     
     public abstract void executeAction();
     

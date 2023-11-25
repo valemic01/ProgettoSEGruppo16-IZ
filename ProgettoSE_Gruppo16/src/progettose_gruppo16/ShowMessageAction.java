@@ -11,7 +11,7 @@ import javafx.scene.control.ButtonType;
  *  scritto dall'utente a schermo all'attivazione del trigger. Il messaggio deve essere
  *  esplicitamente chiuso dall'utente.
  */
-public class ShowMessageAction implements Action, Serializable{
+public class ShowMessageAction implements Action{
     
     private final String message;
 
