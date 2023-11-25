@@ -4,13 +4,14 @@
  */
 package progettose_gruppo16;
 
+import java.io.Serializable;
 import java.sql.Time;
 
 /**
  *
  * @author raffa
  */
-public class Rule {
+public class Rule implements Serializable{
     
     private final int ID;
     private final String name;

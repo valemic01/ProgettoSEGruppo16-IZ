@@ -4,6 +4,7 @@
  */
 package progettose_gruppo16;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.Objects;
 

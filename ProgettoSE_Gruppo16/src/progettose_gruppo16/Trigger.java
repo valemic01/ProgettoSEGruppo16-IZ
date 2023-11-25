@@ -4,11 +4,13 @@
  */
 package progettose_gruppo16;
 
+import java.io.Serializable;
+
 /**
  *
  * @author raffa
  */
-public interface Trigger {
+public interface Trigger extends Serializable{
     
     public abstract boolean checkCondition();
     
