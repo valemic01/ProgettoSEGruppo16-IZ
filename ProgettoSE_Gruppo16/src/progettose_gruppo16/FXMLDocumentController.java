@@ -144,7 +144,10 @@ public class FXMLDocumentController implements Initializable {
     private AnchorPane sleepingPeriodPane;
     @FXML
     private CheckBox repetableCB;
-    
+    @FXML
+    private Button addRuleBtn;
+    @FXML
+    private Tab actionTab;
     
     
     @Override
@@ -186,6 +189,9 @@ public class FXMLDocumentController implements Initializable {
 
         //binding to show the sleeping period settings when the "Repetable" check box is selected
         sleepingPeriodPane.visibleProperty().bind(repetableCB.selectedProperty());
+        
+        //binding to disable the add rule button if the rule name, the action or the trigger are not selected
+        addRuleBtn.disableProperty().bind(Bindings.isEmpty(ruleNameTxtBox.textProperty()).or(Bindings.isNull(trigDD1.valueProperty())).or(Bindings.isNull(actionDD1.valueProperty())));
         
         //inizialization of the combo boxes for the time selection (TECHNICAL DEBT!)
         for (int i = 0; i <= 23; i++) {
@@ -309,17 +315,17 @@ public class FXMLDocumentController implements Initializable {
         trigger = timeOfDay;
         
         if(actionDD1.getSelectionModel().getSelectedItem() == "Play audio"){
-            if(name == null || fileAudio == null || timeOfDay == null)
+            if(fileAudio.isEmpty())
                 return;
             action = new PlayAudioAction(fileAudio);
         }
             
         if(actionDD1.getSelectionModel().getSelectedItem() == "Show message"){
             messageToShow = messTxtBox.getText();
-            if(name == null || messageToShow == null || timeOfDay == null)
+            if(messageToShow.isEmpty())
                  return;          
             action = new ShowMessageAction(messageToShow);
-            }
+        }
         
         
         if(repetableCB.isSelected()){
@@ -477,5 +483,23 @@ public class FXMLDocumentController implements Initializable {
         rule.setActive(true);
         
         saveRules();
+    }
+    
+    @FXML
+    private void toAction(ActionEvent event) {
+        trigg_actTab.getSelectionModel().select(actionTab);
+    }
+
+    @FXML
+    private void toTrigger(ActionEvent event) {
+        trigg_actTab.getSelectionModel().select(triggerTab);
+    }
+
+    //deselect the selected rule when clicking outside of the table
+    @FXML
+    private void deselect(MouseEvent event) {
+        allRulesTable.getSelectionModel().clearSelection();
+        activeRulesTable.getSelectionModel().clearSelection();
+        inactRulesTable.getSelectionModel().clearSelection();
     }
 }

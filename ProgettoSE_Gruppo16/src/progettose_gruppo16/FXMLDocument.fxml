@@ -15,11 +15,11 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="progettose_gruppo16.FXMLDocumentController">
+<StackPane onMouseClicked="#deselect" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="progettose_gruppo16.FXMLDocumentController">
    <children>
       <AnchorPane fx:id="ruleListPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="826.0">
          <children>
-            <TabPane layoutX="14.0" layoutY="14.0" prefHeight="421.0" prefWidth="804.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="246.0">
+            <TabPane layoutX="14.0" layoutY="14.0" onMouseClicked="#deselect" prefHeight="421.0" prefWidth="804.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="246.0">
                <tabs>
                   <Tab text="All rules">
                      <content>
@@ -95,7 +95,7 @@
                   </Tab>
                </tabs>
             </TabPane>
-            <Button layoutX="29.0" layoutY="456.0" mnemonicParsing="false" onAction="#showCreateRule" prefHeight="44.0" prefWidth="164.0" text="Create a rule">
+            <Button layoutX="29.0" layoutY="456.0" mnemonicParsing="false" onAction="#showCreateRule" onMouseClicked="#deselect" prefHeight="44.0" prefWidth="164.0" text="Create a rule">
                <font>
                   <Font size="19.0" />
                </font>
@@ -125,26 +125,27 @@
                                     <ComboBox fx:id="minsDD1" layoutX="194.0" layoutY="5.0" onAction="#selectMinute" prefHeight="28.0" prefWidth="75.0" promptText="00" />
                                  </children>
                               </AnchorPane>
+                              <Button layoutX="372.0" layoutY="433.0" mnemonicParsing="false" onAction="#toAction" prefHeight="31.0" prefWidth="82.0" text="Next" />
                            </children>
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab text="Action">
+                  <Tab fx:id="actionTab" text="Action">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <ComboBox fx:id="actionDD1" layoutX="88.0" layoutY="71.0" prefHeight="31.0" prefWidth="140.0" promptText="Action..." />
                               <TextField fx:id="messTxtBox" layoutX="542.0" layoutY="71.0" promptText="Your text..." visible="false" />
                               <Button fx:id="selectAudioBtn" layoutX="585.0" layoutY="72.0" mnemonicParsing="false" onAction="#chooseAudio" text="Select audio" visible="false" />
-                              <Button layoutX="344.0" layoutY="420.0" mnemonicParsing="false" onAction="#addRuleAction" prefHeight="45.0" prefWidth="138.0" text="Add rule">
+                              <Button fx:id="addRuleBtn" layoutX="344.0" layoutY="420.0" mnemonicParsing="false" onAction="#addRuleAction" prefHeight="45.0" prefWidth="138.0" text="Add rule">
                                  <font>
                                     <Font name="System Bold" size="21.0" />
                                  </font>
                               </Button>
-                              <CheckBox fx:id="repetableCB" layoutX="367.0" layoutY="390.0" mnemonicParsing="false" text="Repetable" />
+                              <CheckBox fx:id="repetableCB" layoutX="367.0" layoutY="386.0" mnemonicParsing="false" text="Repetable" />
                               <Button layoutX="773.0" layoutY="443.0" mnemonicParsing="false" onAction="#goBack" text="X" />
                               <Label layoutX="729.0" layoutY="448.0" text="Close" />
-                              <AnchorPane fx:id="sleepingPeriodPane" layoutX="66.0" layoutY="390.0" visible="false">
+                              <AnchorPane fx:id="sleepingPeriodPane" layoutX="509.0" layoutY="397.0">
                                  <children>
                                     <Label layoutX="38.0" text="Sleeping period:" />
                                     <TextField fx:id="slepPerDays" layoutY="38.0" prefHeight="31.0" prefWidth="51.0" promptText="days" />
@@ -154,12 +155,13 @@
                                     <Label layoutX="130.0" layoutY="42.0" text=":" />
                                  </children>
                               </AnchorPane>
-                              <AnchorPane layoutX="534.0" layoutY="390.0">
+                              <AnchorPane layoutX="333.0" layoutY="313.0">
                                  <children>
-                                    <TextField fx:id="ruleNameTxtBox" layoutY="37.0" prefHeight="31.0" prefWidth="164.0" />
+                                    <TextField fx:id="ruleNameTxtBox" layoutY="30.0" prefHeight="31.0" prefWidth="164.0" />
                                     <Label layoutX="45.0" text="Rule name:" />
                                  </children>
                               </AnchorPane>
+                              <Button layoutX="29.0" layoutY="428.0" mnemonicParsing="false" onAction="#toTrigger" prefHeight="31.0" prefWidth="80.0" text="Back" />
                            </children>
                         </AnchorPane>
                      </content>
