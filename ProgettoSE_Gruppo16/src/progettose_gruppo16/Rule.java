@@ -95,6 +95,11 @@ public class Rule {
     public void setActive(Boolean active) {
         this.active = active;
     }
+
+    @Override
+    public String toString() {
+        return ID + "-" + name + "-" + trigger + "-" + action + "-" + active + "-" + repeatable + "-" + sleepPeriod + "-" + done;
+    }
     
     
 }
