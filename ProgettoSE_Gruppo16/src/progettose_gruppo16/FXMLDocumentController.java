@@ -119,9 +119,11 @@ public class FXMLDocumentController implements Initializable {
     
     private FileChooser fileChooser;
     
-    private Action action;
     private Trigger trigger;
     private Time sleepingPeriod;
+    private String fileAudio;
+    private String messageToShow;
+    private Action action;
     
     @FXML
     private MenuItem inactiveRuleContextMenu2;
@@ -134,16 +136,10 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private CheckBox repetableCB;
     
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        //listener that creates a new ShowMessage action every time the message is changed
-        messTxtBox.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                action = new ShowMessageAction(newValue); //incorrect for sequence of action (TECHNICAL DEBT!)
-            }
-        });
         
         //setup process of the three TableView, linked with the respective observable list
         inizializeTables();
@@ -250,10 +246,11 @@ public class FXMLDocumentController implements Initializable {
     private void chooseAudio(ActionEvent event) {
         
         fileChooser = new FileChooser();
-        File fileAudio = fileChooser.showSaveDialog(selectAudioBtn.getScene().getWindow());
+        PlayAudioAction play = null;
         
-        //action = new PlayAudioAction(fileAudio); //incorrect for sequence of action (TECHNICAL DEBT!)
-        
+        FileChooser.ExtensionFilter filter= new FileChooser.ExtensionFilter ("File Audio WAV (*.wav)", "*.wav");
+        fileChooser.getExtensionFilters().add(filter);
+        fileAudio = fileChooser.showOpenDialog(selectAudioBtn.getScene().getWindow()).getAbsolutePath();
     }
 
     /*
@@ -268,9 +265,19 @@ public class FXMLDocumentController implements Initializable {
         timeOfDay = new TimeOfDayTrigger(time);
         trigger = timeOfDay;
         
-        if(name == null || action == null || timeOfDay == null){
-            return;
+        if(actionDD1.getSelectionModel().getSelectedItem() == "Play audio"){
+            if(name == null || fileAudio == null || timeOfDay == null)
+                return;
+            action = new PlayAudioAction(fileAudio);
         }
+            
+        if(actionDD1.getSelectionModel().getSelectedItem() == "Show message"){
+            messageToShow = messTxtBox.getText();
+            if(name == null || messageToShow == null || timeOfDay == null)
+                 return;          
+            action = new ShowMessageAction(messageToShow);
+            }
+        
         
         if(repetableCB.isSelected()){
             hours = String.valueOf(Integer.parseInt(slepPerDays.getText())*24 + Integer.parseInt(slepPerHours.getText()));
@@ -279,8 +286,12 @@ public class FXMLDocumentController implements Initializable {
         
         Rule rule = new Rule(name, trigger, action, repetableCB.isSelected(), sleepingPeriod);
         allRulesList.add(rule);
-        activeRulesList.add(rule);
+        activeRulesList.add(rule);        
         goBack(null);
+        
+        BackupFileService backupService = new BackupFileService(allRulesList);
+        backupService.start();
+        System.out.println("Lista regole dal backup" + allRulesList);
     }
 
     /*create a new trigger when the user change its settings
