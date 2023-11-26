@@ -5,23 +5,30 @@
 package progettose_gruppo16;
 
 import java.io.File;
-import java.io.Serializable;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-/**
+/**Classe che implementa l'interfaccia Action per permettere all'utente di scegliere come azione
+ * la riproduzione di un audio scelto in fase di creazione della regola.
  *
  * @author valentina <your.name at your.org>
  */
 public class PlayAudioAction implements Action{
-    private String filePath;
+    private final String filePath;
     private Media audioFile;
     private MediaPlayer player;
 
+    /**
+     *Costruttore
+     * @param fileAudio
+     */
     public PlayAudioAction(String fileAudio) {
         this.filePath = fileAudio;
     }
     
+    /**
+     *Crea un oggetto di tipo MediaPlayer che consente di riprodurre l'audio.
+     */
     @Override
     public void executeAction() {
             audioFile = new Media(new File(filePath).toURI().toString());

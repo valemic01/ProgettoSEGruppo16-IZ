@@ -11,7 +11,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
+ *Classe principale che lancia l'applicazione.
  * @author valentina <your.name at your.org>
  */
 public class ProgettoSE_Gruppo16 extends Application {

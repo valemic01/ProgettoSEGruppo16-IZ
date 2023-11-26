@@ -18,8 +18,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -40,7 +38,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 
 /**
- *
+ *Implementazione del controller che gestisce le interazioni con la GUI.
  * @author raffa
  */
 public class FXMLDocumentController implements Initializable {
@@ -57,8 +55,6 @@ public class FXMLDocumentController implements Initializable {
     private TableColumn<Rule, Trigger> allRulesTrigClm;
     @FXML
     private TableColumn<Rule, Action> allRulesActClm;
-    private ObservableList<Rule> allRulesList; //observable list of all rules, created to manage the respective TableView
-    
     @FXML
     private TableView<Rule> activeRulesTable;
     @FXML
@@ -68,9 +64,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TableColumn<Rule, String> activeRulesTrigClm;
     @FXML
-    private TableColumn<Rule, String> activeRulesActClm;
-    private ObservableList<Rule> activeRulesList; //observable list of active rules, created to manage the respective TableView
-    
+    private TableColumn<Rule, String> activeRulesActClm;  
     @FXML
     private TableView<Rule> inactRulesTable;
     @FXML
@@ -81,7 +75,6 @@ public class FXMLDocumentController implements Initializable {
     private TableColumn<Rule, String> inactRulesTrigClm;
     @FXML
     private TableColumn<Rule, String> inactRulesActClm;
-    private ObservableList<Rule> inactRulesList; //observable list of inactive rules, created to manage the respective TableView
     @FXML
     private Button delRuleBtn;
     @FXML
@@ -118,22 +111,6 @@ public class FXMLDocumentController implements Initializable {
     private Tab triggerTab;
     @FXML
     private AnchorPane trigTimeOfDay;
-    
-    private TimeOfDayTrigger timeOfDay;
-    int selectHour, selectMinute;
-     
-    private RulesChecker rulesChecker;
-    private Thread threadRulesChecker;
-    
-    private FileChooser fileChooser;
-    
-    private Trigger trigger;
-    private Time sleepingPeriod;
-    private String fileAudio;
-    private String messageToShow;
-    private Action action;
-    private final String backupFile = "RulesBackup.dat";
-    
     @FXML
     private MenuItem inactiveRuleContextMenu2;
     @FXML
@@ -149,7 +126,26 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Tab actionTab;
     
+    private ObservableList<Rule> allRulesList; //observable list of all rules, created to manage the respective TableView
+    private ObservableList<Rule> activeRulesList; //observable list of active rules, created to manage the respective TableView
+    private ObservableList<Rule> inactRulesList; //observable list of inactive rules, created to manage the respective TableView
+    private TimeOfDayTrigger timeOfDay;
+    private int selectHour, selectMinute;
+    private RulesChecker rulesChecker;
+    private Thread threadRulesChecker;  
+    private FileChooser fileChooser;   
+    private Trigger trigger;
+    private Time sleepingPeriod;
+    private String fileAudio;
+    private String messageToShow;
+    private Action action;
+    private final String backupFile = "RulesBackup.dat";
     
+    /**
+     *Inizializzazione delle componenti dell'interfaccia utente
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -216,6 +212,10 @@ public class FXMLDocumentController implements Initializable {
         threadRulesChecker.start();
     }
     
+    /**
+     *Metodo che importa le regole dal file di backup all'avvio dell'applicazione.
+     * 
+     */
     private void importRulesFromFile() throws IOException{
         ObjectInputStream ois = null;
         ArrayList importedRules = new ArrayList();
@@ -230,7 +230,6 @@ public class FXMLDocumentController implements Initializable {
         }
  
         allRulesList.addAll(importedRules);
-        System.out.println("Lista importata dal backup:" + allRulesList);
         for(Rule r : allRulesList){
             if(r.getActive())
                 activeRulesList.add(r);
@@ -239,6 +238,9 @@ public class FXMLDocumentController implements Initializable {
         }
     }
     
+    /**
+    * Metodo che inizializza le tabelle delle regole, in modo da renderle visibili nell'applicazione. 
+    */
     private void inizializeTables(){
         allRulesIDClm.setCellValueFactory(new PropertyValueFactory("ID"));
         allRulesNameClm.setCellValueFactory(new PropertyValueFactory("name"));
@@ -260,18 +262,22 @@ public class FXMLDocumentController implements Initializable {
         
     }
     
-    
-    //make the rule creation panel visible
+    /**
+     * Metodo che mostra la schermata di creazione delle regole.
+     * @param event 
+     */
     @FXML
     private void showCreateRule(ActionEvent event) {
         ruleListPane.setVisible(false);
         ruleCreatePane.setVisible(true);
     }
 
-    /*
-    Set to default all the element in the rule creation pane, then 
-    close the current pane and goes back to the rule list pane
-    */
+    /**
+     * Metodo che consente di passare dalla schermata di creazione delle regole alla
+     * schermata che mostra tutte le regole definite dall'utente. 
+     * Resetta tutti i parametri relativi alla creazione di una regola.
+     * @param event 
+     */
     @FXML
     private void goBack(ActionEvent event) {
         messTxtBox.clear();
@@ -293,7 +299,10 @@ public class FXMLDocumentController implements Initializable {
         fileAudio= "";
     }
 
-    //open a window to select the audio fil and create the respective action
+    /**
+     * Metodo che consente all'utente di selezionare il file da riprodurre come azione tramite filechooser.
+     * @param event 
+     */
     @FXML
     private void chooseAudio(ActionEvent event) {
         
@@ -305,10 +314,12 @@ public class FXMLDocumentController implements Initializable {
         fileAudio = fileChooser.showOpenDialog(selectAudioBtn.getScene().getWindow()).getAbsolutePath();
     }
 
-    /*
-    add rule to the list with the trigger and action previously set
-    after checking that all the necessary input are valid
-    */
+    /**
+     * Metodo che consente di aggiungere una regola all'interno della lista delle regole,
+     * memorizzando il trigger e l'azione definita dall'utente.
+     * Controlla che tutti i campi siano stati riempiti correttamente.
+     * @param event 
+     */
     @FXML
     private void addRuleAction(ActionEvent event) {
         String hours;
@@ -317,13 +328,13 @@ public class FXMLDocumentController implements Initializable {
         timeOfDay = new TimeOfDayTrigger(time);
         trigger = timeOfDay;
         
-        if(actionDD1.getSelectionModel().getSelectedItem() == "Play audio"){
+        if("Play audio".equals(actionDD1.getSelectionModel().getSelectedItem())){
             if(fileAudio.isEmpty())
                 return;
             action = new PlayAudioAction(fileAudio);
         }
             
-        if(actionDD1.getSelectionModel().getSelectedItem() == "Show message"){
+        if("Show message".equals(actionDD1.getSelectionModel().getSelectedItem())){
             messageToShow = messTxtBox.getText();
             if(messageToShow.isEmpty())
                  return;          
@@ -344,6 +355,9 @@ public class FXMLDocumentController implements Initializable {
         saveRules();
     }
     
+    /**
+     * Metodo che crea il service che salva le regole sul file di backup.
+     */
     private void saveRules(){
         BackupFileService backupService = new BackupFileService(allRulesList, backupFile);
         backupService.start();
@@ -363,12 +377,12 @@ public class FXMLDocumentController implements Initializable {
         
     }
     */
-
-    /*
-    delete the selected rule from the corresponding table and update
-    the related tables to keep them synchronized
-    */
     
+    /**
+     * Metodo che cancella una regola selezionata dalla lista delle regole e aggiorna le tabelle correlate.
+     * Invoca anche il metodo saveRules() per aggiornare la lista delle regole presente sul file di backup.
+     * @param event 
+     */
     @FXML
     private void deleteRuleAction(ActionEvent event) {
         Rule rule;
@@ -396,6 +410,10 @@ public class FXMLDocumentController implements Initializable {
     }
 
     //incorrect for sequence of action (TECHNICAL DEBT!)
+    /**
+     * Metodo che preleva l'ora selezionata dall'utente quando crea un TimeOfDayTrigger.
+     * @param event 
+     */
     @FXML
     private void selectHour(ActionEvent event) {
         if(!hoursDD1.getSelectionModel().isEmpty()){
@@ -404,6 +422,10 @@ public class FXMLDocumentController implements Initializable {
     }
 
     //incorrect for sequence of action (TECHNICAL DEBT!)
+     /**
+     * Metodo che preleva i minuti selezionati dall'utente quando crea un TimeOfDayTrigger.
+     * @param event 
+     */
     @FXML
     private void selectMinute(ActionEvent event) {
         if(!minsDD1.getSelectionModel().isEmpty()){
@@ -411,11 +433,11 @@ public class FXMLDocumentController implements Initializable {
         }
     }
     
-    /*
-    Si possono attivare o disattivare le regole presenti nella tabella generale.
-    Se la regola è attiva, si setta il menu item a "Disable Rule" per disattivarla.
-    se la regole è disattivata, si setta il menu item a "Activate Rule" per attivarla.
-    */
+    /**Metodo che consente di attivare o disattivare le regole presenti nella tabella di tutte le regole.
+     * Se la regola è attiva, si setta il menu item su "Disable Rule" per disattivarla.
+     * Se la regole è disattivata, si setta il menu item su "Activate Rule" per attivarla.
+     * @param event 
+     */
     @FXML
     private void setActiveInactive(MouseEvent event) {
         Rule rule= allRulesTable.getSelectionModel().getSelectedItem();
@@ -426,11 +448,11 @@ public class FXMLDocumentController implements Initializable {
             activeRuleContextMenu1.setText("Disable Rule");
     }
 
-    /*
-    In questo metodo vengono aggiornate le liste osservabili e le tabelle quando, nella tebella
-    contenente tutte le regole, l'utente decide di attivare o disattivare una regola.
-    una regola
-    */
+    /**
+     * Metodo che consente di aggiornare tutte le liste delle regole e le tabelle 
+     * quando l'utente sceglie di attivare o disattivare una regola dalla tabella generale delle regole.
+     * @param event 
+     */
     @FXML
     private void activeInactivateRuleAction(ActionEvent event) {
         Rule rule= allRulesTable.getSelectionModel().getSelectedItem();
@@ -453,10 +475,11 @@ public class FXMLDocumentController implements Initializable {
         saveRules();
     }
 
-    /*
-    Il metodo aggiorna tutte le liste osservabili e le tabelle quando, nella tabella contentente le
-    regole attive, l'utente decide di disattivare una regola.
-    */
+    /**
+     * Metodo che consente di aggiornare le liste di tutte le regole e le tabelle
+     * quando l'utente sceglie di disattivare una regola dalla tabella delle regole attive.
+     * @param event 
+     */
     @FXML
     private void InactivateRuleAction(ActionEvent event) {
         Rule rule= activeRulesTable.getSelectionModel().getSelectedItem();
@@ -470,10 +493,11 @@ public class FXMLDocumentController implements Initializable {
         saveRules();
     }
 
-    /*
-    Il metodo aggiorna tutte le liste osservabili e le tabelle quando, nella tabella contentente le
-    regole disattive, l'utente decide di attivare una regola.
-    */
+     /**
+     * Metodo che consente di aggiornare le liste di tutte le regole e le tabelle
+     * quando l'utente sceglie di riattivare una regola dalla tabella delle regole disattivate.
+     * @param event 
+     */
     @FXML
     private void activateRuleAction(ActionEvent event) {
       
@@ -488,17 +512,28 @@ public class FXMLDocumentController implements Initializable {
         saveRules();
     }
     
+    /**
+     * Metodo che consente di passare dalla schermata dei trigger a quella delle azioni.
+     * @param event 
+     */
     @FXML
     private void toAction(ActionEvent event) {
         trigg_actTab.getSelectionModel().select(actionTab);
     }
 
+    /**
+     * Metodo che consente di passare dalla schermata delle azioni a quella dei trigger.
+     * @param event 
+     */
     @FXML
     private void toTrigger(ActionEvent event) {
         trigg_actTab.getSelectionModel().select(triggerTab);
     }
 
-    //deselect the selected rule when clicking outside of the table
+    /**
+     * Metodo che consente di deselezionare una regola quando si clicca al di fuori delle tabelle.
+     * @param event 
+     */
     @FXML
     private void deselect(MouseEvent event) {
         allRulesTable.getSelectionModel().clearSelection();
