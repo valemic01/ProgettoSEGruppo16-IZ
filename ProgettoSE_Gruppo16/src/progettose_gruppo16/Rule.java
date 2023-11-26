@@ -13,26 +13,21 @@ import java.sql.Time;
  */
 public class Rule implements Serializable{
     
-    private final int ID;
     private final String name;
     private Trigger trigger;
     private Action action;
     private Boolean active;
     private Boolean repeatable; //false if the rule can be fired only once
     private Time sleepPeriod; // if repeatible is true the rule will be periodically checked again after this time
-    private boolean done;
+    private boolean done;   
     
-    private static int counter = 1;
-
     public Rule(String name, Trigger trigger, Action action, Boolean repeatable, Time sleepPeriod) {
-        this.ID = counter;
         this.name = name;
         this.trigger = trigger;
         this.action = action;
         this.active = true;
         this.repeatable = repeatable;
         this.sleepPeriod = sleepPeriod;
-        counter++;
         done=false;
     }
     
@@ -55,10 +50,6 @@ public class Rule implements Serializable{
             done=false;
         }
         return false;
-    }
-
-    public int getID() {
-        return ID;
     }
 
     public String getName() {
@@ -88,18 +79,14 @@ public class Rule implements Serializable{
     public boolean isDone() {
         return done;
     }
-
-    public static int getCounter() {
-        return counter;
-    }
-
+    
     public void setActive(Boolean active) {
         this.active = active;
     }
 
     @Override
     public String toString() {
-        return ID + "-" + name + "-" + trigger + "-" + action + "-" + active + "-" + repeatable + "-" + sleepPeriod + "-" + done;
+        return name + "-" + trigger + "-" + action + "-" + active + "-" + repeatable + "-" + sleepPeriod + "-" + done;
     }
     
     

@@ -26,6 +26,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -48,8 +49,6 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TableView<Rule> allRulesTable;
     @FXML
-    private TableColumn<Rule, Integer> allRulesIDClm;
-    @FXML
     private TableColumn<Rule, String> allRulesNameClm;
     @FXML
     private TableColumn<Rule, Trigger> allRulesTrigClm;
@@ -58,8 +57,6 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TableView<Rule> activeRulesTable;
     @FXML
-    private TableColumn<Rule, String> activeRulesIDClm;
-    @FXML
     private TableColumn<Rule, String> activeRulesNameClm;
     @FXML
     private TableColumn<Rule, String> activeRulesTrigClm;
@@ -67,8 +64,6 @@ public class FXMLDocumentController implements Initializable {
     private TableColumn<Rule, String> activeRulesActClm;  
     @FXML
     private TableView<Rule> inactRulesTable;
-    @FXML
-    private TableColumn<Rule, String> inactRulesIDClm;
     @FXML
     private TableColumn<Rule, String> inactRulesNameClm;
     @FXML
@@ -125,6 +120,8 @@ public class FXMLDocumentController implements Initializable {
     private Button addRuleBtn;
     @FXML
     private Tab actionTab;
+    @FXML
+    private Label labelAudioSelected;
     
     private ObservableList<Rule> allRulesList; //observable list of all rules, created to manage the respective TableView
     private ObservableList<Rule> activeRulesList; //observable list of active rules, created to manage the respective TableView
@@ -187,8 +184,8 @@ public class FXMLDocumentController implements Initializable {
         sleepingPeriodPane.visibleProperty().bind(repetableCB.selectedProperty());
         
         //binding to disable the add rule button if the rule name, the action or the trigger are not selected
-        addRuleBtn.disableProperty().bind(Bindings.isEmpty(ruleNameTxtBox.textProperty()).or(Bindings.isNull(trigDD1.valueProperty())).or(Bindings.isNull(actionDD1.valueProperty())));
-        
+        addRuleBtn.disableProperty().bind(Bindings.isEmpty(ruleNameTxtBox.textProperty()).or(Bindings.isNull(trigDD1.valueProperty())).or(Bindings.isNull(actionDD1.valueProperty())).or(Bindings.createBooleanBinding(() ->"Show message".equals(actionDD1.getSelectionModel().getSelectedItem()), actionDD1.getSelectionModel().selectedItemProperty()).and(Bindings.isEmpty(messTxtBox.textProperty()))).or(Bindings.createBooleanBinding(() ->"Play audio".equals(actionDD1.getSelectionModel().getSelectedItem()), actionDD1.getSelectionModel().selectedItemProperty()).and(labelAudioSelected.visibleProperty().not())));
+       
         //inizialization of the combo boxes for the time selection (TECHNICAL DEBT!)
         for (int i = 0; i <= 23; i++) {
             if(i<10)
@@ -242,19 +239,16 @@ public class FXMLDocumentController implements Initializable {
     * Metodo che inizializza le tabelle delle regole, in modo da renderle visibili nell'applicazione. 
     */
     private void inizializeTables(){
-        allRulesIDClm.setCellValueFactory(new PropertyValueFactory("ID"));
         allRulesNameClm.setCellValueFactory(new PropertyValueFactory("name"));
         allRulesTrigClm.setCellValueFactory(new PropertyValueFactory("trigger"));
         allRulesActClm.setCellValueFactory(new PropertyValueFactory("action"));
         allRulesTable.setItems(allRulesList);
         
-        activeRulesIDClm.setCellValueFactory(new PropertyValueFactory("ID"));
         activeRulesNameClm.setCellValueFactory(new PropertyValueFactory("name"));
         activeRulesTrigClm.setCellValueFactory(new PropertyValueFactory("trigger"));
         activeRulesActClm.setCellValueFactory(new PropertyValueFactory("action"));
         activeRulesTable.setItems(activeRulesList);
         
-        inactRulesIDClm.setCellValueFactory(new PropertyValueFactory("ID"));
         inactRulesNameClm.setCellValueFactory(new PropertyValueFactory("name"));
         inactRulesTrigClm.setCellValueFactory(new PropertyValueFactory("trigger"));
         inactRulesActClm.setCellValueFactory(new PropertyValueFactory("action"));
@@ -297,6 +291,8 @@ public class FXMLDocumentController implements Initializable {
         selectHour= 0;
         selectMinute=0;
         fileAudio= "";
+        labelAudioSelected.visibleProperty().set(false);
+
     }
 
     /**
@@ -312,6 +308,9 @@ public class FXMLDocumentController implements Initializable {
         FileChooser.ExtensionFilter filter= new FileChooser.ExtensionFilter ("File Audio WAV (*.wav)", "*.wav");
         fileChooser.getExtensionFilters().add(filter);
         fileAudio = fileChooser.showOpenDialog(selectAudioBtn.getScene().getWindow()).getAbsolutePath();
+        if(!fileAudio.isEmpty()){
+            labelAudioSelected.visibleProperty().set(true);
+        }
     }
 
     /**
