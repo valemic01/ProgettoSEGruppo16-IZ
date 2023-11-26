@@ -230,7 +230,7 @@ public class FXMLDocumentController implements Initializable {
         }
  
         allRulesList.addAll(importedRules);
-        
+        System.out.println("Lista importata dal backup:" + allRulesList);
         for(Rule r : allRulesList){
             if(r.getActive())
                 activeRulesList.add(r);
@@ -288,6 +288,9 @@ public class FXMLDocumentController implements Initializable {
         trigg_actTab.getSelectionModel().select(triggerTab);
         ruleCreatePane.setVisible(false);
         ruleListPane.setVisible(true);
+        selectHour= 0;
+        selectMinute=0;
+        fileAudio= "";
     }
 
     //open a window to select the audio fil and create the respective action
