@@ -52,9 +52,9 @@
                               <TableView fx:id="activeRulesTable" prefHeight="383.0" prefWidth="804.0">
                                  <columns>
                                     <TableColumn fx:id="activeRulesIDClm" prefWidth="69.0" text="ID" />
-                                    <TableColumn fx:id="activeRulesNameClm" prefWidth="215.0" text="Nome" />
+                                    <TableColumn fx:id="activeRulesNameClm" prefWidth="215.0" text="Name" />
                                     <TableColumn fx:id="activeRulesTrigClm" minWidth="0.0" prefWidth="267.0" text="Trigger" />
-                                    <TableColumn fx:id="activeRulesActClm" prefWidth="252.0" text="Azione" />
+                                    <TableColumn fx:id="activeRulesActClm" prefWidth="252.0" text="Action" />
                                  </columns>
                                  <contextMenu>
                                     <ContextMenu>
