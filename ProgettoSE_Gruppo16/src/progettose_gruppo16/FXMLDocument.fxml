@@ -160,6 +160,7 @@
                                  </children>
                               </AnchorPane>
                               <Button layoutX="29.0" layoutY="428.0" mnemonicParsing="false" onAction="#toTrigger" prefHeight="31.0" prefWidth="80.0" text="Back" />
+                              <Label fx:id="notValidName" layoutX="516.0" layoutY="353.0" prefHeight="21.0" prefWidth="177.0" text="This name already exists." textFill="#e40808" visible="false" />
                            </children>
                         </AnchorPane>
                      </content>

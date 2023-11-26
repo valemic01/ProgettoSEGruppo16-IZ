@@ -122,6 +122,8 @@ public class FXMLDocumentController implements Initializable {
     private Tab actionTab;
     @FXML
     private Label labelAudioSelected;
+    @FXML
+    private Label notValidName;
     
     private ObservableList<Rule> allRulesList; //observable list of all rules, created to manage the respective TableView
     private ObservableList<Rule> activeRulesList; //observable list of active rules, created to manage the respective TableView
@@ -185,7 +187,7 @@ public class FXMLDocumentController implements Initializable {
         
         //binding to disable the add rule button if the rule name, the action or the trigger are not selected
         addRuleBtn.disableProperty().bind(Bindings.isEmpty(ruleNameTxtBox.textProperty()).or(Bindings.isNull(trigDD1.valueProperty())).or(Bindings.isNull(actionDD1.valueProperty())).or(Bindings.createBooleanBinding(() ->"Show message".equals(actionDD1.getSelectionModel().getSelectedItem()), actionDD1.getSelectionModel().selectedItemProperty()).and(Bindings.isEmpty(messTxtBox.textProperty()))).or(Bindings.createBooleanBinding(() ->"Play audio".equals(actionDD1.getSelectionModel().getSelectedItem()), actionDD1.getSelectionModel().selectedItemProperty()).and(labelAudioSelected.visibleProperty().not())));
-       
+                
         //inizialization of the combo boxes for the time selection (TECHNICAL DEBT!)
         for (int i = 0; i <= 23; i++) {
             if(i<10)
@@ -291,7 +293,8 @@ public class FXMLDocumentController implements Initializable {
         selectHour= 0;
         selectMinute=0;
         fileAudio= "";
-        labelAudioSelected.visibleProperty().set(false);
+        labelAudioSelected.setVisible(false);
+        notValidName.setVisible(false);
 
     }
 
@@ -328,30 +331,31 @@ public class FXMLDocumentController implements Initializable {
         trigger = timeOfDay;
         
         if("Play audio".equals(actionDD1.getSelectionModel().getSelectedItem())){
-            if(fileAudio.isEmpty())
-                return;
             action = new PlayAudioAction(fileAudio);
         }
             
         if("Show message".equals(actionDD1.getSelectionModel().getSelectedItem())){
-            messageToShow = messTxtBox.getText();
-            if(messageToShow.isEmpty())
-                 return;          
+            messageToShow = messTxtBox.getText();        
             action = new ShowMessageAction(messageToShow);
         }
-        
-        
+              
         if(repetableCB.isSelected()){
             hours = String.valueOf(Integer.parseInt(slepPerDays.getText())*24 + Integer.parseInt(slepPerHours.getText()));
             sleepingPeriod = Time.valueOf(hours + ":" + slepPerMins.getText() + ":00");
         }
         
         Rule rule = new Rule(name, trigger, action, repetableCB.isSelected(), sleepingPeriod);
+        for(Rule r: allRulesList){
+            if(r.getName().equals(rule.getName())){
+                notValidName.setVisible(true);
+                return;
+            }
+        }
+  
         allRulesList.add(rule);
-        activeRulesList.add(rule);        
+        activeRulesList.add(rule);
         goBack(null);
-        
-        saveRules();
+        saveRules();   
     }
     
     /**
