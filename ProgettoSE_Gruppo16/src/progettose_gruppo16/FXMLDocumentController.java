@@ -319,7 +319,7 @@ public class FXMLDocumentController implements Initializable {
     /**
      * Metodo che consente di aggiungere una regola all'interno della lista delle regole,
      * memorizzando il trigger e l'azione definita dall'utente.
-     * Controlla che tutti i campi siano stati riempiti correttamente.
+     * Controlla che tutti i campi siano stati riempiti correttamente e che i nomi assegnati alle regole siano identificatori univoci.
      * @param event 
      */
     @FXML
