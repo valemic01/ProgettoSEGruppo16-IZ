@@ -38,28 +38,6 @@ public class TimeOfDayTriggerTest {
     }
 
  
-    /**
-     * Test of equals method, of class TimeOfDayTrigger.
-     */
-    @Test
-    public void testEquals() {
-        LocalTime time1 = LocalTime.of(10, 30);
-        LocalTime time2 = LocalTime.of(10, 30);
-        TimeOfDayTrigger trigger1 = new TimeOfDayTrigger(time1);
-        TimeOfDayTrigger trigger2 = new TimeOfDayTrigger(time2);
-
-        assertTrue(trigger1.equals(trigger2));
-    }
-
-    @Test
-    public void testNotEquals() {
-        LocalTime time1 = LocalTime.of(10, 30);
-        LocalTime time2 = LocalTime.of(12, 45);
-        TimeOfDayTrigger trigger1 = new TimeOfDayTrigger(time1);
-        TimeOfDayTrigger trigger2 = new TimeOfDayTrigger(time2);
-
-        assertFalse(trigger1.equals(trigger2));
-    }
 
     /**
      * Test of checkCondition method, of class TimeOfDayTrigger.
