@@ -65,11 +65,19 @@ public class TimeOfDayTriggerTest {
      * Test of checkCondition method, of class TimeOfDayTrigger.
      */
     @Test
-    public void testCheckCondition() {
+    public void testCheckCondition1() {
         LocalTime currentTime = LocalTime.now();
         TimeOfDayTrigger trigger = new TimeOfDayTrigger(currentTime);
 
         assertTrue(trigger.checkCondition());
+    }
+    
+    @Test
+    public void testCheckCondition2() {
+        LocalTime currentTime = LocalTime.of(0, 0);
+        TimeOfDayTrigger trigger = new TimeOfDayTrigger(currentTime);
+
+        assertFalse(trigger.checkCondition());
     }
 
     
