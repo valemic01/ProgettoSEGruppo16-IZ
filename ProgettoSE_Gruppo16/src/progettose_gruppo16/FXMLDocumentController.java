@@ -176,7 +176,11 @@ public class FXMLDocumentController implements Initializable {
         trigDD1.getItems().add("Time of day");
         actionDD1.getItems().add("Show message");
         actionDD1.getItems().add("Play audio");
-        
+        actionDD1.getItems().add("Move file");
+        actionDD1.getItems().add("Delete file");
+        actionDD1.getItems().add("Copy file");
+        actionDD1.getItems().add("Add text to file");
+
         //bindings to show the trigger/action settings when selected
         trigTimeOfDay.visibleProperty().bind(Bindings.createBooleanBinding(() ->"Time of day".equals(trigDD1.getSelectionModel().getSelectedItem()),trigDD1.getSelectionModel().selectedItemProperty()));
         messTxtBox.visibleProperty().bind(Bindings.createBooleanBinding(() ->"Show message".equals(actionDD1.getSelectionModel().getSelectedItem()),actionDD1.getSelectionModel().selectedItemProperty()));
@@ -187,7 +191,8 @@ public class FXMLDocumentController implements Initializable {
         
         //binding to disable the add rule button if the rule name, the action or the trigger are not selected
         addRuleBtn.disableProperty().bind(Bindings.isEmpty(ruleNameTxtBox.textProperty()).or(Bindings.isNull(trigDD1.valueProperty())).or(Bindings.isNull(actionDD1.valueProperty())).or(Bindings.createBooleanBinding(() ->"Show message".equals(actionDD1.getSelectionModel().getSelectedItem()), actionDD1.getSelectionModel().selectedItemProperty()).and(Bindings.isEmpty(messTxtBox.textProperty()))).or(Bindings.createBooleanBinding(() ->"Play audio".equals(actionDD1.getSelectionModel().getSelectedItem()), actionDD1.getSelectionModel().selectedItemProperty()).and(labelAudioSelected.visibleProperty().not())));
-                
+        labelAudioSelected.visibleProperty().bind(actionDD1.getSelectionModel().selectedItemProperty().isEqualTo("Play audio"));          
+
         //inizialization of the combo boxes for the time selection (TECHNICAL DEBT!)
         for (int i = 0; i <= 23; i++) {
             if(i<10)
@@ -293,9 +298,8 @@ public class FXMLDocumentController implements Initializable {
         selectHour= 0;
         selectMinute=0;
         fileAudio= "";
-        labelAudioSelected.setVisible(false);
+        labelAudioSelected.textProperty().set("");
         notValidName.setVisible(false);
-
     }
 
     /**
@@ -304,15 +308,16 @@ public class FXMLDocumentController implements Initializable {
      */
     @FXML
     private void chooseAudio(ActionEvent event) {
-        
         fileChooser = new FileChooser();
         PlayAudioAction play = null;
+        String filename;
         
         FileChooser.ExtensionFilter filter= new FileChooser.ExtensionFilter ("File Audio WAV (*.wav)", "*.wav");
         fileChooser.getExtensionFilters().add(filter);
         fileAudio = fileChooser.showOpenDialog(selectAudioBtn.getScene().getWindow()).getAbsolutePath();
         if(!fileAudio.isEmpty()){
-            labelAudioSelected.visibleProperty().set(true);
+            filename = fileAudio.substring(fileAudio.lastIndexOf('\\')+1);
+            labelAudioSelected.textProperty().set("Selected audio: " + filename);
         }
     }
 
