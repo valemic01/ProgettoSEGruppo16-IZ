@@ -5,6 +5,8 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 /**
  *  Classe che implementa l'interfaccia Action che permette di mostrare un messaggio
@@ -30,10 +32,13 @@ public class ShowMessageAction implements Action{
      *  Questo è necessario poiché ogni interazione con l'interfaccia deve avvenire attraverso l'Application Thread.
      */
     @Override
-    public void executeAction() {        
+    public void executeAction() {    
+     
         Platform.runLater(() -> {
             Alert dialogBox = new Alert(AlertType.NONE, message, ButtonType.OK);
-            dialogBox.setTitle("Notification");
+            Stage stage = (Stage) dialogBox.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("messageAlert.png")));
+            dialogBox.setTitle(" REMINDER");
             dialogBox.show();
         });
     }
