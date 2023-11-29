@@ -17,7 +17,7 @@
 
 <StackPane onMouseClicked="#deselect" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="progettose_gruppo16.FXMLDocumentController">
    <children>
-      <AnchorPane fx:id="ruleListPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="826.0" visible="false">
+      <AnchorPane fx:id="ruleListPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="826.0">
          <children>
             <TabPane layoutX="14.0" layoutY="14.0" onMouseClicked="#deselect" prefHeight="421.0" prefWidth="804.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="246.0">
                <tabs>
@@ -104,7 +104,7 @@
             </Button>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="ruleCreatePane" prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane fx:id="ruleCreatePane" prefHeight="200.0" prefWidth="200.0" visible="false">
          <children>
             <TabPane fx:id="trigg_actTab" prefHeight="529.0" prefWidth="826.0" tabClosingPolicy="UNAVAILABLE" tabMaxWidth="500.0" tabMinWidth="388.0">
                <tabs>
