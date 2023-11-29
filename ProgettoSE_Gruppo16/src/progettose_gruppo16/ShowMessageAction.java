@@ -1,6 +1,5 @@
 package progettose_gruppo16;
 
-import java.io.Serializable;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -41,6 +40,7 @@ public class ShowMessageAction implements Action{
             dialogBox.setTitle(" REMINDER");
             dialogBox.show();
         });
+        
     }
 
     @Override

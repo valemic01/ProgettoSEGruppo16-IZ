@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXML.java to edit this template
- */
 package progettose_gruppo16;
 
 import javafx.application.Application;
@@ -12,14 +8,14 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
- *Classe principale che lancia l'applicazione.
+ *  Classe principale che lancia l'applicazione.
  * @author valentina <your.name at your.org>
  */
 public class ProgettoSE_Gruppo16 extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLRuleTable.fxml"));
         
         Scene scene = new Scene(root);
         stage.setTitle(" IFTTT ");
