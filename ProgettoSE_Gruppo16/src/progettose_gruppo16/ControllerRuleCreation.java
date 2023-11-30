@@ -48,12 +48,6 @@ public class ControllerRuleCreation implements Initializable {
     @FXML
     private ComboBox<String> actionDD1;
     @FXML
-    private TextField messTxtBox;
-    @FXML
-    private Button selectAudioBtn;
-    @FXML
-    private Label labelAudioSelected;
-    @FXML
     private Button addRuleBtn;
     @FXML
     private CheckBox repetableCB;
@@ -69,6 +63,8 @@ public class ControllerRuleCreation implements Initializable {
     private TextField ruleNameTxtBox;
     @FXML
     private Label notValidName;
+    @FXML
+    private AnchorPane actionPane;
     
     private TimeOfDayTrigger timeOfDay;
     private int selectHour, selectMinute;
@@ -77,13 +73,16 @@ public class ControllerRuleCreation implements Initializable {
     private Time sleepingPeriod;
     private String fileAudio;
     private String messageToShow;
-    private Action action;
-    
-    private RulesManager ruleManager;
-    
-    private ObservableList<Rule> allRulesList; //observable list of all rules, created to manage the respective TableView
-    
-    private Stage stage;
+    private Action action;   
+    private RulesManager ruleManager;   
+    private ObservableList<Rule> allRulesList; //observable list of all rules, created to manage the respective TableView  
+    private Stage stage; 
+    private HandlerShowMessageAction h1 = new HandlerShowMessageAction();
+    private HandlerPlayAudioAction h2 = new HandlerPlayAudioAction();
+    private HandlerCopyFileAction h3 = new HandlerCopyFileAction();
+    private HandlerMoveFileAction h4 = new HandlerMoveFileAction();
+    private HandlerDeleteFileAction h5 = new HandlerDeleteFileAction();
+    private HandlerAppendStringToFileAction h6 = new HandlerAppendStringToFileAction();
 
     /**
      *  Inizializzazione delle componenti dell'interfaccia utente
@@ -109,15 +108,12 @@ public class ControllerRuleCreation implements Initializable {
         
         //bindings to show the trigger/action settings when selected
         trigTimeOfDay.visibleProperty().bind(Bindings.createBooleanBinding(() ->"Time of day".equals(trigDD1.getSelectionModel().getSelectedItem()),trigDD1.getSelectionModel().selectedItemProperty()));
-        messTxtBox.visibleProperty().bind(Bindings.createBooleanBinding(() ->"Show message".equals(actionDD1.getSelectionModel().getSelectedItem()),actionDD1.getSelectionModel().selectedItemProperty()));
-        selectAudioBtn.visibleProperty().bind(Bindings.createBooleanBinding(() ->"Play audio".equals(actionDD1.getSelectionModel().getSelectedItem()),actionDD1.getSelectionModel().selectedItemProperty()));
 
         //binding to show the sleeping period settings when the "Repetable" check box is selected
         sleepingPeriodPane.visibleProperty().bind(repetableCB.selectedProperty());
         
         //binding to disable the add rule button if the rule name, the action or the trigger are not selected
-        addRuleBtn.disableProperty().bind(Bindings.isEmpty(ruleNameTxtBox.textProperty()).or(Bindings.isNull(trigDD1.valueProperty())).or(Bindings.isNull(actionDD1.valueProperty())).or(Bindings.createBooleanBinding(() ->"Show message".equals(actionDD1.getSelectionModel().getSelectedItem()), actionDD1.getSelectionModel().selectedItemProperty()).and(Bindings.isEmpty(messTxtBox.textProperty()))).or(Bindings.createBooleanBinding(() ->"Play audio".equals(actionDD1.getSelectionModel().getSelectedItem()), actionDD1.getSelectionModel().selectedItemProperty()).and(labelAudioSelected.visibleProperty().not())));
-        labelAudioSelected.visibleProperty().bind(actionDD1.getSelectionModel().selectedItemProperty().isEqualTo("Play audio"));         
+        //addRuleBtn.disableProperty().bind(Bindings.isEmpty(ruleNameTxtBox.textProperty()).or(Bindings.isNull(trigDD1.valueProperty())).or(Bindings.isNull(actionDD1.valueProperty())).or(Bindings.createBooleanBinding(() ->"Show message".equals(actionDD1.getSelectionModel().getSelectedItem()), actionDD1.getSelectionModel().selectedItemProperty()).and(Bindings.isEmpty(messTxtBox.textProperty()))).or(Bindings.createBooleanBinding(() ->"Play audio".equals(actionDD1.getSelectionModel().getSelectedItem()), actionDD1.getSelectionModel().selectedItemProperty()).and(labelAudioSelected.visibleProperty().not())));
         
         //inizialization of the combo boxes for the time selection (TECHNICAL DEBT!)
         
@@ -185,25 +181,6 @@ public class ControllerRuleCreation implements Initializable {
     }
 
     /**
-     * Metodo che consente all'utente di selezionare il file da riprodurre come azione tramite filechooser.
-     * @param event 
-     */
-    @FXML
-    private void chooseAudio(ActionEvent event) {
-        
-        fileChooser = new FileChooser();
-        String filename;
-        
-        FileChooser.ExtensionFilter filter= new FileChooser.ExtensionFilter ("File Audio WAV (*.wav)", "*.wav");
-        fileChooser.getExtensionFilters().add(filter);
-        fileAudio = fileChooser.showOpenDialog(selectAudioBtn.getScene().getWindow()).getAbsolutePath();
-        if(!fileAudio.isEmpty()){
-            filename = fileAudio.substring(fileAudio.lastIndexOf('\\')+1);
-            labelAudioSelected.textProperty().set("Selected audio: " + filename);
-        }
-    }
-
-    /**
      * Metodo che recupera le informazioni necessarie per la creazione della regola e invoca il
      * corrispettivo metodo di RulesManager.
      * Controlla che tutti i campi siano stati riempiti correttamente e che i nomi assegnati alle regole siano identificatori univoci.
@@ -211,25 +188,21 @@ public class ControllerRuleCreation implements Initializable {
      */
     @FXML
     private void addRuleAction(ActionEvent event) throws IOException {
+        Action action;
         String hours;
         String name = ruleNameTxtBox.getText();
         LocalTime time = LocalTime.of(selectHour, selectMinute);
         timeOfDay = new TimeOfDayTrigger(time);
         trigger = timeOfDay;
-        
-        if("Play audio".equals(actionDD1.getSelectionModel().getSelectedItem())){
-            action = new PlayAudioAction(fileAudio);
-        }
-            
-        if("Show message".equals(actionDD1.getSelectionModel().getSelectedItem())){
-            messageToShow = messTxtBox.getText();        
-            action = new ShowMessageAction(messageToShow);
-        }
               
         if(repetableCB.isSelected()){
             hours = String.valueOf(Integer.parseInt(slepPerDays.getText())*24 + Integer.parseInt(slepPerHours.getText()));
             sleepingPeriod = Time.valueOf(hours + ":" + slepPerMins.getText() + ":00");
         }
+        
+        action = h1.handleBehaviour(actionPane);
+        if(action == null)
+            return;
         
         Rule rule = new Rule(name, trigger, action, repetableCB.isSelected(), sleepingPeriod);
         for(Rule r: allRulesList){
@@ -242,6 +215,16 @@ public class ControllerRuleCreation implements Initializable {
         ruleManager.addRule(rule);
         goBack(null);
         
+    }
+
+    @FXML
+    private void chooseAction(ActionEvent event) {
+        h1.setNext(h2);
+        h2.setNext(h3);
+        h3.setNext(h4);
+        h4.setNext(h5);
+        h5.setNext(h6);
+        h1.handleGUI(actionPane, actionDD1.getValue());
     }
     
 }
