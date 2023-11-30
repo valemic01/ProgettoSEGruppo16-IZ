@@ -1,0 +1,56 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package progettose_gruppo16;
+
+import javafx.scene.control.ComboBox;
+import javafx.scene.layout.AnchorPane;
+
+/**
+ *
+ * @author amost
+ */
+public class HandlerDayOfMonthTrigger extends BaseHandlerTrigger{
+    private ComboBox<String> dayOfMonthBox= new ComboBox();
+    
+    @Override
+    public void handleGUI(AnchorPane ap, String s){
+        if(s.equals("Day of month")){
+            ap.getChildren().clear();
+            ap.setId("DayOfMonthPane");
+        
+            ap.getChildren().add(dayOfMonthBox);
+            dayOfMonthBox.setLayoutX(100);
+            dayOfMonthBox.setLayoutY(0);
+            initializeCBMonth();
+            dayOfMonthBox.setValue("01");
+        }
+        else{
+            dayOfMonthBox.setValue("01");
+            super.handleGUI(ap, s);
+        }
+    }
+    
+    @Override 
+    public Trigger handleBehaviour(AnchorPane ap){     
+        if(ap.getId().equals("DayOfMonthPane")){  
+            
+            return new DayOfMonthTrigger(Integer.parseInt(dayOfMonthBox.getValue()));           
+        }else{
+            return super.handleBehaviour(ap);
+        }
+    }
+    
+    
+    private void initializeCBMonth(){
+        //inizialization of the combo boxes for the time selection (TECHNICAL DEBT!)
+        for (int i = 1; i <= 31; i++) {
+            if(i<10)
+                dayOfMonthBox.getItems().add("0"+String.valueOf(i));
+            else
+                dayOfMonthBox.getItems().add(String.valueOf(i));
+        }
+    }
+    
+}

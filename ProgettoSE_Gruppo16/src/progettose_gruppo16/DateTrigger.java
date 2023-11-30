@@ -22,5 +22,11 @@ public class DateTrigger implements Trigger{
     public boolean checkCondition() {
         return date.equals(LocalDate.now());
     }
+
+    @Override
+    public String toString() {
+        return "Date: " + date;
+    }
+    
     
 }

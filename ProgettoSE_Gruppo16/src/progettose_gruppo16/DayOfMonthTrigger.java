@@ -22,7 +22,9 @@ public class DayOfMonthTrigger implements Trigger{
     public boolean checkCondition() {
         return this.dayOfMonth == LocalDate.now().getDayOfMonth();
     }
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return "Day of month: " + String.format("%02d", dayOfMonth);
+    }
 }
