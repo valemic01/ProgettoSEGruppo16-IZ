@@ -26,7 +26,7 @@ public class BaseHandlerTrigger implements HandlerTrigger{
 
     @Override
     public Trigger handleBehaviour(AnchorPane ap) {
-        if(next != null) next.handleBehaviour(ap);
+        if(next != null) return next.handleBehaviour(ap);
         return null;
     }
     

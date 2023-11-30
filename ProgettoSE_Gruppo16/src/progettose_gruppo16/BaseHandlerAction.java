@@ -26,7 +26,7 @@ public class BaseHandlerAction implements HandlerAction{
 
     @Override
     public Action handleBehaviour(AnchorPane ap) {
-        if(next != null) next.handleBehaviour(ap);
+        if(next != null) return next.handleBehaviour(ap);
         return null;
     }
     

@@ -18,16 +18,10 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ComboBox fx:id="trigDD1" layoutX="90.0" layoutY="68.0" prefHeight="31.0" prefWidth="140.0" promptText="Trigger..." />
+                        <ComboBox fx:id="trigDD1" layoutX="90.0" layoutY="68.0" onAction="#chooseTrigger" prefHeight="31.0" prefWidth="140.0" promptText="Trigger..." />
                         <Button layoutX="773.0" layoutY="443.0" mnemonicParsing="false" onAction="#goBack" text="X" />
                         <Label layoutX="729.0" layoutY="448.0" text="Close" />
-                        <AnchorPane fx:id="trigTimeOfDay" layoutX="464.0" layoutY="69.0" prefHeight="21.0" prefWidth="344.0" visible="false">
-                           <children>
-                              <ComboBox fx:id="hoursDD1" layoutX="97.0" layoutY="4.0" onAction="#selectHour" prefHeight="28.0" prefWidth="75.0" promptText="00" />
-                              <Label layoutX="184.0" layoutY="-8.0" prefHeight="52.0" prefWidth="10.0" text=":" />
-                              <ComboBox fx:id="minsDD1" layoutX="194.0" layoutY="5.0" onAction="#selectMinute" prefHeight="28.0" prefWidth="75.0" promptText="00" />
-                           </children>
-                        </AnchorPane>
+                        <AnchorPane fx:id="triggerPane" layoutX="464.0" layoutY="62.0" prefHeight="45.0" prefWidth="344.0" />
                         <Button layoutX="372.0" layoutY="433.0" mnemonicParsing="false" onAction="#toAction" prefHeight="31.0" prefWidth="82.0" text="Next" />
                      </children>
                   </AnchorPane>

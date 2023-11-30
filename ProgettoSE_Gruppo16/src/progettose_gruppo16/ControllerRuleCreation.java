@@ -3,7 +3,6 @@ package progettose_gruppo16;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Time;
-import java.time.LocalTime;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
@@ -21,7 +20,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -37,12 +35,6 @@ public class ControllerRuleCreation implements Initializable {
     private Tab triggerTab;
     @FXML
     private ComboBox<String> trigDD1;
-    @FXML
-    private AnchorPane trigTimeOfDay;
-    @FXML
-    private ComboBox<String> hoursDD1;
-    @FXML
-    private ComboBox<String> minsDD1;
     @FXML
     private Tab actionTab;
     @FXML
@@ -65,24 +57,23 @@ public class ControllerRuleCreation implements Initializable {
     private Label notValidName;
     @FXML
     private AnchorPane actionPane;
-    
-    private TimeOfDayTrigger timeOfDay;
-    private int selectHour, selectMinute;
-    private FileChooser fileChooser;   
-    private Trigger trigger;
+      
     private Time sleepingPeriod;
-    private String fileAudio;
-    private String messageToShow;
-    private Action action;   
     private RulesManager ruleManager;   
     private ObservableList<Rule> allRulesList; //observable list of all rules, created to manage the respective TableView  
     private Stage stage; 
+    
     private HandlerShowMessageAction h1 = new HandlerShowMessageAction();
     private HandlerPlayAudioAction h2 = new HandlerPlayAudioAction();
     private HandlerCopyFileAction h3 = new HandlerCopyFileAction();
     private HandlerMoveFileAction h4 = new HandlerMoveFileAction();
     private HandlerDeleteFileAction h5 = new HandlerDeleteFileAction();
     private HandlerAppendStringToFileAction h6 = new HandlerAppendStringToFileAction();
+    private HandlerTimeOfDayTrigger h7 = new HandlerTimeOfDayTrigger();
+    private HandlerDayOfWeekTrigger h8 = new HandlerDayOfWeekTrigger();
+    
+    @FXML
+    private AnchorPane triggerPane;
 
     /**
      *  Inizializzazione delle componenti dell'interfaccia utente
@@ -97,8 +88,9 @@ public class ControllerRuleCreation implements Initializable {
         
         allRulesList = ruleManager.getAllRulesList();
         
-        //inizialization of the combo boxes for trigger and actions(TECHNICAL DEBT!)
+        //inizialization of the combo boxes for trigger and actions
         trigDD1.getItems().add("Time of day");
+        trigDD1.getItems().add("Day of the week");
         actionDD1.getItems().add("Show message");
         actionDD1.getItems().add("Play audio");
         actionDD1.getItems().add("Move file");
@@ -106,18 +98,20 @@ public class ControllerRuleCreation implements Initializable {
         actionDD1.getItems().add("Copy file");
         actionDD1.getItems().add("Add text to file");
         
-        //bindings to show the trigger/action settings when selected
-        trigTimeOfDay.visibleProperty().bind(Bindings.createBooleanBinding(() ->"Time of day".equals(trigDD1.getSelectionModel().getSelectedItem()),trigDD1.getSelectionModel().selectedItemProperty()));
-
         //binding to show the sleeping period settings when the "Repetable" check box is selected
         sleepingPeriodPane.visibleProperty().bind(repetableCB.selectedProperty());
         
         //binding to disable the add rule button if the rule name, the action or the trigger are not selected
-        //addRuleBtn.disableProperty().bind(Bindings.isEmpty(ruleNameTxtBox.textProperty()).or(Bindings.isNull(trigDD1.valueProperty())).or(Bindings.isNull(actionDD1.valueProperty())).or(Bindings.createBooleanBinding(() ->"Show message".equals(actionDD1.getSelectionModel().getSelectedItem()), actionDD1.getSelectionModel().selectedItemProperty()).and(Bindings.isEmpty(messTxtBox.textProperty()))).or(Bindings.createBooleanBinding(() ->"Play audio".equals(actionDD1.getSelectionModel().getSelectedItem()), actionDD1.getSelectionModel().selectedItemProperty()).and(labelAudioSelected.visibleProperty().not())));
+        addRuleBtn.disableProperty().bind(Bindings.isEmpty(ruleNameTxtBox.textProperty()).or(Bindings.isNull(trigDD1.valueProperty())).or(Bindings.isNull(actionDD1.valueProperty())));
         
-        //inizialization of the combo boxes for the time selection (TECHNICAL DEBT!)
+        //creation of the handlers chains
+        h1.setNext(h2);
+        h2.setNext(h3);
+        h3.setNext(h4);
+        h4.setNext(h5);
+        h5.setNext(h6);
         
-        
+        h7.setNext(h8);
     }    
 
     /**
@@ -137,31 +131,6 @@ public class ControllerRuleCreation implements Initializable {
         stage.show();
 
     }
-
-    //incorrect for sequence of action (TECHNICAL DEBT!)
-    /**
-     * Metodo che preleva l'ora selezionata dall'utente quando crea un TimeOfDayTrigger.
-     * @param event 
-     */
-    @FXML
-    private void selectHour(ActionEvent event) {
-        if(!hoursDD1.getSelectionModel().isEmpty()){
-            selectHour = Integer.parseInt(hoursDD1.getValue());
-        }
-    }
-
-    //incorrect for sequence of action (TECHNICAL DEBT!)
-     /**
-     * Metodo che preleva i minuti selezionati dall'utente quando crea un TimeOfDayTrigger.
-     * @param event 
-     */
-    @FXML
-    private void selectMinute(ActionEvent event) {
-        if(!minsDD1.getSelectionModel().isEmpty()){
-            selectMinute = Integer.parseInt(minsDD1.getValue());
-        }
-    }
-
     /**
      * Metodo che consente di passare dalla schermata dei trigger a quella delle azioni.
      * @param event 
@@ -189,22 +158,28 @@ public class ControllerRuleCreation implements Initializable {
     @FXML
     private void addRuleAction(ActionEvent event) throws IOException {
         Action action;
+        Trigger trigger;
+        
         String hours;
         String name = ruleNameTxtBox.getText();
-        LocalTime time = LocalTime.of(selectHour, selectMinute);
-        timeOfDay = new TimeOfDayTrigger(time);
-        trigger = timeOfDay;
               
         if(repetableCB.isSelected()){
             hours = String.valueOf(Integer.parseInt(slepPerDays.getText())*24 + Integer.parseInt(slepPerHours.getText()));
             sleepingPeriod = Time.valueOf(hours + ":" + slepPerMins.getText() + ":00");
         }
         
+        //get che selected trigger from the trigger handlers chain
+        trigger = h7.handleBehaviour(triggerPane);
+        
+        //get che selected action from the action handlers chain
         action = h1.handleBehaviour(actionPane);
+        
         if(action == null)
             return;
         
         Rule rule = new Rule(name, trigger, action, repetableCB.isSelected(), sleepingPeriod);
+        
+        //check if the rule name is valid (not already existing)
         for(Rule r: allRulesList){
             if(r.getName().equals(rule.getName())){
                 notValidName.setVisible(true);
@@ -219,12 +194,12 @@ public class ControllerRuleCreation implements Initializable {
 
     @FXML
     private void chooseAction(ActionEvent event) {
-        h1.setNext(h2);
-        h2.setNext(h3);
-        h3.setNext(h4);
-        h4.setNext(h5);
-        h5.setNext(h6);
         h1.handleGUI(actionPane, actionDD1.getValue());
+    }
+
+    @FXML
+    private void chooseTrigger(ActionEvent event) {
+        h7.handleGUI(triggerPane, trigDD1.getValue());
     }
     
 }
