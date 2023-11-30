@@ -4,7 +4,8 @@
  */
 package progettose_gruppo16;
 
-import java.time.LocalTime;
+import java.time.LocalDate;
+import java.time.MonthDay;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -16,9 +17,9 @@ import static org.junit.Assert.*;
  *
  * @author amost
  */
-public class TimeOfDayTriggerTest {
+public class DayOfMonthTriggerTest {
     
-    public TimeOfDayTriggerTest() {
+    public DayOfMonthTriggerTest() {
     }
     
     @BeforeClass
@@ -37,27 +38,19 @@ public class TimeOfDayTriggerTest {
     public void tearDown() {
     }
 
- 
-
-    /**
-     * Test of checkCondition method, of class TimeOfDayTrigger.
-     */
     @Test
     public void testCheckCondition1() {
-        LocalTime currentTime = LocalTime.now();
-        TimeOfDayTrigger trigger = new TimeOfDayTrigger(currentTime);
+        
+        DayOfMonthTrigger trigger = new DayOfMonthTrigger(LocalDate.now().getDayOfMonth());
 
         assertTrue(trigger.checkCondition());
     }
     
     @Test
     public void testCheckCondition2() {
-        LocalTime currentTime = LocalTime.of(0, 0);
-        TimeOfDayTrigger trigger = new TimeOfDayTrigger(currentTime);
-
+        
+        DayOfMonthTrigger trigger = new DayOfMonthTrigger(1);
         assertFalse(trigger.checkCondition());
     }
-
-    
     
 }

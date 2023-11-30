@@ -4,6 +4,8 @@
  */
 package progettose_gruppo16;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -16,9 +18,9 @@ import static org.junit.Assert.*;
  *
  * @author amost
  */
-public class TimeOfDayTriggerTest {
+public class DayOfWeekTriggerTest {
     
-    public TimeOfDayTriggerTest() {
+    public DayOfWeekTriggerTest() {
     }
     
     @BeforeClass
@@ -37,27 +39,22 @@ public class TimeOfDayTriggerTest {
     public void tearDown() {
     }
 
- 
 
     /**
-     * Test of checkCondition method, of class TimeOfDayTrigger.
+     * Test of checkCondition method, of class DayOfWeekTrigger.
      */
     @Test
     public void testCheckCondition1() {
-        LocalTime currentTime = LocalTime.now();
-        TimeOfDayTrigger trigger = new TimeOfDayTrigger(currentTime);
+        DayOfWeekTrigger trigger = new DayOfWeekTrigger(LocalDate.now().getDayOfWeek());
 
         assertTrue(trigger.checkCondition());
     }
     
     @Test
     public void testCheckCondition2() {
-        LocalTime currentTime = LocalTime.of(0, 0);
-        TimeOfDayTrigger trigger = new TimeOfDayTrigger(currentTime);
+        DayOfWeekTrigger trigger = new DayOfWeekTrigger(DayOfWeek.SUNDAY);
 
         assertFalse(trigger.checkCondition());
     }
-
-    
     
 }
