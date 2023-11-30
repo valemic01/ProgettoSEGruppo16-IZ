@@ -120,19 +120,7 @@ public class ControllerRuleCreation implements Initializable {
         labelAudioSelected.visibleProperty().bind(actionDD1.getSelectionModel().selectedItemProperty().isEqualTo("Play audio"));         
         
         //inizialization of the combo boxes for the time selection (TECHNICAL DEBT!)
-        for (int i = 0; i <= 23; i++) {
-            if(i<10)
-                hoursDD1.getItems().add("0"+String.valueOf(i));
-            else
-                hoursDD1.getItems().add(String.valueOf(i));
-        }
- 
-        for (int i = 0; i <= 59; i++) {
-            if(i<10)
-                minsDD1.getItems().add("0"+String.valueOf(i));
-            else
-                minsDD1.getItems().add(String.valueOf(i));
-        }
+        
         
     }    
 

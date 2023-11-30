@@ -10,6 +10,9 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author raffa
  */
-public interface Handler {
-    public void handleGUI(AnchorPane ap, String s);
+public interface HandlerAction extends Handler{
+    
+    public void setNext(HandlerAction h);
+    public Action handleBehaviour(AnchorPane ap);
+    
 }
