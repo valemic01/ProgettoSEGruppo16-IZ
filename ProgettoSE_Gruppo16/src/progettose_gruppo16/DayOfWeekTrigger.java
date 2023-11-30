@@ -26,8 +26,10 @@ public class DayOfWeekTrigger implements Trigger {
     public boolean checkCondition() {
         return this.dayOfWeek == LocalDate.now().getDayOfWeek();
     }
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return "Day of the week: " + dayOfWeek.toString().charAt(0)+dayOfWeek.toString().toLowerCase().substring(1);
+    }
     
 }
