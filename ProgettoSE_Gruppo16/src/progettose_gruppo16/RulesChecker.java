@@ -1,5 +1,7 @@
 package progettose_gruppo16;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.ObservableList;
@@ -11,6 +13,7 @@ public class RulesChecker implements Runnable{
     
     private ObservableList<Rule> rules;
     private final int waitTime = 5;
+    private List<Rule> rulesList;
 
     /**
      *  Costruttore
@@ -18,21 +21,23 @@ public class RulesChecker implements Runnable{
      */
     public RulesChecker(ObservableList<Rule> rules) {
         this.rules = rules;
+        rulesList = new ArrayList<>();
     }
 
     /**
      * Metodo run implementato dall'interfaccia Runnable
-     * Acquisisce il mutex sulla tabella delle regole, in modo che non possa essere modificata durante il controllo,
-     * e poi la scorre per verificare tutte le condizioni e, eventualmente, eseguire le azioni.
+     * Si salva l'istanza attuale della tabella delle regole attive e le controlla.
      * Poi, si mette in attesa per il tempo specificato
      */
     @Override
     public void run() {
         
         while(!Thread.currentThread().isInterrupted()){
-                synchronized(rules){
-                    for(Rule r : rules)
-                    r.evaluate();
+            rulesList.clear();
+            rulesList.addAll(rules);
+                synchronized(rulesList){
+                    for(Rule r : rulesList)
+                        r.evaluate();
                 }
                 try{
                     Thread.sleep(waitTime*1000);

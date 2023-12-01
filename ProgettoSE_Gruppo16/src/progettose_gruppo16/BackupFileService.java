@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package progettose_gruppo16;
 
 import java.io.BufferedOutputStream;
@@ -14,15 +10,14 @@ import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
 /**
- *Classe che realizza il salvataggio delle regole su un file predefinito nel controller.
- * @author valentina <your.name at your.org>
+ *  Classe che realizza il salvataggio delle regole su un file predefinito nel controller.
  */
 public class BackupFileService extends Service<ObservableList<Rule>>{
     private List<Rule> rulesList = new ArrayList();
     private String backupFile;
 
     /**
-     *Costruttore 
+     *  Costruttore 
      * @param rulesList lista delle regole attualmente presenti nell'applicazione
      * @param backupFile file di backup predefinito nel controller (non scelto dall'utente)
      */
@@ -32,7 +27,7 @@ public class BackupFileService extends Service<ObservableList<Rule>>{
     }
     
     /**
-     *Creazione di un task che si occupa di scrivere sul file la lista delle regole ricevute dal controller.
+     *  Creazione di un task che si occupa di scrivere sul file la lista delle regole ricevute dal controller.
      * @return
      */
     @Override
@@ -47,6 +42,7 @@ public class BackupFileService extends Service<ObservableList<Rule>>{
                     }finally{
                         oos.close();
                     }                    
+                    System.out.println(rulesList);
                 return (ObservableList<Rule>) rulesList;
             }
             

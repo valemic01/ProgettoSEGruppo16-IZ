@@ -172,7 +172,7 @@ public class ControllerRuleTable implements Initializable {
         
         Rule rule = allRulesTable.getSelectionModel().getSelectedItem();
         
-        if(rule != null && rule.getActive())
+        if(rule != null && rule.isActive())
             activeRuleContextMenu1.setText("Disable Rule");
         else
             activeRuleContextMenu1.setText("Activate Rule");

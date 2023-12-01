@@ -80,7 +80,7 @@ public class RulesManager {
  
         allRulesList.addAll(importedRules);
         for(Rule r : allRulesList){
-            if(r.getActive())
+            if(r.isActive())
                 activeRulesList.add(r);
             else
                 inactRulesList.add(r);
@@ -107,7 +107,7 @@ public class RulesManager {
         if(r == null)
             return;
         
-        if(r.getActive())
+        if(r.isActive())
             activeRulesList.remove(r);
         else
             inactRulesList.remove(r);
@@ -127,7 +127,7 @@ public class RulesManager {
         if(r == null)
             return;
 
-        if(r.getActive())
+        if(r.isActive())
             this.inactivateRule(r);
         else
             this.activateRule(r);
@@ -139,7 +139,7 @@ public class RulesManager {
      * di disattivare una regola dalla tabella delle regole attive.
      * @param r -> la regola che l'utente vuole disattivare
      */
-    private void inactivateRule(Rule r) {
+    public void inactivateRule(Rule r) {
 
         activeRulesList.remove(r);
         inactRulesList.add(r);
@@ -153,11 +153,13 @@ public class RulesManager {
      * di attivare una regola dalla tabella delle regole disattivate.
      * @param r -> la regola che l'utente vuole attivare
      */
-    private void activateRule(Rule r) {
+    public void activateRule(Rule r) {
       
         inactRulesList.remove(r);
         activeRulesList.add(r);
         r.setActive(true);
+        if(r instanceof RepeatableRule)
+            ((RepeatableRule) r).setFireable(true);
         
         saveRules();
     }
@@ -172,6 +174,23 @@ public class RulesManager {
         allRulesList.add(r);
         activeRulesList.add(r);
         saveRules(); 
+        
+    }
+    
+    /**
+     * Metodo per cambiare il valore del parametro fireable delle regole ripetibili.
+     * Quando una regola ripetibile viene attivata, fireable viene settato a false.
+     * Quando lo sleeping period termina, fireable viene settato a true.
+     * @param r 
+     */
+    public void changeFireable(RepeatableRule r){
+        
+        if(r.isFireable())
+            r.setFireable(false);
+        else
+            r.setFireable(true);
+        
+        saveRules();
         
     }
 

@@ -3,6 +3,7 @@ package progettose_gruppo16;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
@@ -55,6 +56,8 @@ public class ControllerRuleCreation implements Initializable {
     private TextField ruleNameTxtBox;
     @FXML
     private Label notValidName;
+    @FXML
+    private Label notValidSleep;
     @FXML
     private AnchorPane actionPane;
       
@@ -157,16 +160,15 @@ public class ControllerRuleCreation implements Initializable {
      */
     @FXML
     private void addRuleAction(ActionEvent event) throws IOException {
+        
+        Rule rule;
         Action action;
         Trigger trigger;
         
-        String hours;
         String name = ruleNameTxtBox.getText();
-              
-        if(repetableCB.isSelected()){
-            hours = String.valueOf(Integer.parseInt(slepPerDays.getText())*24 + Integer.parseInt(slepPerHours.getText()));
-            sleepingPeriod = Time.valueOf(hours + ":" + slepPerMins.getText() + ":00");
-        }
+        
+        LocalTime sleepPeriod;
+        int days;
         
         //get che selected trigger from the trigger handlers chain
         trigger = h7.handleBehaviour(triggerPane);
@@ -177,8 +179,18 @@ public class ControllerRuleCreation implements Initializable {
         if(action == null)
             return;
         
-        Rule rule = new Rule(name, trigger, action, repetableCB.isSelected(), sleepingPeriod);
-        
+        if(repetableCB.isSelected()){
+            if(!slepPerHours.getText().matches("^(0?\\d|1\\d|2[0-3])$") || !slepPerMins.getText().matches("^(0?[0-9]|[1-5][0-9])$") || !slepPerDays.getText().matches("\\d*")){
+                notValidSleep.setVisible(true);
+                return;
+            }else{
+                sleepPeriod = LocalTime.of(Integer.parseInt(slepPerHours.getText()), Integer.parseInt(slepPerMins.getText()));
+                days = Integer.parseInt(slepPerDays.getText());
+                rule = new RepeatableRule(name, trigger, action, days, sleepPeriod);
+            } 
+        }else
+            rule = new OneTimeRule(name, trigger, action);
+                
         //check if the rule name is valid (not already existing)
         for(Rule r: allRulesList){
             if(r.getName().equals(rule.getName())){
