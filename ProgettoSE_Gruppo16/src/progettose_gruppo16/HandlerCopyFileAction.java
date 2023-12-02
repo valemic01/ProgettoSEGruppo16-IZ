@@ -4,6 +4,8 @@
  */
 package progettose_gruppo16;
 
+import java.io.File;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -17,8 +19,10 @@ import javafx.stage.FileChooser;
 public class HandlerCopyFileAction extends BaseHandlerAction{
     private Label labelSourceFile = new Label();
     private Button selectSourceFile = new Button();
+    private Label selectedFile = new Label();
     private Label labelDestinationFile = new Label();
     private Button selectDestinationFile = new Button();
+    private Label selectedDestination = new Label();
     private String sourcePath;
     private String destinationPath;
     
@@ -26,30 +30,46 @@ public class HandlerCopyFileAction extends BaseHandlerAction{
     public void handleGUI(AnchorPane ap, String s, Button btn){ 
         if(s.equals("Copy file")){
             ap.getChildren().clear();
+            sourcePath = "";
+            destinationPath = "";
             ap.setId("CopyFilePane");
             
             labelSourceFile.setText("File to copy");
             ap.getChildren().add(labelSourceFile);
-            labelSourceFile.setLayoutX(118);
-            labelSourceFile.setLayoutY(14);
+            labelSourceFile.setLayoutX(158);
+            labelSourceFile.setLayoutY(37);
             
             selectSourceFile.setText("Select file");
             ap.getChildren().add(selectSourceFile);
-            selectSourceFile.setLayoutX(103);
-            selectSourceFile.setLayoutY(41);
-
+            selectSourceFile.setLayoutX(156);
+            selectSourceFile.setLayoutY(67);
+            
+            selectedFile.setText("");
+            ap.getChildren().add(selectedFile);
+            selectedFile.setLayoutX(0);
+            selectedFile.setLayoutY(106);
+            selectedFile.setPrefWidth(400);
+            selectedFile.setAlignment(Pos.CENTER);
+            
             labelDestinationFile.setText("Where you want to copy the file");
             ap.getChildren().add(labelDestinationFile);
-            labelDestinationFile.setLayoutX(118);
-            labelDestinationFile.setLayoutY(103);
+            labelDestinationFile.setLayoutX(91);
+            labelDestinationFile.setLayoutY(146);
             
-            selectDestinationFile.setText("Select file");
+            selectDestinationFile.setText("Select destination");
             ap.getChildren().add(selectDestinationFile);
-            selectDestinationFile.setLayoutX(103);
-            selectDestinationFile.setLayoutY(130);
+            selectDestinationFile.setLayoutX(131);
+            selectDestinationFile.setLayoutY(176);
             
-            selectSourceFile.setOnAction(event -> sourcePath = chooseFile(labelSourceFile));
-            selectDestinationFile.setOnAction(event -> destinationPath = chooseDirectory(labelDestinationFile));
+            selectedDestination.setText("");
+            ap.getChildren().add(selectedDestination);
+            selectedDestination.setLayoutX(0);
+            selectedDestination.setLayoutY(218);
+            selectedDestination.setPrefWidth(400);
+            selectedDestination.setAlignment(Pos.CENTER);
+            
+            selectSourceFile.setOnAction(event -> sourcePath = chooseFile(selectedFile));
+            selectDestinationFile.setOnAction(event -> destinationPath = chooseDirectory(selectedDestination));
           
         }else{
             super.handleGUI(ap, s, btn);
@@ -59,43 +79,14 @@ public class HandlerCopyFileAction extends BaseHandlerAction{
     @Override 
     public Action handleBehaviour(AnchorPane ap){
         if(ap.getId().equals("CopyFilePane")){    
-            if(sourcePath.isEmpty() || destinationPath.isEmpty())
+            if(sourcePath==null || destinationPath==null)
                 return null;
             else
                 return new CopyFileAction(sourcePath, destinationPath);           
-        }
-        else{
+        }else{
             return super.handleBehaviour(ap);
         }
-    }
-    
-    public String chooseFile(Label label){
-        FileChooser fileChooser = new FileChooser();
-        String filename;
-        String file;
-        
-        file = fileChooser.showOpenDialog(selectSourceFile.getScene().getWindow()).getAbsolutePath();
-        if(!file.isEmpty()){
-            filename = file.substring(file.lastIndexOf('\\')+1);
-            label.textProperty().set("Selected file: " + filename);
-        }
-        
-        return file;
-    }
-    
-    public String chooseDirectory(Label label){
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        String destinationPath;
-   
-        destinationPath = directoryChooser.showDialog(selectSourceFile.getScene().getWindow()).getAbsolutePath();
-        if(!destinationPath.isEmpty()){
-                label.textProperty().set("Destination: " + destinationPath);
-            }       
-        
-        return destinationPath;
-    }
-    
-    
+    }     
 }
 
 

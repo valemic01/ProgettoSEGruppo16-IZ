@@ -29,7 +29,7 @@ public class MoveFileAction implements Action{
         Integer counterCopy = 1;
         int fileExtensionIndex = fileSourcePath.lastIndexOf('.');
         String fileExtension = fileSourcePath.substring(fileExtensionIndex);
-        String filename = fileSourcePath.substring(fileSourcePath.lastIndexOf('\\')+1, fileExtensionIndex);
+        String filename = "\\" + fileSourcePath.substring(fileSourcePath.lastIndexOf('\\')+1, fileExtensionIndex);
         String pathBase = fileDestinationPath;
         fileDestinationPath = fileDestinationPath.concat(filename+fileExtension);
         
@@ -43,6 +43,11 @@ public class MoveFileAction implements Action{
         } catch (IOException ex) {
             Logger.getLogger(CopyFileAction.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "MoveFileAction" + "-" + fileSourcePath + "-" + fileDestinationPath;
     }
     
 }

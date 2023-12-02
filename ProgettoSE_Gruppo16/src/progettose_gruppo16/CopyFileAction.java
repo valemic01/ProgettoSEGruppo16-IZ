@@ -31,7 +31,7 @@ public class CopyFileAction implements Action{
         Integer counterCopy = 1;
         int fileExtensionIndex = fileToCopyPath.lastIndexOf('.');
         String fileExtension = fileToCopyPath.substring(fileExtensionIndex);
-        String filename = fileToCopyPath.substring(fileToCopyPath.lastIndexOf('\\')+1, fileExtensionIndex);
+        String filename = "\\"+fileToCopyPath.substring(fileToCopyPath.lastIndexOf('\\')+1, fileExtensionIndex);
         String pathBase = fileDestinationPath;
         fileDestinationPath = fileDestinationPath.concat(filename+fileExtension);
         
@@ -45,6 +45,11 @@ public class CopyFileAction implements Action{
         } catch (IOException ex) {
             Logger.getLogger(CopyFileAction.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "CopyFileAction" + "-" + fileToCopyPath + "-" + fileDestinationPath;
     }
     
 }

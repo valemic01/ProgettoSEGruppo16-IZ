@@ -4,6 +4,8 @@
  */
 package progettose_gruppo16;
 
+import java.io.File;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -16,25 +18,28 @@ import javafx.stage.FileChooser;
 public class HandlerPlayAudioAction extends BaseHandlerAction{
     private Button selectAudioBtn = new Button();
     private Label labelAudioSelected = new Label();
-    private String fileAudio;
+    private String filePath;
     
     @Override
     public void handleGUI(AnchorPane ap, String s, Button btn){ 
         if(s.equals("Play audio")){
             ap.getChildren().clear();
+            filePath = "";
             ap.setId("PlayAudioPane");
             
             selectAudioBtn.setText("Select audio");
             ap.getChildren().add(selectAudioBtn);
-            selectAudioBtn.setLayoutX(103);
-            selectAudioBtn.setLayoutY(41);
+            selectAudioBtn.setLayoutX(148);
+            selectAudioBtn.setLayoutY(45);
             
             labelAudioSelected.setText("");
             ap.getChildren().add(labelAudioSelected);
-            labelAudioSelected.setLayoutX(70);
-            labelAudioSelected.setLayoutY(86);
+            labelAudioSelected.setLayoutX(0);
+            labelAudioSelected.setLayoutY(85);
+            labelAudioSelected.setPrefWidth(400);
+            labelAudioSelected.setAlignment(Pos.CENTER);
             
-            selectAudioBtn.setOnAction(event -> chooseFile());
+            selectAudioBtn.setOnAction(event -> filePath = chooseFile(labelAudioSelected));
         }else{
             super.handleGUI(ap, s, btn);
         }      
@@ -43,27 +48,30 @@ public class HandlerPlayAudioAction extends BaseHandlerAction{
     @Override 
     public Action handleBehaviour(AnchorPane ap){   
         if(ap.getId().equals("PlayAudioPane")){
-            if(fileAudio.isEmpty())
-                return null;
+            if(filePath!=null)
+                return new PlayAudioAction(filePath);     
             else
-                return new PlayAudioAction(fileAudio);            
-        }
-        else{
+                return null;
+        }else
             return super.handleBehaviour(ap);
+    }
+    
+    @Override
+    public String chooseFile(Label lbl){
+        FileChooser fileChooser = new FileChooser();
+        File fileAudio;
+        FileChooser.ExtensionFilter filter= new FileChooser.ExtensionFilter ("File Audio WAV (*.wav)", "*.wav");
+        
+        fileChooser.getExtensionFilters().add(filter);
+        fileAudio = fileChooser.showOpenDialog(selectAudioBtn.getScene().getWindow());
+        
+        if(fileAudio!=null){
+            lbl.textProperty().set("Selected audio: " + fileAudio.getName());
+            return fileAudio.getAbsolutePath();
+        }else{
+            lbl.textProperty().set("Audio not selected");
+            return null;
         }
     }
-    
-    public void chooseFile(){
-        FileChooser fileChooser = new FileChooser();
-        String filename;
-        
-        FileChooser.ExtensionFilter filter= new FileChooser.ExtensionFilter ("File Audio WAV (*.wav)", "*.wav");
-            fileChooser.getExtensionFilters().add(filter);
-            fileAudio = fileChooser.showOpenDialog(selectAudioBtn.getScene().getWindow()).getAbsolutePath();
-            if(!fileAudio.isEmpty()){
-                filename = fileAudio.substring(fileAudio.lastIndexOf('\\')+1);
-                labelAudioSelected.textProperty().set("Selected audio: " + filename);
-            }
-    }
-    
 }
+    

@@ -4,8 +4,12 @@
  */
 package progettose_gruppo16;
 
+import java.io.File;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 
 /**
  *
@@ -29,6 +33,34 @@ public class BaseHandlerAction implements HandlerAction{
     public Action handleBehaviour(AnchorPane ap) {
         if(next != null) return next.handleBehaviour(ap);
         return null;
+    }
+    
+    public String chooseFile(Label lbl){
+        FileChooser fileChooser = new FileChooser();
+        File file;
+        
+        file = fileChooser.showOpenDialog(lbl.getScene().getWindow());
+        if(file!=null){
+            lbl.textProperty().set("Selected file: " + file.getName());
+            return file.getAbsolutePath();
+        }else{
+            lbl.textProperty().set("File not selected");
+            return null;
+        }
+    }
+    
+    public String chooseDirectory(Label lbl){
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File directory;
+        
+        directory = directoryChooser.showDialog(lbl.getScene().getWindow());
+        if(directory!=null){
+            lbl.textProperty().set("Destination: " + directory.getName());
+            return directory.getAbsolutePath();
+        }else{
+            lbl.textProperty().set("Destination not selected");
+            return null;
+        }       
     }
     
 }

@@ -4,6 +4,8 @@
  */
 package progettose_gruppo16;
 
+import java.io.File;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -16,25 +18,28 @@ import javafx.stage.FileChooser;
 public class HandlerDeleteFileAction extends BaseHandlerAction{
     private Button selectFile = new Button();
     private Label labelFileSelected = new Label();
-    private String file;
+    private String filePath;
     
     @Override
     public void handleGUI(AnchorPane ap, String s, Button btn){ 
         if(s.equals("Delete file")){
             ap.getChildren().clear();
+            filePath = "";
             ap.setId("DeleteFilePane");
             
             selectFile.setText("Select file");
             ap.getChildren().add(selectFile);
-            selectFile.setLayoutX(103);
-            selectFile.setLayoutY(41);
+            selectFile.setLayoutX(148);
+            selectFile.setLayoutY(45);
             
             labelFileSelected.setText("");
             ap.getChildren().add(labelFileSelected);
-            labelFileSelected.setLayoutX(118);
-            labelFileSelected.setLayoutY(86);
+            labelFileSelected.setLayoutX(0);
+            labelFileSelected.setLayoutY(85);
+            labelFileSelected.setPrefWidth(400);
+            labelFileSelected.setAlignment(Pos.CENTER);
             
-            selectFile.setOnAction(event ->  file = chooseFile(labelFileSelected));
+            selectFile.setOnAction(event ->  filePath = chooseFile(labelFileSelected));
 
         }else{
             super.handleGUI(ap, s, btn);
@@ -44,28 +49,13 @@ public class HandlerDeleteFileAction extends BaseHandlerAction{
     @Override 
     public Action handleBehaviour(AnchorPane ap){
         if(ap.getId().equals("DeleteFilePane")){  
-            if(file.isEmpty())
+            if(filePath == null)
                 return null;
             else
-                return new DeleteFileAction(file);          
-        }
-        else{
+                return new DeleteFileAction(filePath);          
+        }else{
             return super.handleBehaviour(ap);
         }
-    }
-    
-    public String chooseFile(Label label){
-        FileChooser fileChooser = new FileChooser();
-        String filename;
-        String file;
-        
-        file = fileChooser.showOpenDialog(selectFile.getScene().getWindow()).getAbsolutePath();
-        if(!file.isEmpty()){
-            filename = file.substring(file.lastIndexOf('\\')+1);
-            label.textProperty().set("Selected file: " + filename);
-        }
-        
-        return file;
     }
 }
 

@@ -37,5 +37,12 @@ public class AppendStringToFileAction implements Action {
             pw.close();
         }
     }
+
+    @Override
+    public String toString() {
+        return "AppendStringToFileAction: " + filePath + "-" + textToAppend;
+    }
+    
+    
     
 }

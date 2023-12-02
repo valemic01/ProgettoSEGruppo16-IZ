@@ -4,6 +4,7 @@
  */
 package progettose_gruppo16;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -23,8 +24,10 @@ public class HandlerShowMessageAction extends BaseHandlerAction{
            
             messTxtBox.setPromptText("Your text...");
             ap.getChildren().add(messTxtBox);
-            messTxtBox.setLayoutX(50);
-            messTxtBox.setLayoutY(42);
+            messTxtBox.setLayoutX(106);
+            messTxtBox.setLayoutY(45);
+            messTxtBox.setPrefWidth(200);
+            messTxtBox.setPrefHeight(31);
         }else{
             super.handleGUI(ap, s, btn);
         }      

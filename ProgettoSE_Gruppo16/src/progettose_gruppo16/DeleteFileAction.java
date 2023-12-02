@@ -24,5 +24,11 @@ public class DeleteFileAction implements Action{
         else
             System.out.println("Error while deleting the file.");
     }
+
+    @Override
+    public String toString() {
+        return "DeleteFileAction: " + filePath;
+    }
+    
     
 }
