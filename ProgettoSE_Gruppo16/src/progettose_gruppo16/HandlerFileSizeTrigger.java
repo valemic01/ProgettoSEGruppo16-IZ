@@ -27,9 +27,8 @@ public class HandlerFileSizeTrigger extends BaseHandlerTrigger{
     @Override
     public Trigger handleBehaviour(AnchorPane ap) {
         long size;
-        size = Long.parseLong(fileSize.getText());
-        
         if(ap.getId().equalsIgnoreCase("FileSizePane")){
+            size = Long.parseLong(fileSize.getText());
             if(!file.exists()){
                 return null;
             }
@@ -74,6 +73,7 @@ public class HandlerFileSizeTrigger extends BaseHandlerTrigger{
     private File chooseFile(){
         FileChooser fileChooser = new FileChooser();
         File filePath;
+        
         
         filePath = fileChooser.showOpenDialog(selectFile.getScene().getWindow());
         if(filePath.exists()){

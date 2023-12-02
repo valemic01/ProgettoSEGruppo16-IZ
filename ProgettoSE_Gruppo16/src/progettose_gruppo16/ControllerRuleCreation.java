@@ -78,8 +78,9 @@ public class ControllerRuleCreation implements Initializable {
     private HandlerDayOfMonthTrigger h9= new HandlerDayOfMonthTrigger();
     private HandlerDateTrigger h10= new HandlerDateTrigger();
     private HandlerFileSizeTrigger h11 = new HandlerFileSizeTrigger();
-    //private HandlerExistingFileTrigger h11= new HandlerExistingFileTrigger();
-            
+    private HandlerExistingFileTrigger h12= new HandlerExistingFileTrigger();
+    private HandlerExitStatusTrigger h13= new HandlerExitStatusTrigger();      
+    
     @FXML
     private AnchorPane triggerPane;
 
@@ -102,7 +103,8 @@ public class ControllerRuleCreation implements Initializable {
         trigDD1.getItems().add("Day of month");
         trigDD1.getItems().add("Date");
         trigDD1.getItems().add("File size");
-        //trigDD1.getItems().add("Existing file");
+        trigDD1.getItems().add("Existing file");
+        trigDD1.getItems().add("Exit status");
         
         actionDD1.getItems().add("Show message");
         actionDD1.getItems().add("Play audio");
@@ -118,16 +120,20 @@ public class ControllerRuleCreation implements Initializable {
         addRuleBtn.disableProperty().bind(Bindings.isEmpty(ruleNameTxtBox.textProperty()).or(Bindings.isNull(trigDD1.valueProperty())).or(Bindings.isNull(actionDD1.valueProperty())));
         
         //creation of the handlers chains
+        //action
         h1.setNext(h2);
         h2.setNext(h3);
         h3.setNext(h4);
         h4.setNext(h5);
         h5.setNext(h6);
         
+        //trigger
         h7.setNext(h8);
         h8.setNext(h9);
         h9.setNext(h10);
         h10.setNext(h11);
+        h11.setNext(h12);
+        h12.setNext(h13);
     }    
 
     /**
