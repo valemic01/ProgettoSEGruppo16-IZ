@@ -5,6 +5,7 @@
 package progettose_gruppo16;
 
 import java.time.DayOfWeek;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 
@@ -25,7 +26,7 @@ public class HandlerDayOfWeekTrigger extends BaseHandlerTrigger{
     }
 
     @Override
-    public void handleGUI(AnchorPane ap, String s) {
+    public void handleGUI(AnchorPane ap, String s, Button btn) {
         if(s.equalsIgnoreCase("Day of the week")){
             ap.getChildren().clear();
             ap.setId("DayOfWeekPane");
@@ -37,8 +38,8 @@ public class HandlerDayOfWeekTrigger extends BaseHandlerTrigger{
             daysCB.setValue("Monday");
         }
         else{
-            daysCB.setValue(daysCB.getChildrenUnmodifiable().get(0).toString());
-            super.handleGUI(ap, s);
+            daysCB.setValue("Monday");
+            super.handleGUI(ap, s, btn);
         }
     }
     

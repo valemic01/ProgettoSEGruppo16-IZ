@@ -4,6 +4,7 @@
  */
 package progettose_gruppo16;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
@@ -15,7 +16,7 @@ public class HandlerShowMessageAction extends BaseHandlerAction{
     private TextField messTxtBox = new TextField();
             
     @Override
-    public void handleGUI(AnchorPane ap, String s){ 
+    public void handleGUI(AnchorPane ap, String s, Button btn){ 
         if(s.equals("Show message")){
             ap.getChildren().clear();
             ap.setId("ShowMessagePane");
@@ -25,7 +26,7 @@ public class HandlerShowMessageAction extends BaseHandlerAction{
             messTxtBox.setLayoutX(50);
             messTxtBox.setLayoutY(42);
         }else{
-            super.handleGUI(ap, s);
+            super.handleGUI(ap, s, btn);
         }      
     }
     

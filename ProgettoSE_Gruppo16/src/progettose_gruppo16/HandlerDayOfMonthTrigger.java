@@ -4,6 +4,7 @@
  */
 package progettose_gruppo16;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 
@@ -15,7 +16,7 @@ public class HandlerDayOfMonthTrigger extends BaseHandlerTrigger{
     private ComboBox<String> dayOfMonthBox= new ComboBox();
     
     @Override
-    public void handleGUI(AnchorPane ap, String s){
+    public void handleGUI(AnchorPane ap, String s, Button btn){
         if(s.equals("Day of month")){
             ap.getChildren().clear();
             ap.setId("DayOfMonthPane");
@@ -28,7 +29,7 @@ public class HandlerDayOfMonthTrigger extends BaseHandlerTrigger{
         }
         else{
             dayOfMonthBox.setValue("01");
-            super.handleGUI(ap, s);
+            super.handleGUI(ap, s, btn);
         }
     }
     
@@ -46,10 +47,7 @@ public class HandlerDayOfMonthTrigger extends BaseHandlerTrigger{
     private void initializeCBMonth(){
         //inizialization of the combo boxes for the time selection (TECHNICAL DEBT!)
         for (int i = 1; i <= 31; i++) {
-            if(i<10)
-                dayOfMonthBox.getItems().add("0"+String.valueOf(i));
-            else
-                dayOfMonthBox.getItems().add(String.valueOf(i));
+            dayOfMonthBox.getItems().add(String.format("%02d", i));
         }
     }
     

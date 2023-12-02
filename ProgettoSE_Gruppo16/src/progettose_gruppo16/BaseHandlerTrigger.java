@@ -4,6 +4,7 @@
  */
 package progettose_gruppo16;
 
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -20,8 +21,8 @@ public class BaseHandlerTrigger implements HandlerTrigger{
     }
 
     @Override
-    public void handleGUI(AnchorPane ap, String s) {
-        if(next != null) next.handleGUI(ap, s);
+    public void handleGUI(AnchorPane ap, String s, Button btn) {
+        if(next != null) next.handleGUI(ap, s, btn);
     }
 
     @Override

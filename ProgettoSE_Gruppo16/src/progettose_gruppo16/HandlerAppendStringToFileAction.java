@@ -22,7 +22,7 @@ public class HandlerAppendStringToFileAction extends BaseHandlerAction{
     private String file;
     
     @Override
-    public void handleGUI(AnchorPane ap, String s){ 
+    public void handleGUI(AnchorPane ap, String s, Button btn){ 
         if(s.equals("Add text to file")){
             ap.getChildren().clear();
             ap.setId("AppendStringPane");
@@ -49,7 +49,7 @@ public class HandlerAppendStringToFileAction extends BaseHandlerAction{
             
             selectFile.setOnAction(event -> file = chooseFile(labelSelectedFile));
         }else{
-            super.handleGUI(ap, s);
+            super.handleGUI(ap, s, btn);
         }      
     }
     

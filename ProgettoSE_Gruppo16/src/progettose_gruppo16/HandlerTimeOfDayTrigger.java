@@ -5,6 +5,7 @@
 package progettose_gruppo16;
 
 import java.time.LocalTime;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -29,7 +30,7 @@ public class HandlerTimeOfDayTrigger extends BaseHandlerTrigger{
     }
 
     @Override
-    public void handleGUI(AnchorPane ap, String s) {
+    public void handleGUI(AnchorPane ap, String s, Button btn) {
         
         if(s.equalsIgnoreCase("Time of day")){
             ap.getChildren().clear();
@@ -53,25 +54,19 @@ public class HandlerTimeOfDayTrigger extends BaseHandlerTrigger{
             
         }
         else{
-            super.handleGUI(ap, s);
             hoursCB.setValue("00");
             minutesCB.setValue("00");
+            super.handleGUI(ap, s, btn);        
         }
     }
     
     private void initializeCBs(){
         for (int i = 0; i <= 23; i++) {
-            if(i<10)
-                hoursCB.getItems().add("0"+String.valueOf(i));
-            else
-                hoursCB.getItems().add(String.valueOf(i));
+            hoursCB.getItems().add(String.format("%02d", i));
         }
  
         for (int i = 0; i <= 59; i++) {
-            if(i<10)
-                minutesCB.getItems().add("0"+String.valueOf(i));
-            else
-                minutesCB.getItems().add(String.valueOf(i));
+            minutesCB.getItems().add(String.format("%02d", i));
         }
     }
 }

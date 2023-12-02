@@ -72,9 +72,13 @@ public class ControllerRuleCreation implements Initializable {
     private HandlerMoveFileAction h4 = new HandlerMoveFileAction();
     private HandlerDeleteFileAction h5 = new HandlerDeleteFileAction();
     private HandlerAppendStringToFileAction h6 = new HandlerAppendStringToFileAction();
+    
     private HandlerTimeOfDayTrigger h7 = new HandlerTimeOfDayTrigger();
     private HandlerDayOfWeekTrigger h8 = new HandlerDayOfWeekTrigger();
-    
+    private HandlerDayOfMonthTrigger h9= new HandlerDayOfMonthTrigger();
+    private HandlerDateTrigger h10= new HandlerDateTrigger();
+    //private HandlerExistingFileTrigger h11= new HandlerExistingFileTrigger();
+            
     @FXML
     private AnchorPane triggerPane;
 
@@ -94,6 +98,10 @@ public class ControllerRuleCreation implements Initializable {
         //inizialization of the combo boxes for trigger and actions
         trigDD1.getItems().add("Time of day");
         trigDD1.getItems().add("Day of the week");
+        trigDD1.getItems().add("Day of month");
+        trigDD1.getItems().add("Date");
+        //trigDD1.getItems().add("Existing file");
+        
         actionDD1.getItems().add("Show message");
         actionDD1.getItems().add("Play audio");
         actionDD1.getItems().add("Move file");
@@ -115,6 +123,9 @@ public class ControllerRuleCreation implements Initializable {
         h5.setNext(h6);
         
         h7.setNext(h8);
+        h8.setNext(h9);
+        h9.setNext(h10);
+        //h10.setNext(h11);
     }    
 
     /**
@@ -206,12 +217,12 @@ public class ControllerRuleCreation implements Initializable {
 
     @FXML
     private void chooseAction(ActionEvent event) {
-        h1.handleGUI(actionPane, actionDD1.getValue());
+        h1.handleGUI(actionPane, actionDD1.getValue(), addRuleBtn);
     }
 
     @FXML
     private void chooseTrigger(ActionEvent event) {
-        h7.handleGUI(triggerPane, trigDD1.getValue());
+        h7.handleGUI(triggerPane, trigDD1.getValue(), addRuleBtn);
     }
     
 }

@@ -27,6 +27,9 @@ public class ExistingFileTrigger implements Trigger {
         
     }
     
-    
+    @Override
+    public String toString() {
+        return "Check file: " + nameFile;
+    }
     
 }

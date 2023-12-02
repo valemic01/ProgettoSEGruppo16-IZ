@@ -23,7 +23,7 @@ public class HandlerCopyFileAction extends BaseHandlerAction{
     private String destinationPath;
     
     @Override
-    public void handleGUI(AnchorPane ap, String s){ 
+    public void handleGUI(AnchorPane ap, String s, Button btn){ 
         if(s.equals("Copy file")){
             ap.getChildren().clear();
             ap.setId("CopyFilePane");
@@ -52,7 +52,7 @@ public class HandlerCopyFileAction extends BaseHandlerAction{
             selectDestinationFile.setOnAction(event -> destinationPath = chooseDirectory(labelDestinationFile));
           
         }else{
-            super.handleGUI(ap, s);
+            super.handleGUI(ap, s, btn);
         }      
     }
     

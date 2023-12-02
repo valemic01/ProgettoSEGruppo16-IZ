@@ -19,7 +19,7 @@ public class HandlerPlayAudioAction extends BaseHandlerAction{
     private String fileAudio;
     
     @Override
-    public void handleGUI(AnchorPane ap, String s){ 
+    public void handleGUI(AnchorPane ap, String s, Button btn){ 
         if(s.equals("Play audio")){
             ap.getChildren().clear();
             ap.setId("PlayAudioPane");
@@ -36,7 +36,7 @@ public class HandlerPlayAudioAction extends BaseHandlerAction{
             
             selectAudioBtn.setOnAction(event -> chooseFile());
         }else{
-            super.handleGUI(ap, s);
+            super.handleGUI(ap, s, btn);
         }      
     }
     
