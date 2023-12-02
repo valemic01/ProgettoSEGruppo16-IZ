@@ -77,6 +77,7 @@ public class ControllerRuleCreation implements Initializable {
     private HandlerDayOfWeekTrigger h8 = new HandlerDayOfWeekTrigger();
     private HandlerDayOfMonthTrigger h9= new HandlerDayOfMonthTrigger();
     private HandlerDateTrigger h10= new HandlerDateTrigger();
+    private HandlerFileSizeTrigger h11 = new HandlerFileSizeTrigger();
     //private HandlerExistingFileTrigger h11= new HandlerExistingFileTrigger();
             
     @FXML
@@ -100,6 +101,7 @@ public class ControllerRuleCreation implements Initializable {
         trigDD1.getItems().add("Day of the week");
         trigDD1.getItems().add("Day of month");
         trigDD1.getItems().add("Date");
+        trigDD1.getItems().add("File size");
         //trigDD1.getItems().add("Existing file");
         
         actionDD1.getItems().add("Show message");
@@ -125,7 +127,7 @@ public class ControllerRuleCreation implements Initializable {
         h7.setNext(h8);
         h8.setNext(h9);
         h9.setNext(h10);
-        //h10.setNext(h11);
+        h10.setNext(h11);
     }    
 
     /**
@@ -187,7 +189,7 @@ public class ControllerRuleCreation implements Initializable {
         //get che selected action from the action handlers chain
         action = h1.handleBehaviour(actionPane);
         
-        if(action == null)
+        if(action == null || trigger == null)
             return;
         
         if(repetableCB.isSelected()){
