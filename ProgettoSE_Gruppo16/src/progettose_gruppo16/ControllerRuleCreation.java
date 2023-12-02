@@ -72,6 +72,7 @@ public class ControllerRuleCreation implements Initializable {
     private HandlerMoveFileAction h4 = new HandlerMoveFileAction();
     private HandlerDeleteFileAction h5 = new HandlerDeleteFileAction();
     private HandlerAppendStringToFileAction h6 = new HandlerAppendStringToFileAction();
+    private HandlerExecuteProgramAction h14= new HandlerExecuteProgramAction();
     
     private HandlerTimeOfDayTrigger h7 = new HandlerTimeOfDayTrigger();
     private HandlerDayOfWeekTrigger h8 = new HandlerDayOfWeekTrigger();
@@ -112,6 +113,7 @@ public class ControllerRuleCreation implements Initializable {
         actionDD1.getItems().add("Delete file");
         actionDD1.getItems().add("Copy file");
         actionDD1.getItems().add("Add text to file");
+        actionDD1.getItems().add("Execute program");
         
         //binding to show the sleeping period settings when the "Repetable" check box is selected
         sleepingPeriodPane.visibleProperty().bind(repetableCB.selectedProperty());
@@ -126,6 +128,7 @@ public class ControllerRuleCreation implements Initializable {
         h3.setNext(h4);
         h4.setNext(h5);
         h5.setNext(h6);
+        h6.setNext(h14);
         
         //trigger
         h7.setNext(h8);

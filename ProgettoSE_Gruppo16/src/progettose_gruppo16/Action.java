@@ -13,8 +13,4 @@ import java.io.Serializable;
 public interface Action extends Serializable{
     
     public abstract void executeAction();
-    
-    @Override
-    public abstract String toString();
-    
 }

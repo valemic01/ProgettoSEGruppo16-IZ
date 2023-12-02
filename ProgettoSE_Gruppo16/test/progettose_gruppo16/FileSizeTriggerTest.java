@@ -32,7 +32,7 @@ public class FileSizeTriggerTest {
     @Test
     public void testcheckCondition1() {
         File file= new File("C:\\Users\\amost\\Desktop\\INTER-UDINESE_200257523298.pdf");
-        FileSizeTrigger trigger= new FileSizeTrigger(file, 300000);
+        FileSizeTrigger trigger= new FileSizeTrigger(file, 300000, 0);
 
         assertTrue(trigger.checkCondition());
     }
@@ -40,7 +40,7 @@ public class FileSizeTriggerTest {
     @Test
     public void testcheckCondition2() {
         File file= new File("C:\\Users\\amost\\Desktop\\INTER-UDINESE_200257523298.pdf");
-        FileSizeTrigger trigger= new FileSizeTrigger(file, 500000);
+        FileSizeTrigger trigger= new FileSizeTrigger(file, 500000, 0);
 
         assertFalse(trigger.checkCondition());
     }
