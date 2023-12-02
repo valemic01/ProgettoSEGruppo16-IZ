@@ -72,13 +72,16 @@ public class ControllerRuleCreation implements Initializable {
     private HandlerMoveFileAction h4 = new HandlerMoveFileAction();
     private HandlerDeleteFileAction h5 = new HandlerDeleteFileAction();
     private HandlerAppendStringToFileAction h6 = new HandlerAppendStringToFileAction();
+    private HandlerExecuteProgramAction h14= new HandlerExecuteProgramAction();
     
     private HandlerTimeOfDayTrigger h7 = new HandlerTimeOfDayTrigger();
     private HandlerDayOfWeekTrigger h8 = new HandlerDayOfWeekTrigger();
     private HandlerDayOfMonthTrigger h9= new HandlerDayOfMonthTrigger();
     private HandlerDateTrigger h10= new HandlerDateTrigger();
-    //private HandlerExistingFileTrigger h11= new HandlerExistingFileTrigger();
-            
+    private HandlerFileSizeTrigger h11 = new HandlerFileSizeTrigger();
+    private HandlerExistingFileTrigger h12= new HandlerExistingFileTrigger();
+    private HandlerExitStatusTrigger h13= new HandlerExitStatusTrigger();      
+    
     @FXML
     private AnchorPane triggerPane;
 
@@ -100,7 +103,9 @@ public class ControllerRuleCreation implements Initializable {
         trigDD1.getItems().add("Day of the week");
         trigDD1.getItems().add("Day of month");
         trigDD1.getItems().add("Date");
-        //trigDD1.getItems().add("Existing file");
+        trigDD1.getItems().add("File size");
+        trigDD1.getItems().add("Existing file");
+        trigDD1.getItems().add("Exit status");
         
         actionDD1.getItems().add("Show message");
         actionDD1.getItems().add("Play audio");
@@ -108,6 +113,7 @@ public class ControllerRuleCreation implements Initializable {
         actionDD1.getItems().add("Delete file");
         actionDD1.getItems().add("Copy file");
         actionDD1.getItems().add("Add text to file");
+        actionDD1.getItems().add("Execute program");
         
         //binding to show the sleeping period settings when the "Repetable" check box is selected
         sleepingPeriodPane.visibleProperty().bind(repetableCB.selectedProperty());
@@ -116,16 +122,21 @@ public class ControllerRuleCreation implements Initializable {
         addRuleBtn.disableProperty().bind(Bindings.isEmpty(ruleNameTxtBox.textProperty()).or(Bindings.isNull(trigDD1.valueProperty())).or(Bindings.isNull(actionDD1.valueProperty())));
         
         //creation of the handlers chains
+        //action
         h1.setNext(h2);
         h2.setNext(h3);
         h3.setNext(h4);
         h4.setNext(h5);
         h5.setNext(h6);
+        h6.setNext(h14);
         
+        //trigger
         h7.setNext(h8);
         h8.setNext(h9);
         h9.setNext(h10);
-        //h10.setNext(h11);
+        h10.setNext(h11);
+        h11.setNext(h12);
+        h12.setNext(h13);
     }    
 
     /**
@@ -187,7 +198,7 @@ public class ControllerRuleCreation implements Initializable {
         //get che selected action from the action handlers chain
         action = h1.handleBehaviour(actionPane);
         
-        if(action == null)
+        if(action == null || trigger == null)
             return;
         
         if(repetableCB.isSelected()){

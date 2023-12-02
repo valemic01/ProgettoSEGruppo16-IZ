@@ -13,5 +13,6 @@ import java.io.Serializable;
 public interface Trigger extends Serializable{
     
     public abstract boolean checkCondition();
+
     
 }
