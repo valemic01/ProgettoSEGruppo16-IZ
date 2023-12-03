@@ -2,6 +2,8 @@ package progettose_gruppo16;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import progettose_gruppo16.action.Action;
+import progettose_gruppo16.trigger.Trigger;
 
 /**
  *  Classe test per le regole ripetibili.

@@ -1,6 +1,8 @@
 package progettose_gruppo16;
 
 import java.io.Serializable;
+import progettose_gruppo16.action.Action;
+import progettose_gruppo16.trigger.Trigger;
 
 /**
  *  Classe astratta per i test sulle regole

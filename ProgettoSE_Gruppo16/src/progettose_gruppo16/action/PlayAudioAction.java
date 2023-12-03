@@ -4,7 +4,6 @@
  */
 package progettose_gruppo16.action;
 
-import progettose_gruppo16.action.Action;
 import java.io.File;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -16,8 +15,8 @@ import javafx.scene.media.MediaPlayer;
  */
 public class PlayAudioAction implements Action{
     private final String filePath;
-    private Media audioFile;
-    private MediaPlayer player;
+    private transient Media audioFile;
+    private transient MediaPlayer player;
 
     /**
      *Costruttore
