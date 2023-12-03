@@ -12,13 +12,19 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 
 /**
- *
+ * Classe handler che gestisce il trigger "DayOfWeekTrigger"
  * @author raffa
  */
 public class HandlerDayOfWeekTrigger extends BaseHandlerTrigger{
 
     ComboBox<String> daysCB = new ComboBox<>();
     
+    /**
+     * Quando l'utente aggiunge la regola viene preso il valore del giorno della settimana selezionato
+     * nel combo box e passato al costruttore del trigger
+     * @param ap
+     * @return
+     */
     @Override
     public Trigger handleBehaviour(AnchorPane ap) {
         if(ap.getId().equalsIgnoreCase("DayOfWeekPane")){
@@ -27,6 +33,13 @@ public class HandlerDayOfWeekTrigger extends BaseHandlerTrigger{
         return super.handleBehaviour(ap);
     }
 
+    /**
+     * Quando si seleziona il trigger "Day of the week" viene creato dinamicamente l'elemento
+     * che permette di selezionare il giorno della settimana (default: Monday)
+     * @param ap
+     * @param s
+     * @param btn
+     */
     @Override
     public void handleGUI(AnchorPane ap, String s, Button btn) {
         if(s.equalsIgnoreCase("Day of the week")){
@@ -36,7 +49,7 @@ public class HandlerDayOfWeekTrigger extends BaseHandlerTrigger{
             initializeCB();
             ap.getChildren().add(daysCB);
             daysCB.setLayoutX(100);
-            daysCB.setLayoutY(0);
+            daysCB.setLayoutY(7);
             daysCB.setValue("Monday");
         }
         else{
@@ -45,6 +58,7 @@ public class HandlerDayOfWeekTrigger extends BaseHandlerTrigger{
         }
     }
     
+    // Imppsta gli elementi nel combo box per permettere di selezionare qualsiasi giorno della settimana
     private void initializeCB(){
         daysCB.getItems().add("Monday");
         daysCB.getItems().add("Tuesday");

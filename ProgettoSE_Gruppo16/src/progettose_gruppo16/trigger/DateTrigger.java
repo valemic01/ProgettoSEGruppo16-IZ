@@ -1,23 +1,26 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package progettose_gruppo16.trigger;
 
 import java.time.LocalDate;
 
 /**
- *
- * @author amost
+ * Classe DateTrigger implementa l'interfaccia Trigger per il controllo della data.
  */
 public class DateTrigger implements Trigger{
 
     private LocalDate date; 
 
+    /**
+     * Costruttore che prende come paramentro la data inserita dall'utente
+     * @param date
+     */
     public DateTrigger(LocalDate date) {
         this.date = date;
     }
     
+    /**
+     * Metodo che controlla se la data selezionata dall'utente corrisponde alla data attuale
+     * @return
+     */
     @Override
     public boolean checkCondition() {
         return date.equals(LocalDate.now());

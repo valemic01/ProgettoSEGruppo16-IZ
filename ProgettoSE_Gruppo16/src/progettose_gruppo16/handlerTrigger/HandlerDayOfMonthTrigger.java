@@ -1,22 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package progettose_gruppo16.handlerTrigger;
 
-import progettose_gruppo16.trigger.Trigger;
-import progettose_gruppo16.trigger.DayOfMonthTrigger;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 
+import progettose_gruppo16.trigger.DayOfMonthTrigger;
+import progettose_gruppo16.trigger.Trigger;
+
+
 /**
- *
- * @author amost
+ * Classe che estende la classe BaseHandlerTrigger. 
  */
 public class HandlerDayOfMonthTrigger extends BaseHandlerTrigger{
     private ComboBox<String> dayOfMonthBox= new ComboBox();
     
+    /**
+     * Permette all'utente di selezionare un giorno del mese quando decide di utilizzare dayOfMonthTrigger.
+     * @param ap
+     * @param s
+     * @param btn
+     */
     @Override
     public void handleGUI(AnchorPane ap, String s, Button btn){
         if(s.equals("Day of month")){
@@ -25,7 +28,7 @@ public class HandlerDayOfMonthTrigger extends BaseHandlerTrigger{
         
             ap.getChildren().add(dayOfMonthBox);
             dayOfMonthBox.setLayoutX(100);
-            dayOfMonthBox.setLayoutY(0);
+            dayOfMonthBox.setLayoutY(7);
             initializeCBMonth();
             dayOfMonthBox.setValue("01");
         }
@@ -35,8 +38,14 @@ public class HandlerDayOfMonthTrigger extends BaseHandlerTrigger{
         }
     }
     
+    /**
+     * Se l'utente ha selezionato un giorno del mese, allora viene creato 
+     * un oggetto di tipo DayOfMonthTrigger
+     * @param ap
+     * @return
+     */
     @Override 
-    public Trigger handleBehaviour(AnchorPane ap){     
+    public Trigger handleBehaviour(AnchorPane ap){
         if(ap.getId().equals("DayOfMonthPane")){  
             
             return new DayOfMonthTrigger(Integer.parseInt(dayOfMonthBox.getValue()));           
@@ -45,9 +54,7 @@ public class HandlerDayOfMonthTrigger extends BaseHandlerTrigger{
         }
     }
     
-    
     private void initializeCBMonth(){
-        //inizialization of the combo boxes for the time selection (TECHNICAL DEBT!)
         for (int i = 1; i <= 31; i++) {
             dayOfMonthBox.getItems().add(String.format("%02d", i));
         }

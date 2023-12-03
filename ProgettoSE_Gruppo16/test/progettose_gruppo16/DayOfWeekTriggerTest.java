@@ -44,7 +44,7 @@ public class DayOfWeekTriggerTest {
     
     @Test
     public void testCheckCondition2() {
-        DayOfWeekTrigger trigger = new DayOfWeekTrigger(DayOfWeek.SUNDAY);
+        DayOfWeekTrigger trigger = new DayOfWeekTrigger(LocalDate.now().getDayOfWeek().plus(1));
 
         assertFalse(trigger.checkCondition());
     }

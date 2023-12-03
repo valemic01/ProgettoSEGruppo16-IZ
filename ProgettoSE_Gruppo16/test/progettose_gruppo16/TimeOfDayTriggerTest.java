@@ -45,8 +45,8 @@ public class TimeOfDayTriggerTest {
     
     @Test
     public void testCheckCondition2() {
-        LocalTime currentTime = LocalTime.of(0, 0);
-        TimeOfDayTrigger trigger = new TimeOfDayTrigger(currentTime);
+        LocalTime time = LocalTime.now().minusMinutes(1);
+        TimeOfDayTrigger trigger = new TimeOfDayTrigger(time);
 
         assertFalse(trigger.checkCondition());
     }
