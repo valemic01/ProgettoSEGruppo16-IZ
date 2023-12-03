@@ -119,7 +119,7 @@ public class ControllerRuleCreation implements Initializable {
         sleepingPeriodPane.visibleProperty().bind(repetableCB.selectedProperty());
         
         //binding to disable the add rule button if the rule name, the action or the trigger are not selected
-        addRuleBtn.disableProperty().bind(Bindings.isEmpty(ruleNameTxtBox.textProperty()).or(Bindings.isNull(trigDD1.valueProperty())).or(Bindings.isNull(actionDD1.valueProperty())));
+        addRuleBtn.disableProperty().bind(Bindings.isEmpty(ruleNameTxtBox.textProperty()).or(Bindings.isNull(trigDD1.valueProperty())).or(Bindings.isNull(actionDD1.valueProperty())).or((Bindings.isEmpty(slepPerDays.textProperty()).or(Bindings.isEmpty(slepPerHours.textProperty())).or(Bindings.isEmpty(slepPerMins.textProperty()))).and(sleepingPeriodPane.visibleProperty())));
         
         //creation of the handlers chains
         //action
