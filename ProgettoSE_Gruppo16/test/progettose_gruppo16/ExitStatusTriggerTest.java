@@ -4,6 +4,7 @@
  */
 package progettose_gruppo16;
 
+import progettose_gruppo16.trigger.ExitStatusTrigger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

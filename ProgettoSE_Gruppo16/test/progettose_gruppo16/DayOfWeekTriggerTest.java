@@ -1,5 +1,6 @@
 package progettose_gruppo16;
 
+import progettose_gruppo16.trigger.DayOfWeekTrigger;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import org.junit.After;

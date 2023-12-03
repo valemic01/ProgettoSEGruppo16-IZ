@@ -1,5 +1,6 @@
 package progettose_gruppo16;
 
+import progettose_gruppo16.trigger.FileSizeTrigger;
 import java.io.File;
 import org.junit.After;
 import org.junit.AfterClass;

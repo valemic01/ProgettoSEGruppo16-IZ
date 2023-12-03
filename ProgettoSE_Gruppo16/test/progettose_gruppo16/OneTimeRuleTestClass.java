@@ -1,5 +1,8 @@
 package progettose_gruppo16;
 
+import progettose_gruppo16.trigger.Trigger;
+import progettose_gruppo16.action.Action;
+
 /**
  *  Classe test per le regole da eseguire una sola volta. 
  *  Per il testing vengono eliminate le dipendenze dal RulesManager

@@ -1,5 +1,6 @@
 package progettose_gruppo16;
 
+import progettose_gruppo16.trigger.TimeOfDayTrigger;
 import java.time.LocalTime;
 import org.junit.After;
 import org.junit.AfterClass;
