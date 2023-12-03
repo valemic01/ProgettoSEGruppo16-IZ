@@ -1,24 +1,19 @@
 package progettose_gruppo16.handlerTrigger;
 
 
-import progettose_gruppo16.trigger.Trigger;
-import progettose_gruppo16.trigger.ExitStatusTrigger;
 import java.io.File;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
-import progettose_gruppo16.trigger.BaseHandlerTrigger;
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+import progettose_gruppo16.trigger.ExitStatusTrigger;
+import progettose_gruppo16.trigger.Trigger;
 
 /**
- *
+ * Classe che estende la classe BaseHandlerTrigger.
  * @author amost
  */
 public class HandlerExitStatusTrigger extends BaseHandlerTrigger {
@@ -32,6 +27,13 @@ public class HandlerExitStatusTrigger extends BaseHandlerTrigger {
     private TextField textArguments = new TextField();
     private String file;
     
+    /**
+     * Permette all'utente, quando decide di utilizzare ExitStatusTrigger, di selezionare un programma,
+     * scrivere una lista di argomenti da passare a linea di comando e inserire l'exit Status atteso.
+     * @param ap
+     * @param s
+     * @param btn
+     */
     @Override
     public void handleGUI(AnchorPane ap, String s, Button btn){ 
         if(s.equals("Exit status")){
@@ -40,44 +42,56 @@ public class HandlerExitStatusTrigger extends BaseHandlerTrigger {
             
             labelFile.setText("Select a file");
             ap.getChildren().add(labelFile);
-            labelFile.setLayoutX(75);
-            labelFile.setLayoutY(5);
+            labelFile.setLayoutX(-5);
+            labelFile.setLayoutY(4);
+            labelFile.setPrefWidth(344);
+            labelFile.setAlignment(Pos.CENTER);
             
             selectFileBtn.setText("Select file");
             ap.getChildren().add(selectFileBtn);
-            selectFileBtn.setLayoutX(100);
-            selectFileBtn.setLayoutY(40);
+            selectFileBtn.setLayoutX(125);
+            selectFileBtn.setLayoutY(32);
             
             labelSelectedFile.setText("");
             ap.getChildren().add(labelSelectedFile);
-            labelSelectedFile.setLayoutX(75);
-            labelSelectedFile.setLayoutY(75);
+            labelSelectedFile.setLayoutX(0);
+            labelSelectedFile.setLayoutY(70);
+            labelSelectedFile.setPrefWidth(344);
+            labelSelectedFile.setAlignment(Pos.CENTER);
+            labelSelectedFile.setTextFill(Color.web("#009999"));
             
             labelArguments.setText("Command Line Arguments ");
             ap.getChildren().add(labelArguments);
-            labelArguments.setLayoutX(75);
-            labelArguments.setLayoutY(100);
+            labelArguments.setLayoutX(0);
+            labelArguments.setLayoutY(102);
+            labelArguments.setPrefWidth(344);
+            labelArguments.setAlignment(Pos.CENTER);
             
             textArguments.setPromptText("Arguments...");
             ap.getChildren().add(textArguments);
-            textArguments.setLayoutX(75);
-            textArguments.setLayoutY(130);
+            textArguments.setLayoutX(79);
+            textArguments.setLayoutY(123);
             
-            labelExitStatus.setText("Write the exit status: ");
+            labelExitStatus.setText("Exit status: ");
             ap.getChildren().add(labelExitStatus);
-            labelExitStatus.setLayoutX(75);
+            labelExitStatus.setPrefSize(114, 21);
+            labelExitStatus.setLayoutX(30);
             labelExitStatus.setLayoutY(170);
+            labelExitStatus.setAlignment(Pos.CENTER);
             
             textExitStatus.setPromptText("Exit Status...(default 0)");
             ap.getChildren().add(textExitStatus);
-            textExitStatus.setLayoutX(75);
-            textExitStatus.setLayoutY(200);
-         
+            textExitStatus.setPrefSize(168, 31);
+            textExitStatus.setLayoutX(129);
+            textExitStatus.setLayoutY(165);
+            
             labelErrorExitStatus.setText("");
             ap.getChildren().add(labelErrorExitStatus);
-            labelErrorExitStatus.setLayoutX(75);
-            labelErrorExitStatus.setLayoutY(240);
+            labelErrorExitStatus.setLayoutX(0);
+            labelErrorExitStatus.setLayoutY(196);
+            labelErrorExitStatus.setPrefWidth(344);
             labelErrorExitStatus.setTextFill(Color.RED);
+            labelErrorExitStatus.setAlignment(Pos.CENTER);
             
             selectFileBtn.setOnAction(event -> file = chooseFile());
             
@@ -86,6 +100,15 @@ public class HandlerExitStatusTrigger extends BaseHandlerTrigger {
         }      
     }
     
+    /**
+     * Se l'utente ha selezionato un file e scritto eventuali argomenti
+     * a linea di comando, allora viene creato un oggetto di tipo ExitStatusTrigger. 
+     * Nel caso in cui l'utente non dovesse scrivere l'exit Status, viene di default selezionato 0;
+     * se l'utente non scrive un numero, l'applicazione lo avvisa con un messaggio e non gli permette
+     * di creare la regola.
+     * @param ap
+     * @return
+     */
     @Override 
     public Trigger handleBehaviour(AnchorPane ap){     
         if(ap.getId().equals("ExitStatusPane")){
@@ -107,7 +130,7 @@ public class HandlerExitStatusTrigger extends BaseHandlerTrigger {
         }
     }
 
-    
+    // permette di selezionare un file
     private String chooseFile(){
         FileChooser fileChooser = new FileChooser();
         String path;

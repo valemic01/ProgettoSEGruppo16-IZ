@@ -7,13 +7,14 @@ package progettose_gruppo16.handlerTrigger;
 import progettose_gruppo16.trigger.Trigger;
 import progettose_gruppo16.trigger.FileSizeTrigger;
 import java.io.File;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
-import progettose_gruppo16.trigger.BaseHandlerTrigger;
 
 /**
  *
@@ -47,24 +48,27 @@ public class HandlerFileSizeTrigger extends BaseHandlerTrigger{
             ap.setId("FileSizePane");
             
             ap.getChildren().add(selectFile);
-            selectFile.setLayoutX(14);
+            selectFile.setLayoutX(19);
             selectFile.setLayoutY(7);
             
             ap.getChildren().add(fileSize);
-            fileSize.setLayoutX(127);
+            fileSize.setLayoutX(132);
             fileSize.setLayoutY(7);
             fileSize.setPrefSize(64.0, 31.0);
             
             fileUnit.getItems().addAll("B", "KB", "MB", "GB");
             ap.getChildren().add(fileUnit);
-            fileUnit.setLayoutX(203);
+            fileUnit.setLayoutX(208);
             fileUnit.setLayoutY(7);
             fileUnit.setPrefSize(78.0, 31.0);
             fileUnit.setValue("B");
             
             ap.getChildren().add(labelSelectedFile);
-            labelSelectedFile.setLayoutX(29);
+            labelSelectedFile.setLayoutX(-15);
             labelSelectedFile.setLayoutY(48);
+            labelSelectedFile.setPrefWidth(344);
+            labelSelectedFile.setAlignment(Pos.CENTER);
+            labelSelectedFile.setTextFill(Color.web("#009999"));
             
             selectFile.setOnAction(event -> file = chooseFile());
         }

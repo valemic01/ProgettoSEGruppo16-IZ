@@ -1,21 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package progettose_gruppo16.handlerAction;
 
-import progettose_gruppo16.action.Action;
-import progettose_gruppo16.action.ExecuteProgramAction;
 import java.io.File;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import progettose_gruppo16.action.Action;
+import progettose_gruppo16.action.ExecuteProgramAction;
 
 /**
- *
- * @author amost
+ * Classe che estende la classe BaseHandlerAction.
  */
 public class HandlerExecuteProgramAction extends BaseHandlerAction{
     
@@ -26,6 +24,13 @@ public class HandlerExecuteProgramAction extends BaseHandlerAction{
     private TextField textArguments = new TextField();
     private String file;
     
+    /**
+     * Permette all'utente di selezionare un programma e scrivere una lista di argomenti da passare a linea
+     * di comando quando decide di utlizzare ExecuteProgramAction.
+     * @param ap
+     * @param s
+     * @param btn
+     */
     @Override
     public void handleGUI(AnchorPane ap, String s, Button btn){ 
         if(s.equals("Execute program")){
@@ -34,28 +39,35 @@ public class HandlerExecuteProgramAction extends BaseHandlerAction{
             
             labelFile.setText("Select a file");
             ap.getChildren().add(labelFile);
-            labelFile.setLayoutX(75);
-            labelFile.setLayoutY(5);
+            labelFile.setLayoutX(-5);
+            labelFile.setLayoutY(30);
+            labelFile.setPrefWidth(400);
+            labelFile.setAlignment(Pos.CENTER);
             
             selectFileBtn.setText("Select file");
             ap.getChildren().add(selectFileBtn);
-            selectFileBtn.setLayoutX(100);
-            selectFileBtn.setLayoutY(40);
+            selectFileBtn.setLayoutX(152);
+            selectFileBtn.setLayoutY(57);
             
             labelSelectedFile.setText("");
             ap.getChildren().add(labelSelectedFile);
-            labelSelectedFile.setLayoutX(75);
-            labelSelectedFile.setLayoutY(75);
+            labelSelectedFile.setLayoutX(0);
+            labelSelectedFile.setLayoutY(95);
+            labelSelectedFile.setPrefWidth(400);
+            labelSelectedFile.setAlignment(Pos.CENTER);
+            labelSelectedFile.setTextFill(Color.web("#009999"));
             
             labelArguments.setText("Command Line Arguments ");
             ap.getChildren().add(labelArguments);
-            labelArguments.setLayoutX(75);
-            labelArguments.setLayoutY(100);
+            labelArguments.setLayoutX(0);
+            labelArguments.setLayoutY(132);
+            labelArguments.setPrefWidth(400);
+            labelArguments.setAlignment(Pos.CENTER);
             
             textArguments.setPromptText("Arguments...");
             ap.getChildren().add(textArguments);
-            textArguments.setLayoutX(75);
-            textArguments.setLayoutY(130);
+            textArguments.setLayoutX(106);
+            textArguments.setLayoutY(153);
             
             
             selectFileBtn.setOnAction(event -> file = chooseFile());
@@ -65,6 +77,12 @@ public class HandlerExecuteProgramAction extends BaseHandlerAction{
         }      
     }
     
+    /**
+     * Se l'utente ha selezionato un file e scritto eventuali argomenti
+     * a linea di comando, allora viene creato un oggetto di tipo ExecuteProgramAction
+     * @param ap
+     * @return
+     */
     @Override 
     public Action handleBehaviour(AnchorPane ap){     
         if(ap.getId().equals("ExecuteProgramPane")){
@@ -80,7 +98,7 @@ public class HandlerExecuteProgramAction extends BaseHandlerAction{
         }
     } 
     
-    
+    // Metodo per selezionare un file
     private String chooseFile(){
         FileChooser fileChooser = new FileChooser();
         String path;

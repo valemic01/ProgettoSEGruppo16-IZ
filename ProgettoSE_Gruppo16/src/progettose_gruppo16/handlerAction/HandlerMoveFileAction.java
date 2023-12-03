@@ -29,6 +29,12 @@ public class HandlerMoveFileAction extends BaseHandlerAction{
     private String sourcePath;
     private String destinationPath;
             
+    /**
+     *
+     * @param ap
+     * @param s
+     * @param btn
+     */
     @Override
     public void handleGUI(AnchorPane ap, String s, Button btn){ 
         if(s.equals("Move file")){
@@ -81,6 +87,11 @@ public class HandlerMoveFileAction extends BaseHandlerAction{
         }      
     }
     
+    /**
+     *
+     * @param ap
+     * @return
+     */
     @Override 
     public Action handleBehaviour(AnchorPane ap){
         if(ap.getId().equals("MoveFilePane")){         

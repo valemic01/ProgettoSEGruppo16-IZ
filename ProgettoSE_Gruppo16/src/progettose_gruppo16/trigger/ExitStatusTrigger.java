@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package progettose_gruppo16.trigger;
 
 import java.io.File;
@@ -13,8 +10,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author amost
+ * Classe che implementa l'interfaccia trigger per controllare se l'exitstatus atteso dall'utente coincide con quello del programma
+ * esterno che ha scelto di eseguire.
  */
 public class ExitStatusTrigger implements Trigger {
     
@@ -22,12 +19,25 @@ public class ExitStatusTrigger implements Trigger {
     private String args;
     private int exitStatus;
 
+    /**
+     *
+     * @param path  -->path del programma da eseguire
+     * @param args  --> lista di argomenti
+     * @param exitStatus
+     */
     public ExitStatusTrigger(String path, String args, int exitStatus) {
         this.path = path;
         this.args = args;
         this.exitStatus = exitStatus;
     }
 
+    /**
+     * Costruisce il processo tramite il path del programma e la lista di argomenti; dopodichè fa partire la sua esecuzione
+     * e salva l'exit status.
+     * Viene passato al ProcessBuilder una lista contenente il programma e gli argomenti passati a linea di comando.
+     * Se il formato del programma è jar, la lista contiene anche "java -jar".
+     * @return true se l'exit status del programma coincide con quello inserito dall'utente; false altrimenti
+     */
     @Override
     public boolean checkCondition() {
         try {            

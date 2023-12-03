@@ -10,7 +10,6 @@ import java.time.DayOfWeek;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
-import progettose_gruppo16.trigger.BaseHandlerTrigger;
 
 /**
  *
@@ -37,7 +36,7 @@ public class HandlerDayOfWeekTrigger extends BaseHandlerTrigger{
             initializeCB();
             ap.getChildren().add(daysCB);
             daysCB.setLayoutX(100);
-            daysCB.setLayoutY(0);
+            daysCB.setLayoutY(7);
             daysCB.setValue("Monday");
         }
         else{

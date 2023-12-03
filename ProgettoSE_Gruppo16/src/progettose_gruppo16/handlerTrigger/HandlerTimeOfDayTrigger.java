@@ -11,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import progettose_gruppo16.trigger.BaseHandlerTrigger;
 
 /**
  *
@@ -44,21 +43,21 @@ public class HandlerTimeOfDayTrigger extends BaseHandlerTrigger{
             minutesCB.setValue("00");
 
             ap.getChildren().add(hoursCB);
-            hoursCB.setLayoutX(97);
-            minutesCB.setLayoutY(4);
+            hoursCB.setLayoutX(50);
+            hoursCB.setLayoutY(7);
+            hoursCB.setPrefSize(76, 31);
             
             ap.getChildren().add(lbl);
-            lbl.setLayoutX(184);
-            lbl.setLayoutY(-8);
+            lbl.setLayoutX(136);
+            lbl.setLayoutY(10);
             
             ap.getChildren().add(minutesCB);
-            minutesCB.setLayoutX(194);
-            minutesCB.setLayoutY(5);
+            minutesCB.setLayoutX(152);
+            minutesCB.setLayoutY(7);
+            minutesCB.setPrefSize(76, 31);
             
         }
         else{
-            hoursCB.setValue("00");
-            minutesCB.setValue("00");
             super.handleGUI(ap, s, btn);        
         }
     }

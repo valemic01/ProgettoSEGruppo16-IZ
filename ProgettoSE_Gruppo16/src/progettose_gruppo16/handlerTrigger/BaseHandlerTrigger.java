@@ -2,12 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package progettose_gruppo16.trigger;
+package progettose_gruppo16.handlerTrigger;
 
 import progettose_gruppo16.handlerTrigger.HandlerTrigger;
 import progettose_gruppo16.trigger.Trigger;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import progettose_gruppo16.trigger.Trigger;
 
 /**
  *
