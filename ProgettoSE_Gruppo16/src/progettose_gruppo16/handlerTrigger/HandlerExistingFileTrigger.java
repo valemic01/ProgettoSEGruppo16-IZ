@@ -100,33 +100,16 @@ public class HandlerExistingFileTrigger extends BaseHandlerTrigger{
     }
     
     private String chooseFolder() {
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("Select a folder");
+         DirectoryChooser directoryChooser = new DirectoryChooser();
+        File directory;
         
-        // Ottieni il percorso selezionato
-        File selectedDirectory = directoryChooser.showDialog(selectFolderBtn.getScene().getWindow());
-        
-        // Controlla se l'utente ha selezionato una cartella
-        if (selectedDirectory != null) {
-            String[] pathElements = selectedDirectory.getAbsolutePath().split("\\\\");
- 
-            // Controlla se ci sono almeno due elementi nel percorso
-            if (pathElements.length >= 2) {
-                String lastFolder = pathElements[pathElements.length - 1];
-                String secondToLastFolder = pathElements[pathElements.length - 2];
-                String folders = secondToLastFolder + "\\" + lastFolder;
-                
-                labelSelectedFolder.textProperty().set("Selected folders: " + folders);
-            } else {
-                // Il percorso ha solo 1 elemento
-                labelSelectedFolder.textProperty().set("Selected folder: " + pathElements[0]);
-            }
-            
-            // Salva il percorso completo
-            return selectedDirectory.getAbsolutePath();
-            
-        }
-        labelSelectedFolder.textProperty().set("");
-        return null;
-    }       
+        directory = directoryChooser.showDialog(labelSelectedFolder.getScene().getWindow());
+        if(directory!=null){
+            labelSelectedFolder.textProperty().set("Destination: " + directory.getName());
+            return directory.getAbsolutePath();
+        }else{
+            labelSelectedFolder.textProperty().set("Destination not selected");
+            return null;
+        }       
+    }  
 }
