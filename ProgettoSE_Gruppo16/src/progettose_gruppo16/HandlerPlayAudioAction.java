@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
 /**
@@ -38,6 +39,7 @@ public class HandlerPlayAudioAction extends BaseHandlerAction{
             labelAudioSelected.setLayoutY(85);
             labelAudioSelected.setPrefWidth(400);
             labelAudioSelected.setAlignment(Pos.CENTER);
+            labelAudioSelected.setTextFill(Color.web("#009999"));
             
             selectAudioBtn.setOnAction(event -> filePath = chooseFile(labelAudioSelected));
         }else{

@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
@@ -50,6 +51,7 @@ public class HandlerCopyFileAction extends BaseHandlerAction{
             selectedFile.setLayoutY(106);
             selectedFile.setPrefWidth(400);
             selectedFile.setAlignment(Pos.CENTER);
+            selectedFile.setTextFill(Color.web("#009999"));
             
             labelDestinationFile.setText("Where you want to copy the file");
             ap.getChildren().add(labelDestinationFile);
@@ -67,6 +69,7 @@ public class HandlerCopyFileAction extends BaseHandlerAction{
             selectedDestination.setLayoutY(218);
             selectedDestination.setPrefWidth(400);
             selectedDestination.setAlignment(Pos.CENTER);
+            selectedDestination.setTextFill(Color.web("#009999"));
             
             selectSourceFile.setOnAction(event -> sourcePath = chooseFile(selectedFile));
             selectDestinationFile.setOnAction(event -> destinationPath = chooseDirectory(selectedDestination));

@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
 /**
@@ -17,7 +18,7 @@ import javafx.stage.FileChooser;
  */
 public class HandlerDeleteFileAction extends BaseHandlerAction{
     private Button selectFile = new Button();
-    private Label labelFileSelected = new Label();
+    private Label labelSelectedFile = new Label();
     private String filePath;
     
     @Override
@@ -32,14 +33,15 @@ public class HandlerDeleteFileAction extends BaseHandlerAction{
             selectFile.setLayoutX(148);
             selectFile.setLayoutY(45);
             
-            labelFileSelected.setText("");
-            ap.getChildren().add(labelFileSelected);
-            labelFileSelected.setLayoutX(0);
-            labelFileSelected.setLayoutY(85);
-            labelFileSelected.setPrefWidth(400);
-            labelFileSelected.setAlignment(Pos.CENTER);
+            labelSelectedFile.setText("");
+            ap.getChildren().add(labelSelectedFile);
+            labelSelectedFile.setLayoutX(0);
+            labelSelectedFile.setLayoutY(85);
+            labelSelectedFile.setPrefWidth(400);
+            labelSelectedFile.setAlignment(Pos.CENTER);
+            labelSelectedFile.setTextFill(Color.web("#009999"));
             
-            selectFile.setOnAction(event ->  filePath = chooseFile(labelFileSelected));
+            selectFile.setOnAction(event ->  filePath = chooseFile(labelSelectedFile));
 
         }else{
             super.handleGUI(ap, s, btn);

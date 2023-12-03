@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
 /**
@@ -52,6 +53,7 @@ public class HandlerAppendStringToFileAction extends BaseHandlerAction{
             labelSelectedFile.setLayoutY(171);          
             labelSelectedFile.setPrefWidth(400);
             labelSelectedFile.setAlignment(Pos.CENTER);
+            labelSelectedFile.setTextFill(Color.web("#009999"));
             
             selectFile.setOnAction(event -> filePath = chooseFile(labelSelectedFile));
         }else{
