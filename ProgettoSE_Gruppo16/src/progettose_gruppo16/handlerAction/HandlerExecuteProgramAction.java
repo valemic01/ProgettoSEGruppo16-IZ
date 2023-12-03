@@ -70,7 +70,7 @@ public class HandlerExecuteProgramAction extends BaseHandlerAction{
             textArguments.setLayoutY(153);
             
             
-            selectFileBtn.setOnAction(event -> file = chooseFile());
+            selectFileBtn.setOnAction(event -> file = chooseFile(labelSelectedFile));
             
         }else{
             super.handleGUI(ap, s, btn);
@@ -98,18 +98,18 @@ public class HandlerExecuteProgramAction extends BaseHandlerAction{
         }
     } 
     
-    // Metodo per selezionare un file
-    private String chooseFile(){
+    @Override
+    public String chooseFile(Label lbl){
         FileChooser fileChooser = new FileChooser();
         String path;
         FileChooser.ExtensionFilter filter= new FileChooser.ExtensionFilter ("Accepted extensions (*.exe), (*.jar)", "*.exe", "*.jar");
         fileChooser.getExtensionFilters().add(filter);
         File filePath = fileChooser.showOpenDialog(selectFileBtn.getScene().getWindow());
         if(filePath!=null){           
-            labelSelectedFile.setText("Selected file: " + filePath.getName());
+            lbl.setText("Selected file: " + filePath.getName());
             return filePath.getAbsolutePath();
         }
-        labelSelectedFile.setText("");
+        lbl.textProperty().set("File not selected");
         return null;
     }
 }

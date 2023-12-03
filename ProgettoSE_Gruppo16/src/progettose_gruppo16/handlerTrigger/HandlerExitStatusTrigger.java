@@ -141,7 +141,7 @@ public class HandlerExitStatusTrigger extends BaseHandlerTrigger {
             labelSelectedFile.setText("Selected file: " + filePath.getName());
             return filePath.getAbsolutePath();
         }
-        labelSelectedFile.setText("");
+        labelSelectedFile.setText("File not selected");
         return null;
     }
 }
