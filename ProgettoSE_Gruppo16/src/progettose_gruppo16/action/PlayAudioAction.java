@@ -4,7 +4,6 @@
  */
 package progettose_gruppo16.action;
 
-import progettose_gruppo16.action.Action;
 import java.io.File;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -16,19 +15,21 @@ import javafx.scene.media.MediaPlayer;
  */
 public class PlayAudioAction implements Action{
     private final String filePath;
-    private Media audioFile;
-    private MediaPlayer player;
-
+    private transient Media audioFile;
+    private transient MediaPlayer player;
+    
     /**
-     *Costruttore
-     * @param fileAudio
+     * Costruttore della classe che inizializza il percorso del file audio da riprodurre.
+     * @param fileAudio Il percorso del file audio da riprodurre.
      */
     public PlayAudioAction(String fileAudio) {
         this.filePath = fileAudio;
     }
     
     /**
-     *Crea un oggetto di tipo MediaPlayer che consente di riprodurre l'audio.
+     * Esegue l'azione di riproduzione audio utilizzando JavaFX Media e MediaPlayer.
+     * Crea un oggetto Media e un oggetto MediaPlayer associato al file audio specificato,
+     * quindi avvia la riproduzione del file audio.
      */
     @Override
     public void executeAction() {
@@ -37,6 +38,10 @@ public class PlayAudioAction implements Action{
             player.play();
     }
 
+    /**
+     * Restituisce una rappresentazione testuale della classe.
+     * @return Una stringa che rappresenta l'oggetto PlayAudioAction.
+     */
     @Override
     public String toString() {
         return "PlayAudioAction: " + filePath;

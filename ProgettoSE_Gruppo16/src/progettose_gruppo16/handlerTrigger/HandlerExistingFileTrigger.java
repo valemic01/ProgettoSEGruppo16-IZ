@@ -14,7 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
-import progettose_gruppo16.trigger.BaseHandlerTrigger;
 
 /**
  *

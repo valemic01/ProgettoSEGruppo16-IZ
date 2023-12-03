@@ -7,7 +7,7 @@ package progettose_gruppo16.action;
 import java.io.Serializable;
 
 /**
- *
+ *Definizione dell'interfaccia Action
  * @author raffa
  */
 public interface Action extends Serializable{

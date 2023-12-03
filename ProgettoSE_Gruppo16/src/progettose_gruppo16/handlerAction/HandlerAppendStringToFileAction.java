@@ -16,7 +16,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
 /**
- *
+ *HandlerAppendStringToFileAction è una classe che gestisce la GUI e le funzionalità 
+ * necessarie per l'aggiunta di testo a un file. 
+ * Estende la classe BaseHandlerAction.
  * @author valentina <your.name at your.org>
  */
 public class HandlerAppendStringToFileAction extends BaseHandlerAction{
@@ -26,29 +28,40 @@ public class HandlerAppendStringToFileAction extends BaseHandlerAction{
     private Label labelSelectedFile = new Label();
     private String filePath;
     
+    /**
+     * Costruttore
+     * @param ap AnchorPane dove sono posizionati i componenti GUI.
+     * @param s identificatore dell'azione
+     * @param btn pulsante associato all'azione
+     */
     @Override
     public void handleGUI(AnchorPane ap, String s, Button btn){ 
         if(s.equals("Add text to file")){
+            // Cancella i componenti GUI esistenti
             ap.getChildren().clear();
             filePath = "";
             ap.setId("AppendStringPane");
             
+            // Configura l'etichetta "Insert text to append"
             labelTextField.setText("Insert text to append");
             ap.getChildren().add(labelTextField);
             labelTextField.setLayoutX(138);
             labelTextField.setLayoutY(38);
             
+            // Configura il campo di testo per l'input dell'utente
             textToAppend.setPromptText("Your text...");
             ap.getChildren().add(textToAppend);
             textToAppend.setLayoutX(99);
             textToAppend.setLayoutY(68);
             textToAppend.setPrefWidth(217);
             
+            // Configura il pulsante "Select file"
             selectFile.setText("Select file");
             ap.getChildren().add(selectFile);
             selectFile.setLayoutX(157);
             selectFile.setLayoutY(127);
             
+            // Configura l'etichetta per mostrare il file selezionato
             labelSelectedFile.setText("");
             ap.getChildren().add(labelSelectedFile);
             labelSelectedFile.setLayoutX(0);
@@ -57,12 +70,19 @@ public class HandlerAppendStringToFileAction extends BaseHandlerAction{
             labelSelectedFile.setAlignment(Pos.CENTER);
             labelSelectedFile.setTextFill(Color.web("#009999"));
             
+            // Associa il pulsante "Select file" a un'azione per scegliere un file
             selectFile.setOnAction(event -> filePath = chooseFile(labelSelectedFile));
         }else{
             super.handleGUI(ap, s, btn);
         }      
     }
     
+    /**
+     * Gestisce il comportamento in base allo stato dell'AnchorPane.
+     *
+     * @param ap L'AnchorPane che rappresenta lo stato corrente.
+     * @return Un'istanza di Action basata sullo stato corrente.
+     */
     @Override 
     public Action handleBehaviour(AnchorPane ap){     
         if(ap.getId().equals("AppendStringPane")){     
@@ -73,9 +93,15 @@ public class HandlerAppendStringToFileAction extends BaseHandlerAction{
         }else{
            return super.handleBehaviour(ap);
         }
-    }
+    } 
     
-    
+    /**
+     * Apre una finestra di dialogo per permettere all'utente di selezionare un file di testo.
+     * Sovrascrive il metodo della superclasse, specificando l'estensione del file.
+     * 
+     * @param lbl L'etichetta utilizzata per mostrare informazioni sul file selezionato.
+     * @return Il percorso assoluto del file selezionato o null se nessun file è stato selezionato.
+     */
     @Override
     public String chooseFile(Label lbl){
         FileChooser fileChooser = new FileChooser();

@@ -10,7 +10,6 @@ import java.time.DayOfWeek;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
-import progettose_gruppo16.trigger.BaseHandlerTrigger;
 
 /**
  *

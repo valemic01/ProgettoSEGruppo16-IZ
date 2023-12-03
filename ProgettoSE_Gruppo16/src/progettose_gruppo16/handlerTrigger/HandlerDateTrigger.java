@@ -12,7 +12,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.layout.AnchorPane;
-import progettose_gruppo16.trigger.BaseHandlerTrigger;
 
 /**
  *

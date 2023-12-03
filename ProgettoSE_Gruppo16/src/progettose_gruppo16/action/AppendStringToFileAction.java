@@ -12,18 +12,29 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ *Classe progettata per eseguire l'azione che consente di aggiungere una 
+ * stringa ad un file esistente.
  * @author valentina <your.name at your.org>
  */
 public class AppendStringToFileAction implements Action {
     private final String filePath;
     private final String textToAppend;
     
+    /**
+     * Costruttore della classe che inizializza il percorso del file e la stringa da aggiungere.
+     *
+     * @param filePath     Il percorso del file a cui aggiungere la stringa.
+     * @param textToAppend La stringa da aggiungere al file.
+     */
     public AppendStringToFileAction(String filePath, String textToAppend) {
         this.filePath = filePath;
         this.textToAppend = textToAppend;
     }
     
+     /**
+     * Aggiunge un testo al file.
+     * Utilizza PrintWriter e BufferedWriter per garantire una scrittura efficiente e gestire le eccezioni.
+     */
     @Override
     public void executeAction() {
        PrintWriter pw = null;
@@ -37,7 +48,11 @@ public class AppendStringToFileAction implements Action {
             pw.close();
         }
     }
-
+    
+    /**
+     * Restituisce una rappresentazione testuale della classe.
+     * @return Una stringa che rappresenta l'oggetto AppendStringToFileAction.
+     */
     @Override
     public String toString() {
         return "AppendStringToFileAction: " + filePath + "-" + textToAppend;

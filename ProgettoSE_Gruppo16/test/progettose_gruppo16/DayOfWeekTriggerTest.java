@@ -1,6 +1,5 @@
 package progettose_gruppo16;
 
-import progettose_gruppo16.trigger.DayOfWeekTrigger;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import org.junit.After;
@@ -9,6 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import progettose_gruppo16.trigger.DayOfWeekTrigger;
 
 public class DayOfWeekTriggerTest {
     

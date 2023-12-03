@@ -1,6 +1,5 @@
 package progettose_gruppo16;
 
-import progettose_gruppo16.trigger.TimeOfDayTrigger;
 import java.time.LocalTime;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -8,6 +7,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import progettose_gruppo16.trigger.TimeOfDayTrigger;
 
 public class TimeOfDayTriggerTest {
     

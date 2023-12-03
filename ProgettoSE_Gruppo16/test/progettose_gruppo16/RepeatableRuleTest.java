@@ -10,6 +10,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import progettose_gruppo16.trigger.DayOfWeekTrigger;
+import progettose_gruppo16.trigger.Trigger;
 
 /**
  * Classe test

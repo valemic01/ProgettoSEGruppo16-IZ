@@ -1,8 +1,5 @@
 package progettose_gruppo16;
 
-import progettose_gruppo16.trigger.TimeOfDayTrigger;
-import progettose_gruppo16.trigger.Trigger;
-import progettose_gruppo16.trigger.DayOfWeekTrigger;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import org.junit.After;
@@ -11,6 +8,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import progettose_gruppo16.trigger.DayOfWeekTrigger;
+import progettose_gruppo16.trigger.TimeOfDayTrigger;
+import progettose_gruppo16.trigger.Trigger;
 
 /**
  *  Test Class for One Time Rule

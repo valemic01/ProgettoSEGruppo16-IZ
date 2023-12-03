@@ -4,7 +4,6 @@
  */
 package progettose_gruppo16.handlerAction;
 
-import progettose_gruppo16.handlerAction.HandlerAction;
 import progettose_gruppo16.action.Action;
 import java.io.File;
 import javafx.scene.control.Button;
