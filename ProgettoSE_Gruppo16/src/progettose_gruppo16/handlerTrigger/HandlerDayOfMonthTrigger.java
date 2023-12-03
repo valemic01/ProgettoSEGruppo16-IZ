@@ -43,7 +43,7 @@ public class HandlerDayOfMonthTrigger extends BaseHandlerTrigger{
      * @return
      */
     @Override 
-    public Trigger handleBehaviour(AnchorPane ap){     
+    public Trigger handleBehaviour(AnchorPane ap){
         if(ap.getId().equals("DayOfMonthPane")){  
             
             return new DayOfMonthTrigger(Integer.parseInt(dayOfMonthBox.getValue()));           
@@ -52,9 +52,7 @@ public class HandlerDayOfMonthTrigger extends BaseHandlerTrigger{
         }
     }
     
-    
     private void initializeCBMonth(){
-        //inizialization of the combo boxes for the time selection (TECHNICAL DEBT!)
         for (int i = 1; i <= 31; i++) {
             dayOfMonthBox.getItems().add(String.format("%02d", i));
         }

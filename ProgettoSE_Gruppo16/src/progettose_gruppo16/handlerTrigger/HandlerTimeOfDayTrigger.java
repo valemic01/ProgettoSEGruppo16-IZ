@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
 /**
- *
+ * Classe handler che gestisce il trigger "TimeOfDayTrigger"
  * @author raffa
  */
 public class HandlerTimeOfDayTrigger extends BaseHandlerTrigger{
@@ -22,6 +22,12 @@ public class HandlerTimeOfDayTrigger extends BaseHandlerTrigger{
     private ComboBox<String> minutesCB = new ComboBox<>();
     private Label lbl = new Label(":");
     
+    /**
+     * Quando l'utente aggiunge la regola vengono presi i valori di ora e minuti dai rispettivi combo box
+     * e passati al costruttore del trigger
+     * @param ap
+     * @return
+     */
     @Override
     public Trigger handleBehaviour(AnchorPane ap) {
         if(ap.getId().equalsIgnoreCase("TimeOfDayPane")){
@@ -31,6 +37,13 @@ public class HandlerTimeOfDayTrigger extends BaseHandlerTrigger{
         else return super.handleBehaviour(ap);
     }
 
+    /**
+     * Quando si seleziona il trigger "Time of day" vengono creati dinamicamente gli elementi
+     * che permettono di impostare l'orario di attivazione del trigger (default: 00:00)
+     * @param ap
+     * @param s
+     * @param btn
+     */
     @Override
     public void handleGUI(AnchorPane ap, String s, Button btn) {
         
@@ -62,6 +75,7 @@ public class HandlerTimeOfDayTrigger extends BaseHandlerTrigger{
         }
     }
     
+    // Imposta gli elementi nelle combo box per permettere di selezionare qualsiasi orario del giorno
     private void initializeCBs(){
         for (int i = 0; i <= 23; i++) {
             hoursCB.getItems().add(String.format("%02d", i));
