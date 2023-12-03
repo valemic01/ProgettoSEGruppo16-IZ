@@ -1,5 +1,21 @@
 package progettose_gruppo16;
 
+import progettose_gruppo16.handlerTrigger.HandlerTimeOfDayTrigger;
+import progettose_gruppo16.handlerTrigger.HandlerExistingFileTrigger;
+import progettose_gruppo16.handlerTrigger.HandlerFileSizeTrigger;
+import progettose_gruppo16.handlerTrigger.HandlerDateTrigger;
+import progettose_gruppo16.handlerTrigger.HandlerDayOfWeekTrigger;
+import progettose_gruppo16.handlerTrigger.HandlerDayOfMonthTrigger;
+import progettose_gruppo16.handlerTrigger.HandlerExitStatusTrigger;
+import progettose_gruppo16.trigger.Trigger;
+import progettose_gruppo16.handlerAction.HandlerMoveFileAction;
+import progettose_gruppo16.handlerAction.HandlerShowMessageAction;
+import progettose_gruppo16.handlerAction.HandlerPlayAudioAction;
+import progettose_gruppo16.handlerAction.HandlerDeleteFileAction;
+import progettose_gruppo16.handlerAction.HandlerCopyFileAction;
+import progettose_gruppo16.handlerAction.HandlerExecuteProgramAction;
+import progettose_gruppo16.handlerAction.HandlerAppendStringToFileAction;
+import progettose_gruppo16.action.Action;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Time;

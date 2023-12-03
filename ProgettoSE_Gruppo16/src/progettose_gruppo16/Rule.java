@@ -1,5 +1,7 @@
 package progettose_gruppo16;
 
+import progettose_gruppo16.trigger.Trigger;
+import progettose_gruppo16.action.Action;
 import java.io.Serializable;
 
 /**
