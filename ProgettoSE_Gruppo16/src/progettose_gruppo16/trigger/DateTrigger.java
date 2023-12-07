@@ -8,13 +8,15 @@ import java.time.LocalDate;
 public class DateTrigger implements Trigger{
 
     private LocalDate date; 
+    private boolean not;
 
     /**
      * Costruttore che prende come paramentro la data inserita dall'utente
      * @param date
      */
-    public DateTrigger(LocalDate date) {
+    public DateTrigger(LocalDate date, boolean not) {
         this.date = date;
+        this.not = not;
     }
     
     /**
@@ -23,11 +25,14 @@ public class DateTrigger implements Trigger{
      */
     @Override
     public boolean checkCondition() {
+        if(not) return !date.equals(LocalDate.now());
         return date.equals(LocalDate.now());
     }
 
     @Override
     public String toString() {
+        if(not) 
+            return "(NOT Date: " + date + ")";
         return "Date: " + date;
     }
     

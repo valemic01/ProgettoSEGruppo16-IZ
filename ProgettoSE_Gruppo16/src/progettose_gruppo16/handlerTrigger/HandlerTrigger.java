@@ -6,6 +6,7 @@ package progettose_gruppo16.handlerTrigger;
 
 import progettose_gruppo16.trigger.Trigger;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import progettose_gruppo16.Handler;
 
 /**
@@ -15,6 +16,6 @@ import progettose_gruppo16.Handler;
 public interface HandlerTrigger extends Handler{
     
     public void setNext(HandlerTrigger h);
-    public Trigger handleBehaviour(AnchorPane ap);
+    public Trigger handleBehaviour(AnchorPane ap, HandlerTrigger ht, int x, VBox vbox);
     
 }

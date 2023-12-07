@@ -9,6 +9,7 @@ import progettose_gruppo16.action.AppendStringToFileAction;
 import java.io.File;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -35,8 +36,8 @@ public class HandlerAppendStringToFileAction extends BaseHandlerAction{
      * @param btn pulsante associato all'azione
      */
     @Override
-    public void handleGUI(AnchorPane ap, String s, Button btn){ 
-        if(s.equals("Add text to file")){
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn){ 
+        if(cb.getValue().equals("Add text to file")){
             // Cancella i componenti GUI esistenti
             ap.getChildren().clear();
             filePath = "";
@@ -73,7 +74,7 @@ public class HandlerAppendStringToFileAction extends BaseHandlerAction{
             // Associa il pulsante "Select file" a un'azione per scegliere un file
             selectFile.setOnAction(event -> filePath = chooseFile(labelSelectedFile));
         }else{
-            super.handleGUI(ap, s, btn);
+            super.handleGUI(ap, cb, btn);
         }      
     }
     

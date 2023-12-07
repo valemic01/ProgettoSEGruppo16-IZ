@@ -7,6 +7,7 @@ package progettose_gruppo16.handlerAction;
 import progettose_gruppo16.action.Action;
 import java.io.File;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
@@ -26,8 +27,8 @@ public class BaseHandlerAction implements HandlerAction{
     }
 
     @Override
-    public void handleGUI(AnchorPane ap, String s, Button btn) {
-        if(next != null) next.handleGUI(ap, s, btn);
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn) {
+        if(next != null) next.handleGUI(ap, cb, btn);
     }
 
     @Override

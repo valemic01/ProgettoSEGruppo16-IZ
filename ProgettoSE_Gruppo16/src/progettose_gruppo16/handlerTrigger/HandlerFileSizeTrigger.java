@@ -9,10 +9,12 @@ import progettose_gruppo16.trigger.FileSizeTrigger;
 import java.io.File;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
@@ -22,11 +24,6 @@ import javafx.stage.FileChooser;
  */
 public class HandlerFileSizeTrigger extends BaseHandlerTrigger{
 
-    private Button selectFile = new Button("Select file");
-    private TextField fileSize = new TextField();
-    private ComboBox<String> fileUnit = new ComboBox<>();
-    private Label labelSelectedFile = new Label();
-    private File file;
     
     /**
      * Quando l'utente aggiunge la regola vengono presi il riferimento al file selezionato (se presente),
@@ -36,20 +33,24 @@ public class HandlerFileSizeTrigger extends BaseHandlerTrigger{
      * @return
      */
     @Override
-    public Trigger handleBehaviour(AnchorPane ap) {
+    public Trigger handleBehaviour(AnchorPane ap, HandlerTrigger ht, int x, VBox notVBox) {
         long size;
         if(ap.getId().equalsIgnoreCase("FileSizePane")){
+            File file = new File(((Label) ap.getChildren().get(4)).getText());
+            TextField fileSize = (((TextField) ap.getChildren().get(1)));
+            ComboBox<String> fileUnit = (((ComboBox<String>) ap.getChildren().get(2)));
             if(file == null || fileSize.getText().isEmpty()){
                 return null;
             }
             else{
                 size = Long.parseLong(fileSize.getText());
-                return new FileSizeTrigger(file, size, fileUnit.getSelectionModel().getSelectedIndex());
+                boolean not = ((CheckBox) notVBox.getChildren().get(x-1)).isSelected();
+                return new FileSizeTrigger(file, size, fileUnit.getSelectionModel().getSelectedIndex(), not);
                 //Al costruttore del trigger viene passato l'indice della relativa unità di misura all'interno della lista (0 = B, 1 = KB, 2 = MB, 3 = GB)
 
             }
         }
-        else return super.handleBehaviour(ap);
+        else return super.handleBehaviour(ap, ht, x, notVBox);
     }
 
     /**
@@ -60,10 +61,17 @@ public class HandlerFileSizeTrigger extends BaseHandlerTrigger{
      * @param btn
      */
     @Override
-    public void handleGUI(AnchorPane ap, String s, Button btn) {
-        if(s.equalsIgnoreCase("FIle size")){
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn) {
+        if(cb.getValue().equalsIgnoreCase("FIle size")){
             ap.getChildren().clear();
             ap.setId("FileSizePane");
+            
+            Button selectFile = new Button("Select file");
+            TextField fileSize = new TextField();
+            ComboBox<String> fileUnit = new ComboBox<>();
+            Label labelSelectedFile = new Label();
+            Label filePath = new Label();
+            String file;
             
             ap.getChildren().add(selectFile);
             selectFile.setLayoutX(19);
@@ -83,30 +91,33 @@ public class HandlerFileSizeTrigger extends BaseHandlerTrigger{
             
             ap.getChildren().add(labelSelectedFile);
             labelSelectedFile.setLayoutX(-15);
-            labelSelectedFile.setLayoutY(48);
+            labelSelectedFile.setLayoutY(37);
             labelSelectedFile.setPrefWidth(344);
             labelSelectedFile.setAlignment(Pos.CENTER);
             labelSelectedFile.setTextFill(Color.web("#009999"));
             
-            selectFile.setOnAction(event -> file = chooseFile());
+            filePath.setText("");
+            filePath.setVisible(false);
+            ap.getChildren().add(filePath);
+            
+            
+            selectFile.setOnAction(event -> chooseFile(labelSelectedFile, filePath));
         }
         else{
-            super.handleGUI(ap, s, btn);
+            super.handleGUI(ap, cb, btn);
         }
     }
     
     // Metodo per selezionare un file da finestra di dialogo e mostrarne il nome tramite label
-    private File chooseFile(){
+    private void chooseFile(Label labelSelectedFile, Label filePath){
         FileChooser fileChooser = new FileChooser();
-        File filePath;
-        filePath = fileChooser.showOpenDialog(labelSelectedFile.getScene().getWindow());
-        if(filePath!=null){
-            labelSelectedFile.textProperty().set("Selected file: " + filePath.getName());
-            return filePath;
+        File file;
+        file = fileChooser.showOpenDialog(labelSelectedFile.getScene().getWindow());
+        if(file!=null){
+            filePath.setText(file.getAbsolutePath());
+            labelSelectedFile.textProperty().set("Selected file: " + file.getName());
         }else{
             labelSelectedFile.textProperty().set("File not selected");
-            return null;
         }
-    }
-    
+    }   
 }

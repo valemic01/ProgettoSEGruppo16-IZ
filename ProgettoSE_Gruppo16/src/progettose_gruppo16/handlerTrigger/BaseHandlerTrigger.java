@@ -7,7 +7,9 @@ package progettose_gruppo16.handlerTrigger;
 import progettose_gruppo16.handlerTrigger.HandlerTrigger;
 import progettose_gruppo16.trigger.Trigger;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import progettose_gruppo16.trigger.Trigger;
 
 /**
@@ -24,13 +26,13 @@ public class BaseHandlerTrigger implements HandlerTrigger{
     }
 
     @Override
-    public void handleGUI(AnchorPane ap, String s, Button btn) {
-        if(next != null) next.handleGUI(ap, s, btn);
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn) {
+        if(next != null) next.handleGUI(ap, cb, btn);
     }
 
     @Override
-    public Trigger handleBehaviour(AnchorPane ap) {
-        if(next != null) return next.handleBehaviour(ap);
+    public Trigger handleBehaviour(AnchorPane ap, HandlerTrigger ht, int x, VBox vbox) {
+        if(next != null) return next.handleBehaviour(ap, ht, x, vbox);
         return null;
     }
     

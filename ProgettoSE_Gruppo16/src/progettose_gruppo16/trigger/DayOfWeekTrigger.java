@@ -15,20 +15,25 @@ import java.util.Objects;
 public class DayOfWeekTrigger implements Trigger {
     
     private DayOfWeek dayOfWeek;
+    private boolean not;
 
-    public DayOfWeekTrigger(DayOfWeek dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;      
+    public DayOfWeekTrigger(DayOfWeek dayOfWeek, boolean not) {
+        this.dayOfWeek = dayOfWeek;
+        this.not = not;
     }
     
     
 
     @Override
     public boolean checkCondition() {
+        if(not) return !(this.dayOfWeek == LocalDate.now().getDayOfWeek());
         return this.dayOfWeek == LocalDate.now().getDayOfWeek();
     }
 
     @Override
     public String toString() {
+        if (not)
+            return "(NOT Day of the week: (" + dayOfWeek.toString().charAt(0)+dayOfWeek.toString().toLowerCase().substring(1) +")";
         return "Day of the week: " + dayOfWeek.toString().charAt(0)+dayOfWeek.toString().toLowerCase().substring(1);
     }
     

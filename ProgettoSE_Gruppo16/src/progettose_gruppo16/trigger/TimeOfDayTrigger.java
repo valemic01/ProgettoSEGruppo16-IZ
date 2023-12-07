@@ -15,13 +15,15 @@ import java.util.Objects;
  */
 public class TimeOfDayTrigger implements Trigger{
     private LocalTime time;
+    private boolean not;
 
     /**
      * costruttore
      * @param time  --> Ora e minuti selezionati dall'utente
      */
-    public TimeOfDayTrigger(LocalTime time) {
+    public TimeOfDayTrigger(LocalTime time, boolean not) {
         this.time = time;
+        this.not = not;
     }    
     
     /**
@@ -30,11 +32,14 @@ public class TimeOfDayTrigger implements Trigger{
      */
     @Override
     public boolean checkCondition() {
+        if(not) return !(this.time.getHour() == LocalTime.now().getHour() && this.time.getMinute() == LocalTime.now().getMinute());
         return this.time.getHour() == LocalTime.now().getHour() && this.time.getMinute() == LocalTime.now().getMinute();
     }   
 
     @Override
     public String toString() {
+        if (not)
+            return "(NOT Time of day - " + time +")";
         return "Time of day - " + time;
     }
     

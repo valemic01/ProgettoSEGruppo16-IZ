@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="ruleCreatePane" prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="progettose_gruppo16.ControllerRuleCreation">
@@ -18,11 +19,55 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ComboBox fx:id="trigDD1" layoutX="90.0" layoutY="68.0" onAction="#chooseTrigger" prefHeight="31.0" prefWidth="140.0" promptText="Trigger..." />
+                        <AnchorPane id="triggerPane1" fx:id="triggerPane1" layoutX="427.0" layoutY="62.0" prefHeight="45.0" prefWidth="393.0" />
+                        <AnchorPane id="triggerPane2" fx:id="triggerPane2" layoutX="427.0" layoutY="114.0" prefHeight="45.0" prefWidth="393.0" />
+                        <AnchorPane id="triggerPane3" fx:id="triggerPane3" layoutX="427.0" layoutY="165.0" prefHeight="45.0" prefWidth="393.0" />
+                        <AnchorPane id="triggerPane4" fx:id="triggerPane4" layoutX="427.0" layoutY="218.0" prefHeight="45.0" prefWidth="393.0" />
+                        <AnchorPane id="triggerPane5" fx:id="triggerPane5" layoutX="427.0" layoutY="270.0" prefHeight="45.0" prefWidth="393.0" />
+                        <AnchorPane id="triggerPane6" fx:id="triggerPane6" layoutX="427.0" layoutY="319.0" prefHeight="45.0" prefWidth="393.0" />
+                        <AnchorPane id="triggerPane7" fx:id="triggerPane7" layoutX="427.0" layoutY="371.0" prefHeight="45.0" prefWidth="393.0" />
+                        <AnchorPane id="composite1" fx:id="composite1" layoutX="14.0" layoutY="107.0" prefHeight="103.0" prefWidth="385.0" style="-fx-border-color: black;">
+                           <children>
+                              <ComboBox id="trigDD2" fx:id="trigDD2" layoutX="72.0" layoutY="14.0" onAction="#chooseTrigger" prefHeight="31.0" prefWidth="140.0" promptText="Trigger..." />
+                              <ComboBox id="trigDD3" fx:id="trigDD3" layoutX="72.0" layoutY="64.0" onAction="#chooseTrigger" prefHeight="31.0" prefWidth="140.0" promptText="Trigger..." />
+                              <ComboBox id="logicalOps1" fx:id="logicalOpsDD1" layoutX="255.0" layoutY="36.0" prefHeight="31.0" prefWidth="90.0" />
+                              <Label layoutX="353.0" layoutY="41.0" text="(1)" />
+                              <Label layoutX="224.0" layoutY="19.0" text="(2)" />
+                              <Label layoutX="224.0" layoutY="69.0" text="(3)" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane id="composite2" fx:id="composite2" layoutX="14.0" layoutY="208.0" prefHeight="103.0" prefWidth="385.0" style="-fx-border-color: black;">
+                           <children>
+                              <ComboBox fx:id="trigDD4" layoutX="72.0" layoutY="14.0" onAction="#chooseTrigger" prefHeight="31.0" prefWidth="140.0" promptText="Trigger..." />
+                              <ComboBox fx:id="trigDD5" layoutX="72.0" layoutY="64.0" onAction="#chooseTrigger" prefHeight="31.0" prefWidth="140.0" promptText="Trigger..." />
+                              <ComboBox id="logicalOps2" fx:id="logicalOpsDD2" layoutX="255.0" layoutY="36.0" prefHeight="31.0" prefWidth="90.0" />
+                              <Label layoutX="353.0" layoutY="41.0" text="(2)" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane id="composite3" fx:id="composite3" layoutX="14.0" layoutY="309.0" prefHeight="100.0" prefWidth="385.0" style="-fx-border-color: black;">
+                           <children>
+                              <ComboBox fx:id="trigDD6" layoutX="72.0" layoutY="14.0" onAction="#chooseTrigger" prefHeight="31.0" prefWidth="140.0" promptText="Trigger..." />
+                              <ComboBox fx:id="trigDD7" layoutX="72.0" layoutY="64.0" onAction="#chooseTrigger" prefHeight="31.0" prefWidth="140.0" promptText="Trigger..." />
+                              <ComboBox id="logicalOps3" fx:id="logicalOpsDD3" layoutX="255.0" layoutY="35.0" prefHeight="31.0" prefWidth="90.0" />
+                              <Label layoutX="353.0" layoutY="40.0" text="(3)" />
+                           </children>
+                        </AnchorPane>
+                        <ComboBox id="trigDD1" fx:id="trigDD1" layoutX="90.0" layoutY="68.0" onAction="#chooseTrigger" prefHeight="31.0" prefWidth="140.0" promptText="Trigger..." />
                         <Button layoutX="773.0" layoutY="443.0" mnemonicParsing="false" onAction="#goBack" text="X" />
                         <Label layoutX="729.0" layoutY="448.0" text="Close" />
-                        <AnchorPane fx:id="triggerPane" layoutX="464.0" layoutY="62.0" prefHeight="45.0" prefWidth="344.0" />
                         <Button layoutX="372.0" layoutY="433.0" mnemonicParsing="false" onAction="#toAction" prefHeight="31.0" prefWidth="82.0" text="Next" />
+                        <VBox fx:id="notVBox" layoutX="22.0" layoutY="74.0" prefHeight="371.0" prefWidth="54.0" spacing="30.0">
+                           <children>
+                              <CheckBox mnemonicParsing="false" text="Not" />
+                              <CheckBox fx:id="not2" mnemonicParsing="false" text="Not" />
+                              <CheckBox fx:id="not3" mnemonicParsing="false" text="Not" />
+                              <CheckBox fx:id="not4" mnemonicParsing="false" text="Not" />
+                              <CheckBox fx:id="not5" mnemonicParsing="false" text="Not" />
+                              <CheckBox fx:id="not6" mnemonicParsing="false" text="Not" />
+                              <CheckBox fx:id="not7" mnemonicParsing="false" text="Not" />
+                           </children>
+                        </VBox>
+                        <Label layoutX="241.0" layoutY="74.0" text="(1)" />
                      </children>
                   </AnchorPane>
                </content>

@@ -9,12 +9,14 @@ import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
-
 import progettose_gruppo16.trigger.ExistingFileTrigger;
 import progettose_gruppo16.trigger.Trigger;
 
@@ -23,12 +25,6 @@ import progettose_gruppo16.trigger.Trigger;
  */
 public class HandlerExistingFileTrigger extends BaseHandlerTrigger{
     
-    private Label labelFile = new Label();
-    private TextField textFile = new TextField();
-    private Button selectFolderBtn = new Button();
-    private Label labelFolder = new Label();
-    private Label labelSelectedFolder = new Label();
-    private String folder;
     
     /**
      * Permette all'utente di scrivere il nome del file da controllare 
@@ -38,48 +34,44 @@ public class HandlerExistingFileTrigger extends BaseHandlerTrigger{
      * @param btn
      */
     @Override
-    public void handleGUI(AnchorPane ap, String s, Button btn){ 
-        if(s.equals("Existing file")){
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn){ 
+        if(cb.getValue().equals("Existing file")){
             ap.getChildren().clear();
             ap.setId("ExistingFilePane");
             
-            labelFile.setText("Write the file to check");
-            ap.getChildren().add(labelFile);
-            labelFile.setLayoutX(0);
-            labelFile.setLayoutY(4);
-            labelFile.setPrefWidth(344);
-            labelFile.setAlignment(Pos.CENTER);
+            TextField textFile = new TextField();
+            Button selectFolderBtn = new Button();
+            Label labelSelectedFolder = new Label();
+            Label filePath= new Label();
+            
             
             textFile.setPromptText("Your file...");
             ap.getChildren().add(textFile);
-            textFile.setLayoutX(79);
-            textFile.setLayoutY(32);
-            
-            labelFolder.setText("Select the folder");
-            ap.getChildren().add(labelFolder);
-            labelFolder.setLayoutX(0);
-            labelFolder.setLayoutY(75);
-            labelFolder.setPrefWidth(344);
-            labelFolder.setAlignment(Pos.CENTER);
+            textFile.setLayoutX(0);
+            textFile.setLayoutY(7);
             
 
             selectFolderBtn.setText("Select folder");
             ap.getChildren().add(selectFolderBtn);
-            selectFolderBtn.setLayoutX(125);
-            selectFolderBtn.setLayoutY(104);
+            selectFolderBtn.setLayoutX(220);
+            selectFolderBtn.setLayoutY(7);
             
             labelSelectedFolder.setText("");
             ap.getChildren().add(labelSelectedFolder);
             labelSelectedFolder.setLayoutX(0);
-            labelSelectedFolder.setLayoutY(138);
+            labelSelectedFolder.setLayoutY(37);
             labelSelectedFolder.setPrefWidth(344);
             labelSelectedFolder.setAlignment(Pos.CENTER);
             labelSelectedFolder.setTextFill(Color.web("#009999"));
          
-            selectFolderBtn.setOnAction(event -> folder = chooseFolder());
+            filePath.setText("");
+            filePath.setVisible(false);
+            ap.getChildren().add(filePath);
+            
+            selectFolderBtn.setOnAction(event -> chooseFolder(labelSelectedFolder, filePath));
             
         }else{
-            super.handleGUI(ap, s, btn);
+            super.handleGUI(ap, cb, btn);
         }      
     }
     
@@ -90,27 +82,29 @@ public class HandlerExistingFileTrigger extends BaseHandlerTrigger{
      * @return
      */
     @Override 
-    public Trigger handleBehaviour(AnchorPane ap){     
+    public Trigger handleBehaviour(AnchorPane ap, HandlerTrigger ht, int x, VBox notVBox){     
         if(ap.getId().equals("ExistingFilePane")){
-            if(folder!=null)
-                return new ExistingFileTrigger(folder, textFile.getText()); 
+            String folder= ((Label) ap.getChildren().get(3)).getText();
+            if(folder!=null){
+                boolean not = ((CheckBox) notVBox.getChildren().get(x-1)).isSelected();
+                return new ExistingFileTrigger(folder, ((TextField) ap.getChildren().get(0)).getText(), not); 
+            }
             return null;
         }else{
-            return super.handleBehaviour(ap);
+            return super.handleBehaviour(ap, ht, x, notVBox);
         }
     }
     
-    private String chooseFolder() {
-         DirectoryChooser directoryChooser = new DirectoryChooser();
+    private void chooseFolder(Label labelSelectedFolder, Label filePath) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
         File directory;
         
         directory = directoryChooser.showDialog(labelSelectedFolder.getScene().getWindow());
         if(directory!=null){
+            filePath.setText(directory.getAbsolutePath());
             labelSelectedFolder.textProperty().set("Destination: " + directory.getName());
-            return directory.getAbsolutePath();
         }else{
             labelSelectedFolder.textProperty().set("Destination not selected");
-            return null;
         }       
     }  
 }

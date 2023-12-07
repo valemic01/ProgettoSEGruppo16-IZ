@@ -9,6 +9,7 @@ import progettose_gruppo16.action.Action;
 import java.io.File;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -32,8 +33,8 @@ public class HandlerPlayAudioAction extends BaseHandlerAction{
      * @param btn Il pulsante associato all'azione.
      */
     @Override
-    public void handleGUI(AnchorPane ap, String s, Button btn){ 
-        if(s.equals("Play audio")){
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn){ 
+        if(cb.getValue().equals("Play audio")){
             // Cancella i componenti GUI esistenti
             ap.getChildren().clear();
             filePath = "";
@@ -57,7 +58,7 @@ public class HandlerPlayAudioAction extends BaseHandlerAction{
             // Associa il pulsante "Select audio" a un'azione per scegliere un file audio
             selectAudioBtn.setOnAction(event -> filePath = chooseFile(labelAudioSelected));
         }else{
-            super.handleGUI(ap, s, btn);
+            super.handleGUI(ap, cb, btn);
         }      
     }
     

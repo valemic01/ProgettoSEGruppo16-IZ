@@ -8,16 +8,16 @@ import progettose_gruppo16.trigger.Trigger;
 import progettose_gruppo16.trigger.DayOfWeekTrigger;
 import java.time.DayOfWeek;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 /**
  * Classe handler che gestisce il trigger "DayOfWeekTrigger"
  * @author raffa
  */
 public class HandlerDayOfWeekTrigger extends BaseHandlerTrigger{
-
-    ComboBox<String> daysCB = new ComboBox<>();
     
     /**
      * Quando l'utente aggiunge la regola viene preso il valore del giorno della settimana selezionato
@@ -26,40 +26,40 @@ public class HandlerDayOfWeekTrigger extends BaseHandlerTrigger{
      * @return
      */
     @Override
-    public Trigger handleBehaviour(AnchorPane ap) {
+    public Trigger handleBehaviour(AnchorPane ap, HandlerTrigger ht, int x, VBox notVBox) {
         if(ap.getId().equalsIgnoreCase("DayOfWeekPane")){
-            return new DayOfWeekTrigger(DayOfWeek.valueOf(daysCB.getValue().toUpperCase()));
+            boolean not = ((CheckBox) notVBox.getChildren().get(x-1)).isSelected();
+            return new DayOfWeekTrigger(DayOfWeek.valueOf(((ComboBox<String>) ap.getChildren().get(0)).getValue().toUpperCase()), not);
         }
-        return super.handleBehaviour(ap);
+        return super.handleBehaviour(ap, ht, x, notVBox);
     }
 
     /**
      * Quando si seleziona il trigger "Day of the week" viene creato dinamicamente l'elemento
      * che permette di selezionare il giorno della settimana (default: Monday)
      * @param ap
-     * @param s
      * @param btn
      */
     @Override
-    public void handleGUI(AnchorPane ap, String s, Button btn) {
-        if(s.equalsIgnoreCase("Day of the week")){
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn) {
+        if(cb.getValue().equalsIgnoreCase("Day of the week")){
             ap.getChildren().clear();
             ap.setId("DayOfWeekPane");
             
-            initializeCB();
+            ComboBox<String> daysCB = new ComboBox<>();
+            initializeCB(daysCB);
             ap.getChildren().add(daysCB);
             daysCB.setLayoutX(100);
             daysCB.setLayoutY(7);
             daysCB.setValue("Monday");
         }
         else{
-            daysCB.setValue("Monday");
-            super.handleGUI(ap, s, btn);
+            super.handleGUI(ap, cb, btn);
         }
     }
     
     // Imppsta gli elementi nel combo box per permettere di selezionare qualsiasi giorno della settimana
-    private void initializeCB(){
+    private void initializeCB(ComboBox<String> daysCB){
         daysCB.getItems().add("Monday");
         daysCB.getItems().add("Tuesday");
         daysCB.getItems().add("Wednesday");

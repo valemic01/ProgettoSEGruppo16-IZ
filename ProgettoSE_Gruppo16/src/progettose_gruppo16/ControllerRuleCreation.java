@@ -37,7 +37,9 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import progettose_gruppo16.handlerTrigger.HandlerComposite;
 
 /**
  *  Implementazione del controller che gestisce la schermata di creazione delle regole
@@ -90,16 +92,68 @@ public class ControllerRuleCreation implements Initializable {
     private HandlerAppendStringToFileAction h6 = new HandlerAppendStringToFileAction();
     private HandlerExecuteProgramAction h14= new HandlerExecuteProgramAction();
     
+    private HandlerComposite h15 = new HandlerComposite();
     private HandlerTimeOfDayTrigger h7 = new HandlerTimeOfDayTrigger();
     private HandlerDayOfWeekTrigger h8 = new HandlerDayOfWeekTrigger();
     private HandlerDayOfMonthTrigger h9= new HandlerDayOfMonthTrigger();
     private HandlerDateTrigger h10= new HandlerDateTrigger();
     private HandlerFileSizeTrigger h11 = new HandlerFileSizeTrigger();
     private HandlerExistingFileTrigger h12= new HandlerExistingFileTrigger();
-    private HandlerExitStatusTrigger h13= new HandlerExitStatusTrigger();      
+    private HandlerExitStatusTrigger h13= new HandlerExitStatusTrigger(); 
+    
     
     @FXML
-    private AnchorPane triggerPane;
+    private ComboBox<String> trigDD2;
+    @FXML
+    private ComboBox<String> trigDD3;
+    @FXML
+    private AnchorPane triggerPane2;
+    @FXML
+    private AnchorPane triggerPane3;
+    @FXML
+    private AnchorPane triggerPane4;
+    @FXML
+    private AnchorPane triggerPane5;
+    @FXML
+    private AnchorPane triggerPane6;
+    @FXML
+    private AnchorPane triggerPane7;
+    @FXML
+    private ComboBox<String> trigDD4;
+    @FXML
+    private ComboBox<String> trigDD5;
+    @FXML
+    private ComboBox<String> trigDD6;
+    @FXML
+    private ComboBox<String> trigDD7;
+    @FXML
+    private AnchorPane composite1;
+    @FXML
+    private AnchorPane composite2;
+    @FXML
+    private AnchorPane composite3;
+    @FXML
+    private AnchorPane triggerPane1;
+    @FXML
+    private ComboBox<String> logicalOpsDD1;
+    @FXML
+    private ComboBox<String> logicalOpsDD2;
+    @FXML
+    private ComboBox<String> logicalOpsDD3;
+    @FXML
+    private VBox notVBox;
+    @FXML
+    private CheckBox not2;
+    @FXML
+    private CheckBox not3;
+    @FXML
+    private CheckBox not4;
+    @FXML
+    private CheckBox not5;
+    @FXML
+    private CheckBox not6;
+    @FXML
+    private CheckBox not7;
 
     /**
      *  Inizializzazione delle componenti dell'interfaccia utente
@@ -115,13 +169,17 @@ public class ControllerRuleCreation implements Initializable {
         allRulesList = ruleManager.getAllRulesList();
         
         //inizialization of the combo boxes for trigger and actions
-        trigDD1.getItems().add("Time of day");
-        trigDD1.getItems().add("Day of the week");
-        trigDD1.getItems().add("Day of month");
-        trigDD1.getItems().add("Date");
-        trigDD1.getItems().add("File size");
-        trigDD1.getItems().add("Existing file");
-        trigDD1.getItems().add("Exit status");
+        initializeTrigDD(trigDD1);
+        initializeTrigDD(trigDD2);
+        initializeTrigDD(trigDD3);
+        initializeTrigDD(trigDD4);
+        initializeTrigDD(trigDD5);
+        initializeTrigDD(trigDD6);
+        initializeTrigDD(trigDD7);
+        
+        initializeLogOpsDD(logicalOpsDD1);
+        initializeLogOpsDD(logicalOpsDD2);
+        initializeLogOpsDD(logicalOpsDD3);
         
         actionDD1.getItems().add("Show message");
         actionDD1.getItems().add("Play audio");
@@ -137,6 +195,24 @@ public class ControllerRuleCreation implements Initializable {
         //binding to disable the add rule button if the rule name, the action or the trigger are not selected
         addRuleBtn.disableProperty().bind(Bindings.isEmpty(ruleNameTxtBox.textProperty()).or(Bindings.isNull(trigDD1.valueProperty())).or(Bindings.isNull(actionDD1.valueProperty())).or((Bindings.isEmpty(slepPerDays.textProperty()).or(Bindings.isEmpty(slepPerHours.textProperty())).or(Bindings.isEmpty(slepPerMins.textProperty()))).and(sleepingPeriodPane.visibleProperty())));
         
+        composite1.visibleProperty().bind(Bindings.createBooleanBinding(() ->"Composite".equals(trigDD1.getSelectionModel().getSelectedItem()),trigDD1.getSelectionModel().selectedItemProperty()));
+        triggerPane2.visibleProperty().bind(composite1.visibleProperty());
+        triggerPane3.visibleProperty().bind(composite1.visibleProperty());
+        not2.visibleProperty().bind(composite1.visibleProperty());
+        not3.visibleProperty().bind(composite1.visibleProperty());
+        
+        composite2.visibleProperty().bind(Bindings.createBooleanBinding(() ->"Composite".equals(trigDD2.getSelectionModel().getSelectedItem()),trigDD2.getSelectionModel().selectedItemProperty()).and(composite1.visibleProperty()));
+        triggerPane4.visibleProperty().bind(composite2.visibleProperty());
+        triggerPane5.visibleProperty().bind(composite2.visibleProperty());
+        not4.visibleProperty().bind(composite2.visibleProperty());
+        not5.visibleProperty().bind(composite2.visibleProperty());
+
+        composite3.visibleProperty().bind(Bindings.createBooleanBinding(() ->"Composite".equals(trigDD3.getSelectionModel().getSelectedItem()),trigDD3.getSelectionModel().selectedItemProperty()).and(composite1.visibleProperty()));
+        triggerPane6.visibleProperty().bind(composite3.visibleProperty());
+        triggerPane7.visibleProperty().bind(composite3.visibleProperty());
+        not6.visibleProperty().bind(composite3.visibleProperty());
+        not7.visibleProperty().bind(composite3.visibleProperty());
+        
         //creation of the handlers chains
         //action
         h1.setNext(h2);
@@ -147,13 +223,33 @@ public class ControllerRuleCreation implements Initializable {
         h6.setNext(h14);
         
         //trigger
+        h15.setNext(h7);
         h7.setNext(h8);
         h8.setNext(h9);
         h9.setNext(h10);
         h10.setNext(h11);
         h11.setNext(h12);
         h12.setNext(h13);
-    }    
+    }
+    
+    private void initializeTrigDD(ComboBox<String> cb){
+        int i;
+        cb.getItems().add("Time of day");
+        cb.getItems().add("Day of the week");
+        cb.getItems().add("Day of month");
+        cb.getItems().add("Date");
+        cb.getItems().add("File size");
+        cb.getItems().add("Existing file");
+        cb.getItems().add("Exit status");
+        if(Integer.parseInt(cb.getId().substring(6))<4)
+            cb.getItems().add("Composite");
+    }
+    
+    private void initializeLogOpsDD(ComboBox<String> cb){
+        cb.getItems().add("AND");
+        cb.getItems().add("OR");
+        cb.setValue("AND");
+    }
 
     /**
      * Metodo che consente di passare dalla schermata di creazione delle regole alla
@@ -209,7 +305,7 @@ public class ControllerRuleCreation implements Initializable {
         int days;
         
         //get che selected trigger from the trigger handlers chain
-        trigger = h7.handleBehaviour(triggerPane);
+        trigger = h15.handleBehaviour(triggerPane1, h15, 1, notVBox);
         
         //get che selected action from the action handlers chain
         action = h1.handleBehaviour(actionPane);
@@ -244,12 +340,38 @@ public class ControllerRuleCreation implements Initializable {
 
     @FXML
     private void chooseAction(ActionEvent event) {
-        h1.handleGUI(actionPane, actionDD1.getValue(), addRuleBtn);
+        h1.handleGUI(actionPane, actionDD1, addRuleBtn);
     }
 
     @FXML
     private void chooseTrigger(ActionEvent event) {
-        h7.handleGUI(triggerPane, trigDD1.getValue(), addRuleBtn);
+        ComboBox<String> cb = (ComboBox<String>) event.getSource();
+        String n = cb.getId().substring(6);
+        AnchorPane ap;
+        switch (n) {
+            case "1":
+                ap = triggerPane1;
+                break;
+            case "2":
+                ap = triggerPane2;
+                break;
+            case "3":
+                ap = triggerPane3;
+                break;
+            case "4":
+                ap = triggerPane4;
+                break;
+            case "5":
+                ap = triggerPane5;
+                break;
+            case "6":
+                ap = triggerPane6;
+                break;
+            default:
+                ap = triggerPane7;
+                break;
+        }
+        h15.handleGUI(ap, cb, addRuleBtn);
     }
     
 }

@@ -18,6 +18,7 @@ public class ExitStatusTrigger implements Trigger {
     private String path;
     private String args;
     private int exitStatus;
+    private boolean not;
 
     /**
      *
@@ -25,10 +26,11 @@ public class ExitStatusTrigger implements Trigger {
      * @param args  --> lista di argomenti
      * @param exitStatus
      */
-    public ExitStatusTrigger(String path, String args, int exitStatus) {
+    public ExitStatusTrigger(String path, String args, int exitStatus, boolean not) {
         this.path = path;
         this.args = args;
         this.exitStatus = exitStatus;
+        this.not = not;
     }
 
     /**
@@ -55,17 +57,21 @@ public class ExitStatusTrigger implements Trigger {
             ProcessBuilder pb= new ProcessBuilder(list); 
             Process process= pb.start();          
             int exitStatusProcess= process.waitFor();  //è un metodo bloccante
-            if (exitStatusProcess==exitStatus)
-                return true;
+            if (exitStatusProcess==exitStatus){
+                return !not;
+            }
+            
         } catch (IOException | InterruptedException ex) {
             ex.printStackTrace();
         }
-        return false;
+        return not;
     }
 
     @Override
     public String toString() {     
         String filename = path.substring(path.lastIndexOf('\\')+1);
+        if (not)
+            return "(NOT (Program: " + filename + " ExitStatus: " + exitStatus + "))";
         return "Program: " + filename + " ExitStatus: " + exitStatus;
     }   
 }

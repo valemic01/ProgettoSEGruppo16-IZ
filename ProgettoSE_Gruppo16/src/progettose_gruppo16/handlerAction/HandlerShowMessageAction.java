@@ -8,6 +8,7 @@ import progettose_gruppo16.action.ShowMessageAction;
 import progettose_gruppo16.action.Action;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
@@ -27,8 +28,8 @@ public class HandlerShowMessageAction extends BaseHandlerAction{
      * @param btn Il pulsante associato all'azione.
      */
     @Override
-    public void handleGUI(AnchorPane ap, String s, Button btn){ 
-        if(s.equals("Show message")){
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn){ 
+        if(cb.getValue().equals("Show message")){
             // Cancella i componenti GUI esistenti
             ap.getChildren().clear();
             ap.setId("ShowMessagePane");
@@ -41,7 +42,7 @@ public class HandlerShowMessageAction extends BaseHandlerAction{
             messTxtBox.setPrefWidth(200);
             messTxtBox.setPrefHeight(31);
         }else{
-            super.handleGUI(ap, s, btn);
+            super.handleGUI(ap, cb, btn);
         }      
     }
     

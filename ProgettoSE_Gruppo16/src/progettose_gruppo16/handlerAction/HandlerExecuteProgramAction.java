@@ -4,6 +4,7 @@ package progettose_gruppo16.handlerAction;
 import java.io.File;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -32,8 +33,8 @@ public class HandlerExecuteProgramAction extends BaseHandlerAction{
      * @param btn
      */
     @Override
-    public void handleGUI(AnchorPane ap, String s, Button btn){ 
-        if(s.equals("Execute program")){
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn){ 
+        if(cb.getValue().equals("Execute program")){
             ap.getChildren().clear();
             ap.setId("ExecuteProgramPane");
             
@@ -73,7 +74,7 @@ public class HandlerExecuteProgramAction extends BaseHandlerAction{
             selectFileBtn.setOnAction(event -> file = chooseFile(labelSelectedFile));
             
         }else{
-            super.handleGUI(ap, s, btn);
+            super.handleGUI(ap, cb, btn);
         }      
     }
     

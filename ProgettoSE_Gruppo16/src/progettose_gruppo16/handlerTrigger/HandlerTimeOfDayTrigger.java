@@ -8,19 +8,17 @@ import progettose_gruppo16.trigger.TimeOfDayTrigger;
 import progettose_gruppo16.trigger.Trigger;
 import java.time.LocalTime;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 /**
  * Classe handler che gestisce il trigger "TimeOfDayTrigger"
  * @author raffa
  */
 public class HandlerTimeOfDayTrigger extends BaseHandlerTrigger{
-
-    private ComboBox<String> hoursCB = new ComboBox<>();
-    private ComboBox<String> minutesCB = new ComboBox<>();
-    private Label lbl = new Label(":");
     
     /**
      * Quando l'utente aggiunge la regola vengono presi i valori di ora e minuti dai rispettivi combo box
@@ -29,12 +27,14 @@ public class HandlerTimeOfDayTrigger extends BaseHandlerTrigger{
      * @return
      */
     @Override
-    public Trigger handleBehaviour(AnchorPane ap) {
+    public Trigger handleBehaviour(AnchorPane ap, HandlerTrigger ht, int x, VBox notVBox) {
         if(ap.getId().equalsIgnoreCase("TimeOfDayPane")){
-            LocalTime time = LocalTime.of(Integer.parseInt(hoursCB.getValue()), Integer.parseInt(minutesCB.getValue()));
-            return new TimeOfDayTrigger(time);
+    
+            boolean not = ((CheckBox) notVBox.getChildren().get(x-1)).isSelected();
+            LocalTime time = LocalTime.of(Integer.parseInt(((ComboBox<String>) ap.getChildren().get(0)).getValue()), Integer.parseInt(((ComboBox<String>) ap.getChildren().get(2)).getValue()));
+            return new TimeOfDayTrigger(time, not);
         }
-        else return super.handleBehaviour(ap);
+        else return super.handleBehaviour(ap, ht, x, notVBox);
     }
 
     /**
@@ -45,13 +45,17 @@ public class HandlerTimeOfDayTrigger extends BaseHandlerTrigger{
      * @param btn
      */
     @Override
-    public void handleGUI(AnchorPane ap, String s, Button btn) {
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn) {
         
-        if(s.equalsIgnoreCase("Time of day")){
+        if(cb.getValue().equalsIgnoreCase("Time of day")){
             ap.getChildren().clear();
             ap.setId("TimeOfDayPane");
             
-            initializeCBs();
+            ComboBox<String> hoursCB = new ComboBox<>();
+            ComboBox<String> minutesCB = new ComboBox<>();
+            Label lbl = new Label(":");
+            
+            initializeCBs(hoursCB, minutesCB);
             hoursCB.setValue("00");
             minutesCB.setValue("00");
 
@@ -71,12 +75,12 @@ public class HandlerTimeOfDayTrigger extends BaseHandlerTrigger{
             
         }
         else{
-            super.handleGUI(ap, s, btn);        
+            super.handleGUI(ap, cb, btn);        
         }
     }
     
     // Imposta gli elementi nelle combo box per permettere di selezionare qualsiasi orario del giorno
-    private void initializeCBs(){
+    private void initializeCBs(ComboBox<String> hoursCB, ComboBox<String> minutesCB){
         for (int i = 0; i <= 23; i++) {
             hoursCB.getItems().add(String.format("%02d", i));
         }

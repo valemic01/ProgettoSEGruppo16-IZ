@@ -4,12 +4,13 @@ import java.time.LocalDate;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.layout.AnchorPane;
-
+import javafx.scene.layout.VBox;
 import progettose_gruppo16.trigger.DateTrigger;
 import progettose_gruppo16.trigger.Trigger;
-
 
 /**
  *
@@ -17,7 +18,6 @@ import progettose_gruppo16.trigger.Trigger;
  */
 public class HandlerDateTrigger extends BaseHandlerTrigger{
     
-    private DatePicker date= new DatePicker();
             
     /**
      * Permette all'utente di selezionare una data (non precedente a quella attuale) 
@@ -27,11 +27,11 @@ public class HandlerDateTrigger extends BaseHandlerTrigger{
      * @param btn
      */
     @Override
-    public void handleGUI(AnchorPane ap, String s, Button btn){
-        if(s.equals("Date")){
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn){
+        if(cb.getValue().equals("Date")){
             ap.getChildren().clear();
             ap.setId("DatePane");
-        
+            DatePicker date= new DatePicker();
             ap.getChildren().add(date);
             date.setLayoutX(40);
             date.setLayoutY(0);
@@ -48,24 +48,27 @@ public class HandlerDateTrigger extends BaseHandlerTrigger{
             });
         }
         else{
-            super.handleGUI(ap, s, btn);
+            super.handleGUI(ap, cb, btn);
         }
     }
     
     /**
      * Se l'utente ha selezionato una data, allora viene creato un oggetto di tipo DateTrigger
      * @param ap
+     * @param ht
      * @return
      */
     @Override 
-    public Trigger handleBehaviour(AnchorPane ap){     
-        if(ap.getId().equals("DatePane")){     
-            if (date.getValue()!=null)
-                return new DateTrigger(date.getValue());   
+    public Trigger handleBehaviour(AnchorPane ap, HandlerTrigger ht, int x, VBox notVBox){     
+        if(ap.getId().equals("DatePane")){  
+            boolean not = ((CheckBox) notVBox.getChildren().get(x-1)).isSelected();
+            LocalDate date= ((DatePicker) ap.getChildren().get(0)).getValue();
+            if (date!=null)
+                    return new DateTrigger(date, not);
             else
                 return null;
         }else{
-            return super.handleBehaviour(ap);
+            return super.handleBehaviour(ap, ht, x, notVBox);
         }
     }
 }

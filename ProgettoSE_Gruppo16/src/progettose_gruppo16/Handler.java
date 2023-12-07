@@ -5,6 +5,7 @@
 package progettose_gruppo16;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -12,5 +13,5 @@ import javafx.scene.layout.AnchorPane;
  * @author raffa
  */
 public interface Handler {
-    public void handleGUI(AnchorPane ap, String s, Button btn);
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn);
 }

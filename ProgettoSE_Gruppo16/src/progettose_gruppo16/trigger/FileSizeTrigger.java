@@ -17,11 +17,13 @@ public class FileSizeTrigger implements Trigger {
     private File file;
     private long size;
     private int exp;
+    private boolean not;
 
-    public FileSizeTrigger(File file, long size, int exp) {
+    public FileSizeTrigger(File file, long size, int exp, boolean not) {
         this.file = file;
         this.size = size;
         this.exp = exp;
+        this.not = not;
     }
 
     @Override
@@ -30,12 +32,15 @@ public class FileSizeTrigger implements Trigger {
         if(exp != 0){
            s = (long) (size*(Math.pow(1024, exp)));
         }
+        if(not) return !(file.length()>=s);
         return file.length()>=s;
     }
 
     @Override
     public String toString() {
-        return "File size: " + file.getName() + " > " + size + ((exp == 0) ? "B" : (exp == 1) ? "KB" : (exp == 2) ? "MB" : "GB");
+        if (not)
+            return "File size: " + file.getName() + " < " + size + ((exp == 0) ? "B" : (exp == 1) ? "KB" : (exp == 2) ? "MB" : "GB");
+        return "File size: " + file.getName() + " >= " + size + ((exp == 0) ? "B" : (exp == 1) ? "KB" : (exp == 2) ? "MB" : "GB");
     }
     
 }
