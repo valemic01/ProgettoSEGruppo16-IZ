@@ -1,13 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package progettose_gruppo16.handlerTrigger;
 
 import progettose_gruppo16.trigger.TimeOfDayTrigger;
 import progettose_gruppo16.trigger.Trigger;
 import java.time.LocalTime;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -15,19 +10,19 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 /**
- * Classe handler che gestisce il trigger "TimeOfDayTrigger"
- * @author raffa
+ * Handler class for the "TimeOfDayTrigger" trigger.
+ * Manages the behavior and GUI for the TimeOfDayTrigger.
  */
 public class HandlerTimeOfDayTrigger extends BaseHandlerTrigger{
     
     /**
-     * Quando l'utente aggiunge la regola vengono presi i valori di ora e minuti dai rispettivi combo box
-     * e passati al costruttore del trigger
-     * @param ap
-     * @param ht
-     * @param x
-     * @param notVBox
-     * @return
+     * When the user adds the rule, the values of hours and minutes are taken from their respective combo boxes
+     * and passed to the trigger constructor.
+     * @param ap AnchorPane containing the GUI elements
+     * @param ht HandlerTrigger instance
+     * @param x Integer parameter for trigger behavior
+     * @param notVBox VBox containing "not" CheckBox elements
+     * @return Trigger object representing the time of day trigger
      */
     @Override
     public Trigger handleBehaviour(AnchorPane ap, HandlerTrigger ht, int x, VBox notVBox) {
@@ -41,10 +36,10 @@ public class HandlerTimeOfDayTrigger extends BaseHandlerTrigger{
     }
 
     /**
-     * Quando si seleziona il trigger "Time of day" vengono creati dinamicamente gli elementi
-     * che permettono di impostare l'orario di attivazione del trigger (default: 00:00)
-     * @param ap
-     * @param cb
+     * When the "Time of day" trigger is selected, dynamically creates elements
+     * to set the activation time of the trigger (default: 00:00).
+     * @param ap AnchorPane to modify
+     * @param cb ComboBox representing the trigger type
      */
     @Override
     public void handleGUI(AnchorPane ap, ComboBox<String> cb) {
@@ -81,7 +76,11 @@ public class HandlerTimeOfDayTrigger extends BaseHandlerTrigger{
         }
     }
     
-    // Imposta gli elementi nelle combo box per permettere di selezionare qualsiasi orario del giorno
+    /**
+     * Initializes the items in the combo boxes to allow selecting any time of the day.
+     * @param hoursCB ComboBox for selecting hours
+     * @param minutesCB ComboBox for selecting minutes
+     */
     private void initializeCBs(ComboBox<String> hoursCB, ComboBox<String> minutesCB){
         for (int i = 0; i <= 23; i++) {
             hoursCB.getItems().add(String.format("%02d", i));

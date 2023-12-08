@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package progettose_gruppo16.handlerTrigger;
 
 import progettose_gruppo16.trigger.Trigger;
@@ -19,21 +15,21 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
 /**
- * Classe handler che gestisce il trigger "FileSizeTrigger"
- * @author raffa
+ * Handler class for the "FileSizeTrigger" trigger.
+ * Handles the behavior and GUI for the FileSizeTrigger.
  */
 public class HandlerFileSizeTrigger extends BaseHandlerTrigger{
 
     
     /**
-     * Quando l'utente aggiunge la regola vengono presi il riferimento al file selezionato (se presente),
-     * il valore della dimensione di riferimento e la sua unità di misura (tramite indice), e passati
-     * al costruttore del trigger
-     * @param ap
-     * @param ht
-     * @param x
-     * @param notVBox
-     * @return
+     * When the user adds the rule, the reference to the selected file (if present),
+     * the reference size value, and its unit of measure (by index) are taken and passed
+     * to the trigger constructor.
+     * @param ap AnchorPane containing the GUI elements
+     * @param ht HandlerTrigger instance
+     * @param x Integer parameter for trigger behavior
+     * @param notVBox VBox containing "not" CheckBox elements
+     * @return Trigger object representing the file size trigger
      */
     @Override
     public Trigger handleBehaviour(AnchorPane ap, HandlerTrigger ht, int x, VBox notVBox) {
@@ -49,7 +45,7 @@ public class HandlerFileSizeTrigger extends BaseHandlerTrigger{
                 size = Long.parseLong(fileSize.getText());
                 boolean not = ((CheckBox) notVBox.getChildren().get(x-1)).isSelected();
                 return new FileSizeTrigger(file, size, fileUnit.getSelectionModel().getSelectedIndex(), not);
-                //Al costruttore del trigger viene passato l'indice della relativa unità di misura all'interno della lista (0 = B, 1 = KB, 2 = MB, 3 = GB)
+                //To the trigger constructor is given the index representing the measurament unit(0 = B, 1 = KB, 2 = MB, 3 = GB)
 
             }
         }
@@ -57,10 +53,10 @@ public class HandlerFileSizeTrigger extends BaseHandlerTrigger{
     }
 
     /**
-     * Quando si seleziona il trigger "File size" vengono creati dinamicamente gli elementi
-     * che permettono di selezionare il file ed impostare la dimensione di soglia
-     * @param ap
-     * @param cb
+     * When the "File size" trigger is selected, dynamically creates elements
+     * to select the file and set the threshold size.
+     * @param ap AnchorPane to modify
+     * @param cb ComboBox representing the trigger type
      */
     @Override
     public void handleGUI(AnchorPane ap, ComboBox<String> cb) {
@@ -97,6 +93,7 @@ public class HandlerFileSizeTrigger extends BaseHandlerTrigger{
             labelSelectedFile.setAlignment(Pos.CENTER);
             labelSelectedFile.setTextFill(Color.web("#009999"));
             
+            // invisible label to pass the file path string to the handleBehaviour method
             filePath.setText("");
             filePath.setVisible(false);
             ap.getChildren().add(filePath);
@@ -109,7 +106,11 @@ public class HandlerFileSizeTrigger extends BaseHandlerTrigger{
         }
     }
     
-    // Metodo per selezionare un file da finestra di dialogo e mostrarne il nome tramite label
+    /**
+     * Method to choose a file from a dialog window and display its name through a label.
+     * @param labelSelectedFile Label displaying the selected file
+     * @param filePath The label to pass the file path.
+     */
     private void chooseFile(Label labelSelectedFile, Label filePath){
         FileChooser fileChooser = new FileChooser();
         File file;
