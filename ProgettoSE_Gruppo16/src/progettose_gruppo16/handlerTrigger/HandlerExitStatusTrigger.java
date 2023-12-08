@@ -126,7 +126,7 @@ public class HandlerExitStatusTrigger extends BaseHandlerTrigger {
     // permette di selezionare un file
     private void chooseFile(Label labelSelectedFile, Label filePath){
         FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter filter= new FileChooser.ExtensionFilter ("Accepted extensions (*.exe), (*.jar)", "*.exe", "*.jar");
+        FileChooser.ExtensionFilter filter= new FileChooser.ExtensionFilter ("Accepted extensions (*.exe, *.jar, *.bat, *.ps1)", "*.exe", "*.jar", "*.bat", "*.ps1");
         fileChooser.getExtensionFilters().add(filter);
         File file = fileChooser.showOpenDialog(labelSelectedFile.getScene().getWindow());
         if(file!=null){    

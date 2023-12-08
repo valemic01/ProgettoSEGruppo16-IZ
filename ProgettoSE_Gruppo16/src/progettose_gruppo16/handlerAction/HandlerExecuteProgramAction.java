@@ -102,7 +102,7 @@ public class HandlerExecuteProgramAction extends BaseHandlerAction{
     public String chooseFile(Label lbl){
         FileChooser fileChooser = new FileChooser();
         String path;
-        FileChooser.ExtensionFilter filter= new FileChooser.ExtensionFilter ("Accepted extensions (*.exe), (*.jar)", "*.exe", "*.jar");
+        FileChooser.ExtensionFilter filter= new FileChooser.ExtensionFilter ("Accepted extensions (*.exe, *.jar, *.bat, *.ps1)", "*.exe", "*.jar", "*.bat", "*.ps1");
         fileChooser.getExtensionFilters().add(filter);
         File filePath = fileChooser.showOpenDialog(selectFileBtn.getScene().getWindow());
         if(filePath!=null){           
