@@ -1,19 +1,21 @@
-
 package progettose_gruppo16.trigger;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- * Classe che implementa l'interfaccia trigger per controllare se l'exitstatus atteso dall'utente coincide con quello del programma
- * esterno che ha scelto di eseguire.
+ * Implements the Trigger interface for checking if the exit status matches the expected exit status
+ * of an external program chosen by the user.
+ * 
+ * The class uses ProcessBuilder to execute an external program and captures its exit status.
+ * The trigger can also be negated to check for inequality.
+ * 
+ * Supports execution of JAR, PS1, EXE, or BAT files.
+ * 
  */
-public class ExitStatusTrigger implements Trigger {
+public class ExitStatusTrigger implements Trigger{
     
     private String path;
     private String args;
@@ -21,12 +23,14 @@ public class ExitStatusTrigger implements Trigger {
     private boolean not;
 
     /**
-     *
-     * @param path  -->path del programma da eseguire
-     * @param args  --> lista di argomenti
-     * @param exitStatus
+     * Constructs an ExitStatusTrigger with the specified program path, arguments, exit status, and negation status.
+     * 
+     * @param path The path of the program to be executed.
+     * @param args The list of arguments to be passed to the program.
+     * @param exitStatus The expected exit status.
+     * @param not True if the trigger should check for non-matching exit status, false for matching exit status.
      */
-    public ExitStatusTrigger(String path, String args, int exitStatus, boolean not) {
+    public ExitStatusTrigger(String path, String args, int exitStatus, boolean not){
         this.path = path;
         this.args = args;
         this.exitStatus = exitStatus;
@@ -34,41 +38,49 @@ public class ExitStatusTrigger implements Trigger {
     }
 
     /**
-     * Costruisce il processo tramite il path del programma e la lista di argomenti; dopodichè fa partire la sua esecuzione
-     * e salva l'exit status.
-     * Viene passato al ProcessBuilder una lista contenente il programma e gli argomenti passati a linea di comando.
-     * Se il formato del programma è jar, la lista contiene anche "java -jar".
-     * @return true se l'exit status del programma coincide con quello inserito dall'utente; false altrimenti
+     * Executes the external program, captures its exit status, and checks if it matches the expected exit status,
+     * considering negation status.
+     * 
+     * @return True if the exit status matches the expected exit status, false otherwise.
      */
     @Override
-    public boolean checkCondition() {
+    public boolean checkCondition(){
         try {            
             List<String> list= new LinkedList<>();
-            if (path.substring(path.lastIndexOf('.')+1).equals("jar")){  //file jar
+            if (path.substring(path.lastIndexOf('.')+1).equals("jar")){  // JAR file
                 list.add("java");
                 list.add("-jar");
             }
-            //altrimenti file exe
+            if (path.substring(path.lastIndexOf('.')+1).equals("ps1")){  // PowerShell script
+                list.add("powershell.exe");
+                list.add("-File");
+            }
+            // Otherwise, it's an EXE or BAT file
             list.add(path);
             StringTokenizer st= new StringTokenizer(args);
             while(st.hasMoreTokens()){
-                list.add(st.nextToken(" "));
+                list.add(st.nextToken(" "));  // Add arguments to the command list
             }
+             // Build and start the process
             ProcessBuilder pb= new ProcessBuilder(list); 
             Process process= pb.start();          
-            int exitStatusProcess= process.waitFor();  //è un metodo bloccante
-            if (exitStatusProcess==exitStatus){
+            int exitStatusProcess= process.waitFor();   // Wait for the process to complete and get the exit status
+            if (exitStatusProcess == exitStatus){
                 return !not;
-            }
-            
+            }           
         } catch (IOException | InterruptedException ex) {
             ex.printStackTrace();
         }
         return not;
     }
 
+    /**
+     * Returns a string representation of the ExitStatusTrigger, including negation status.
+     * 
+     * @return The string representation of the ExitStatusTrigger.
+     */
     @Override
-    public String toString() {     
+    public String toString(){     
         String filename = path.substring(path.lastIndexOf('\\')+1);
         if (not)
             return "(NOT (Program: " + filename + " ExitStatus: " + exitStatus + "))";

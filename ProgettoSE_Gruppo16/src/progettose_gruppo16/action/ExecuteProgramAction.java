@@ -34,7 +34,11 @@ public class ExecuteProgramAction implements Action{
                 list.add("java");
                 list.add("-jar");
             }
-            //altrimenti file exe
+            if (path.substring(path.lastIndexOf('.')+1).equals("ps1")){
+                list.add("powershell.exe");
+                list.add("-File");
+            }
+            //altrimenti file exe o bat
             list.add(path);
             StringTokenizer st= new StringTokenizer(args);
             while(st.hasMoreTokens()){
