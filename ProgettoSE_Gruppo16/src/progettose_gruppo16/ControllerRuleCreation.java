@@ -79,7 +79,6 @@ public class ControllerRuleCreation implements Initializable {
     @FXML
     private AnchorPane actionPane;
       
-    private Time sleepingPeriod;
     private RulesManager ruleManager;   
     private ObservableList<Rule> allRulesList; //observable list of all rules, created to manage the respective TableView  
     private Stage stage; 
@@ -92,14 +91,14 @@ public class ControllerRuleCreation implements Initializable {
     private HandlerAppendStringToFileAction h6 = new HandlerAppendStringToFileAction();
     private HandlerExecuteProgramAction h14= new HandlerExecuteProgramAction();
     
-    private HandlerComposite h15 = new HandlerComposite();
-    private HandlerTimeOfDayTrigger h7 = new HandlerTimeOfDayTrigger();
-    private HandlerDayOfWeekTrigger h8 = new HandlerDayOfWeekTrigger();
-    private HandlerDayOfMonthTrigger h9= new HandlerDayOfMonthTrigger();
-    private HandlerDateTrigger h10= new HandlerDateTrigger();
-    private HandlerFileSizeTrigger h11 = new HandlerFileSizeTrigger();
-    private HandlerExistingFileTrigger h12= new HandlerExistingFileTrigger();
-    private HandlerExitStatusTrigger h13= new HandlerExitStatusTrigger(); 
+    private final HandlerComposite h15 = new HandlerComposite();
+    private final HandlerTimeOfDayTrigger h7 = new HandlerTimeOfDayTrigger();
+    private final HandlerDayOfWeekTrigger h8 = new HandlerDayOfWeekTrigger();
+    private final HandlerDayOfMonthTrigger h9= new HandlerDayOfMonthTrigger();
+    private final HandlerDateTrigger h10= new HandlerDateTrigger();
+    private final HandlerFileSizeTrigger h11 = new HandlerFileSizeTrigger();
+    private final HandlerExistingFileTrigger h12= new HandlerExistingFileTrigger();
+    private final HandlerExitStatusTrigger h13= new HandlerExitStatusTrigger(); 
     
     
     @FXML
@@ -154,6 +153,8 @@ public class ControllerRuleCreation implements Initializable {
     private CheckBox not6;
     @FXML
     private CheckBox not7;
+    @FXML
+    private Label errorMessage;
 
     /**
      *  Inizializzazione delle componenti dell'interfaccia utente
@@ -233,7 +234,6 @@ public class ControllerRuleCreation implements Initializable {
     }
     
     private void initializeTrigDD(ComboBox<String> cb){
-        int i;
         cb.getItems().add("Time of day");
         cb.getItems().add("Day of the week");
         cb.getItems().add("Day of month");
@@ -310,8 +310,10 @@ public class ControllerRuleCreation implements Initializable {
         //get che selected action from the action handlers chain
         action = h1.handleBehaviour(actionPane);
         
-        if(action == null || trigger == null)
+        if(action == null || trigger == null){
+            errorMessage.setVisible(true);
             return;
+        }
         
         if(repetableCB.isSelected()){
             if(!slepPerHours.getText().matches("^(0?\\d|1\\d|2[0-3])$") || !slepPerMins.getText().matches("^(0?[0-9]|[1-5][0-9])$") || !slepPerDays.getText().matches("\\d*")){
@@ -340,7 +342,7 @@ public class ControllerRuleCreation implements Initializable {
 
     @FXML
     private void chooseAction(ActionEvent event) {
-        h1.handleGUI(actionPane, actionDD1, addRuleBtn);
+        h1.handleGUI(actionPane, actionDD1);
     }
 
     @FXML
@@ -371,7 +373,7 @@ public class ControllerRuleCreation implements Initializable {
                 ap = triggerPane7;
                 break;
         }
-        h15.handleGUI(ap, cb, addRuleBtn);
+        h15.handleGUI(ap, cb);
     }
     
 }

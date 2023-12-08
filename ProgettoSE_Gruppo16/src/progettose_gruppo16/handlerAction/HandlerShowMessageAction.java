@@ -24,11 +24,10 @@ public class HandlerShowMessageAction extends BaseHandlerAction{
      * Gestisce i componenti GUI in base all'azione specificata.
      *
      * @param ap  L'AnchorPane dove sono posizionati i componenti GUI.
-     * @param s   L'identificatore dell'azione.
-     * @param btn Il pulsante associato all'azione.
+     * @param cb
      */
     @Override
-    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn){ 
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb){ 
         if(cb.getValue().equals("Show message")){
             // Cancella i componenti GUI esistenti
             ap.getChildren().clear();
@@ -42,7 +41,7 @@ public class HandlerShowMessageAction extends BaseHandlerAction{
             messTxtBox.setPrefWidth(200);
             messTxtBox.setPrefHeight(31);
         }else{
-            super.handleGUI(ap, cb, btn);
+            super.handleGUI(ap, cb);
         }      
     }
     
@@ -54,8 +53,11 @@ public class HandlerShowMessageAction extends BaseHandlerAction{
      */
     @Override 
     public Action handleBehaviour(AnchorPane ap){
-        if(ap.getId().equals("ShowMessagePane")){        
-            return new ShowMessageAction(messTxtBox.getText());
+        if(ap.getId().equals("ShowMessagePane")){  
+            if(messTxtBox.getText().isEmpty()){
+                return null;
+            }
+            else return new ShowMessageAction(messTxtBox.getText());
         }
         else{
             return super.handleBehaviour(ap);

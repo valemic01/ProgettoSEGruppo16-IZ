@@ -30,6 +30,9 @@ public class HandlerFileSizeTrigger extends BaseHandlerTrigger{
      * il valore della dimensione di riferimento e la sua unità di misura (tramite indice), e passati
      * al costruttore del trigger
      * @param ap
+     * @param ht
+     * @param x
+     * @param notVBox
      * @return
      */
     @Override
@@ -57,11 +60,10 @@ public class HandlerFileSizeTrigger extends BaseHandlerTrigger{
      * Quando si seleziona il trigger "File size" vengono creati dinamicamente gli elementi
      * che permettono di selezionare il file ed impostare la dimensione di soglia
      * @param ap
-     * @param s
-     * @param btn
+     * @param cb
      */
     @Override
-    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn) {
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb) {
         if(cb.getValue().equalsIgnoreCase("FIle size")){
             ap.getChildren().clear();
             ap.setId("FileSizePane");
@@ -71,7 +73,6 @@ public class HandlerFileSizeTrigger extends BaseHandlerTrigger{
             ComboBox<String> fileUnit = new ComboBox<>();
             Label labelSelectedFile = new Label();
             Label filePath = new Label();
-            String file;
             
             ap.getChildren().add(selectFile);
             selectFile.setLayoutX(19);
@@ -104,7 +105,7 @@ public class HandlerFileSizeTrigger extends BaseHandlerTrigger{
             selectFile.setOnAction(event -> chooseFile(labelSelectedFile, filePath));
         }
         else{
-            super.handleGUI(ap, cb, btn);
+            super.handleGUI(ap, cb);
         }
     }
     

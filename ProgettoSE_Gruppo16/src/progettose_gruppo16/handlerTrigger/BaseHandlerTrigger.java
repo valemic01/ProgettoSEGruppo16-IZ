@@ -26,8 +26,8 @@ public class BaseHandlerTrigger implements HandlerTrigger{
     }
 
     @Override
-    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn) {
-        if(next != null) next.handleGUI(ap, cb, btn);
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb) {
+        if(next != null) next.handleGUI(ap, cb);
     }
 
     @Override

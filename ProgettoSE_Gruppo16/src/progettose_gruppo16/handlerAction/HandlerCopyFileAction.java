@@ -35,11 +35,10 @@ public class HandlerCopyFileAction extends BaseHandlerAction{
      * Gestisce i componenti GUI in base all'azione specificata.
      *
      * @param ap  L'AnchorPane dove sono posizionati i componenti GUI.
-     * @param s   L'identificatore dell'azione.
-     * @param btn Il pulsante associato all'azione.
+     * @param cb
      */
     @Override
-    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn){ 
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb){ 
         if(cb.getValue().equals("Copy file")){
             // Cancella i componenti GUI esistenti
             ap.getChildren().clear();
@@ -96,7 +95,7 @@ public class HandlerCopyFileAction extends BaseHandlerAction{
             selectDestinationFile.setOnAction(event -> destinationPath = chooseDirectory(selectedDestination));
           
         }else{
-            super.handleGUI(ap, cb, btn);
+            super.handleGUI(ap, cb);
         }      
     }
     

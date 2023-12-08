@@ -1,0 +1,31 @@
+.tab-pane > .tab-header-area > .headers-region > .tab:selected {
+    -fx-background-color: #097a7a; /* Sostituisci con il tuo colore desiderato */
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab {
+    -fx-background-color: #009999; /* Sostituisci con il tuo colore desiderato */
+}
+
+#createBtn:hover {
+    -fx-background-color: #097a7a;
+}
+
+#createBtn {
+    -fx-background-color: #009999;
+}
+
+#addRuleBtn:hover {
+    -fx-background-color: #097a7a;
+}
+
+#addRuleBtn {
+    -fx-background-color: #009999;
+}
+
+#deleteBtn, .closeBtn {
+    -fx-background-color: #b53a3a;
+}
+
+#deleteBtn:hover, .closeBtn:hover {
+    -fx-background-color: #fa0505;
+}

@@ -27,8 +27,8 @@ public class BaseHandlerAction implements HandlerAction{
     }
 
     @Override
-    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn) {
-        if(next != null) next.handleGUI(ap, cb, btn);
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb) {
+        if(next != null) next.handleGUI(ap, cb);
     }
 
     @Override

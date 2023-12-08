@@ -23,11 +23,10 @@ public class HandlerDateTrigger extends BaseHandlerTrigger{
      * Permette all'utente di selezionare una data (non precedente a quella attuale) 
      * quando decide di utilizzare DateTrigger
      * @param ap
-     * @param s
-     * @param btn
+     * @param cb
      */
     @Override
-    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn){
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb){
         if(cb.getValue().equals("Date")){
             ap.getChildren().clear();
             ap.setId("DatePane");
@@ -35,20 +34,18 @@ public class HandlerDateTrigger extends BaseHandlerTrigger{
             ap.getChildren().add(date);
             date.setLayoutX(40);
             date.setLayoutY(0);
+            date.setValue(LocalDate.now());
             
             
-            date.valueProperty().addListener(new ChangeListener<LocalDate>() {
-                @Override
-                public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
-                    // Verifica se la nuova data è precedente al giorno corrente
-                    if (newValue != null && newValue.isBefore(LocalDate.now())) {
-                        date.setValue(null);
-                    }
+            date.valueProperty().addListener((ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) -> {
+                // Verifica se la nuova data è precedente al giorno corrente
+                if (newValue != null && newValue.isBefore(LocalDate.now())) {
+                    date.setValue(null);
                 }
             });
         }
         else{
-            super.handleGUI(ap, cb, btn);
+            super.handleGUI(ap, cb);
         }
     }
     
@@ -56,6 +53,8 @@ public class HandlerDateTrigger extends BaseHandlerTrigger{
      * Se l'utente ha selezionato una data, allora viene creato un oggetto di tipo DateTrigger
      * @param ap
      * @param ht
+     * @param x
+     * @param notVBox
      * @return
      */
     @Override 
@@ -63,10 +62,7 @@ public class HandlerDateTrigger extends BaseHandlerTrigger{
         if(ap.getId().equals("DatePane")){  
             boolean not = ((CheckBox) notVBox.getChildren().get(x-1)).isSelected();
             LocalDate date= ((DatePicker) ap.getChildren().get(0)).getValue();
-            if (date!=null)
-                    return new DateTrigger(date, not);
-            else
-                return null;
+            return new DateTrigger(date, not);
         }else{
             return super.handleBehaviour(ap, ht, x, notVBox);
         }

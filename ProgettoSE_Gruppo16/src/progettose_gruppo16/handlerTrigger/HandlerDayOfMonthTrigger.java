@@ -16,11 +16,10 @@ public class HandlerDayOfMonthTrigger extends BaseHandlerTrigger{
     /**
      * Permette all'utente di selezionare un giorno del mese quando decide di utilizzare dayOfMonthTrigger.
      * @param ap
-     * @param s
-     * @param btn
+     * @param cb
      */
     @Override
-    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn){
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb){
         ComboBox<String> dayOfMonthBox= new ComboBox();
         if(cb.getValue().equals("Day of month")){
             ap.getChildren().clear();
@@ -34,7 +33,7 @@ public class HandlerDayOfMonthTrigger extends BaseHandlerTrigger{
         }
         else{
             dayOfMonthBox.setValue("01");
-            super.handleGUI(ap, cb, btn);
+            super.handleGUI(ap, cb);
         }
     }
     
@@ -43,6 +42,8 @@ public class HandlerDayOfMonthTrigger extends BaseHandlerTrigger{
      * un oggetto di tipo DayOfMonthTrigger
      * @param ap
      * @param ht
+     * @param x
+     * @param notVBox
      * @return
      */
     @Override 

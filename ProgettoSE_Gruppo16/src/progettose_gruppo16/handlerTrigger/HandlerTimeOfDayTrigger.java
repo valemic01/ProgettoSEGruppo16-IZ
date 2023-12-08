@@ -24,6 +24,9 @@ public class HandlerTimeOfDayTrigger extends BaseHandlerTrigger{
      * Quando l'utente aggiunge la regola vengono presi i valori di ora e minuti dai rispettivi combo box
      * e passati al costruttore del trigger
      * @param ap
+     * @param ht
+     * @param x
+     * @param notVBox
      * @return
      */
     @Override
@@ -41,11 +44,10 @@ public class HandlerTimeOfDayTrigger extends BaseHandlerTrigger{
      * Quando si seleziona il trigger "Time of day" vengono creati dinamicamente gli elementi
      * che permettono di impostare l'orario di attivazione del trigger (default: 00:00)
      * @param ap
-     * @param s
-     * @param btn
+     * @param cb
      */
     @Override
-    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn) {
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb) {
         
         if(cb.getValue().equalsIgnoreCase("Time of day")){
             ap.getChildren().clear();
@@ -75,7 +77,7 @@ public class HandlerTimeOfDayTrigger extends BaseHandlerTrigger{
             
         }
         else{
-            super.handleGUI(ap, cb, btn);        
+            super.handleGUI(ap, cb);        
         }
     }
     

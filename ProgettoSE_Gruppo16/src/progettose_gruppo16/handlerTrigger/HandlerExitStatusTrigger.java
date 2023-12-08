@@ -2,7 +2,6 @@ package progettose_gruppo16.handlerTrigger;
 
 
 import java.io.File;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -25,11 +24,10 @@ public class HandlerExitStatusTrigger extends BaseHandlerTrigger {
      * Permette all'utente, quando decide di utilizzare ExitStatusTrigger, di selezionare un programma,
      * scrivere una lista di argomenti da passare a linea di comando e inserire l'exit Status atteso.
      * @param ap
-     * @param s
-     * @param btn
+     * @param cb
      */
     @Override
-    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn){ 
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb){ 
         if(cb.getValue().equals("Exit status")){
             ap.getChildren().clear();
             ap.setId("ExitStatusPane");
@@ -83,17 +81,19 @@ public class HandlerExitStatusTrigger extends BaseHandlerTrigger {
             selectFileBtn.setOnAction(event -> chooseFile(labelSelectedFile, filePath ));
             
         }else{
-            super.handleGUI(ap, cb, btn);
+            super.handleGUI(ap, cb);
         }      
     }
     
     /**
      * Se l'utente ha selezionato un file e scritto eventuali argomenti
-     * a linea di comando, allora viene creato un oggetto di tipo ExitStatusTrigger. 
-     * Nel caso in cui l'utente non dovesse scrivere l'exit Status, viene di default selezionato 0;
-     * se l'utente non scrive un numero, l'applicazione lo avvisa con un messaggio e non gli permette
-     * di creare la regola.
+     * a linea di comando, allora viene creato un oggetto di tipo ExitStatusTrigger.Nel caso in cui l'utente non dovesse scrivere l'exit Status, viene di default selezionato 0;
+ se l'utente non scrive un numero, l'applicazione lo avvisa con un messaggio e non gli permette
+ di creare la regola.
      * @param ap
+     * @param ht
+     * @param x
+     * @param notVBox
      * @return
      */
     @Override 

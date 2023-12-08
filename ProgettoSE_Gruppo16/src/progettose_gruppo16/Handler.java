@@ -13,5 +13,5 @@ import javafx.scene.layout.AnchorPane;
  * @author raffa
  */
 public interface Handler {
-    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn);
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb);
 }

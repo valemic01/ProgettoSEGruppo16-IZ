@@ -23,6 +23,9 @@ public class HandlerDayOfWeekTrigger extends BaseHandlerTrigger{
      * Quando l'utente aggiunge la regola viene preso il valore del giorno della settimana selezionato
      * nel combo box e passato al costruttore del trigger
      * @param ap
+     * @param ht
+     * @param x
+     * @param notVBox
      * @return
      */
     @Override
@@ -38,10 +41,10 @@ public class HandlerDayOfWeekTrigger extends BaseHandlerTrigger{
      * Quando si seleziona il trigger "Day of the week" viene creato dinamicamente l'elemento
      * che permette di selezionare il giorno della settimana (default: Monday)
      * @param ap
-     * @param btn
+     * @param cb
      */
     @Override
-    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn) {
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb) {
         if(cb.getValue().equalsIgnoreCase("Day of the week")){
             ap.getChildren().clear();
             ap.setId("DayOfWeekPane");
@@ -54,7 +57,7 @@ public class HandlerDayOfWeekTrigger extends BaseHandlerTrigger{
             daysCB.setValue("Monday");
         }
         else{
-            super.handleGUI(ap, cb, btn);
+            super.handleGUI(ap, cb);
         }
     }
     

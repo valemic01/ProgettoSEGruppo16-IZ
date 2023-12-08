@@ -29,11 +29,10 @@ public class HandlerExecuteProgramAction extends BaseHandlerAction{
      * Permette all'utente di selezionare un programma e scrivere una lista di argomenti da passare a linea
      * di comando quando decide di utlizzare ExecuteProgramAction.
      * @param ap
-     * @param s
-     * @param btn
+     * @param cb
      */
     @Override
-    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn){ 
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb){ 
         if(cb.getValue().equals("Execute program")){
             ap.getChildren().clear();
             ap.setId("ExecuteProgramPane");
@@ -74,7 +73,7 @@ public class HandlerExecuteProgramAction extends BaseHandlerAction{
             selectFileBtn.setOnAction(event -> file = chooseFile(labelSelectedFile));
             
         }else{
-            super.handleGUI(ap, cb, btn);
+            super.handleGUI(ap, cb);
         }      
     }
     

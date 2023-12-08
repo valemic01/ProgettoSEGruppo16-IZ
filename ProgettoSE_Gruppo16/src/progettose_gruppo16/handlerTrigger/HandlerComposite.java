@@ -45,17 +45,7 @@ public class HandlerComposite extends BaseHandlerTrigger{
                     n1 = 4;
                     n2 = 5;
                     break;
-                case "3":/*
-                    String cbT2 = ((ComboBox<String>) ap.get().get(8)).getChildrenUnmodifiable(0);
-                    if (!ap.getParent().getChildrenUnmodifiable().get(8).is){
-                        System.out.println("ciao");
-                        ap1 = (AnchorPane) ap.getParent().getChildrenUnmodifiable().get(3);
-                        ap2 = (AnchorPane) ap.getParent().getChildrenUnmodifiable().get(4);
-                        a = (AnchorPane) ap.getParent().getChildrenUnmodifiable().get(8);
-                        n1 = 4;
-                        n2 = 5;
-                        break;
-                    }*/
+                case "3":
                     ap1 = (AnchorPane) ap.getParent().getChildrenUnmodifiable().get(5);
                     ap2 = (AnchorPane) ap.getParent().getChildrenUnmodifiable().get(6);
                     a = (AnchorPane) ap.getParent().getChildrenUnmodifiable().get(9);
@@ -69,9 +59,9 @@ public class HandlerComposite extends BaseHandlerTrigger{
             t1 = ht.handleBehaviour(ap1, ht, n1, notVBox);
             t2 = ht.handleBehaviour(ap2, ht, n2,notVBox);
             
-            if (t1==null && t2==null)
+            if (t1==null || t2==null)
                 return null;
-            return new CompositeTrigger(t1, t2, not, op);
+            else return new CompositeTrigger(t1, t2, not, op);
         }
         else{
             return super.handleBehaviour(ap, ht, x, notVBox);
@@ -79,7 +69,7 @@ public class HandlerComposite extends BaseHandlerTrigger{
     }
 
     @Override
-    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn) {
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb) {
         String x;
         if(cb.getValue().equalsIgnoreCase("Composite")){
             ap.getChildren().clear();
@@ -97,7 +87,7 @@ public class HandlerComposite extends BaseHandlerTrigger{
             }
         }
         else{
-            super.handleGUI(ap, cb, btn);
+            super.handleGUI(ap, cb);
         }
     }
 }

@@ -5,8 +5,6 @@
 package progettose_gruppo16.handlerTrigger;
 
 import java.io.File;
-import javafx.beans.binding.Binding;
-import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -30,11 +28,10 @@ public class HandlerExistingFileTrigger extends BaseHandlerTrigger{
      * Permette all'utente di scrivere il nome del file da controllare 
      * e di selezionare una cartella quando decide di utilizzare il trigger Existing file.
      * @param ap
-     * @param s
-     * @param btn
+     * @param cb
      */
     @Override
-    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn){ 
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb){ 
         if(cb.getValue().equals("Existing file")){
             ap.getChildren().clear();
             ap.setId("ExistingFilePane");
@@ -71,7 +68,7 @@ public class HandlerExistingFileTrigger extends BaseHandlerTrigger{
             selectFolderBtn.setOnAction(event -> chooseFolder(labelSelectedFolder, filePath));
             
         }else{
-            super.handleGUI(ap, cb, btn);
+            super.handleGUI(ap, cb);
         }      
     }
     
@@ -79,6 +76,9 @@ public class HandlerExistingFileTrigger extends BaseHandlerTrigger{
      * Se l'utente ha scritto il nome di un file e ha selezionato una cartella, allora viene creato 
      * un oggetto di tipo ExistingFileTrigger
      * @param ap
+     * @param ht
+     * @param x
+     * @param notVBox
      * @return
      */
     @Override 
@@ -89,7 +89,7 @@ public class HandlerExistingFileTrigger extends BaseHandlerTrigger{
                 boolean not = ((CheckBox) notVBox.getChildren().get(x-1)).isSelected();
                 return new ExistingFileTrigger(folder, ((TextField) ap.getChildren().get(0)).getText(), not); 
             }
-            return null;
+            else return null;
         }else{
             return super.handleBehaviour(ap, ht, x, notVBox);
         }
