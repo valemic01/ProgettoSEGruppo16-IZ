@@ -172,7 +172,7 @@ public class ControllerRuleCreation implements Initializable {
     private List<BaseHandlerAction> handlerAction2 = new LinkedList<>();;
     private List<BaseHandlerAction> handlerAction3 = new LinkedList<>();;
     private List<BaseHandlerAction> handlerAction4 = new LinkedList<>();;
-    private List<BaseHandlerAction> startHandlers = new LinkedList<>();
+    private List<BaseHandlerAction> startHandlersAction = new LinkedList<>();
     private List<AnchorPane> anchorPanesAction = new LinkedList<>();
     private int numAction = 1;
 
@@ -330,7 +330,7 @@ public class ControllerRuleCreation implements Initializable {
         
         //get che selected action from the action handlers chain
         for(int i = 0; i < numAction; i++){
-            Action a = startHandlers.get(i).handleBehaviour(anchorPanesAction.get(i));
+            Action a = startHandlersAction.get(i).handleBehaviour(anchorPanesAction.get(i));
             if(a==null)
                 return;
             else
@@ -508,7 +508,7 @@ public class ControllerRuleCreation implements Initializable {
         list.add(new HandlerExecuteProgramAction());
         
         setNextHandlerAction(list);
-        startHandlers.add(list.get(0));
+        startHandlersAction.add(list.get(0));
     }
     
     private void setNextHandlerAction(List<BaseHandlerAction> list){
