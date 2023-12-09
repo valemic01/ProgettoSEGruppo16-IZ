@@ -4,8 +4,8 @@ import progettose_gruppo16.action.Action;
 import progettose_gruppo16.trigger.Trigger;
 
 /**
- *  Classe test per le regole da eseguire una sola volta. 
- *  Per il testing vengono eliminate le dipendenze dal RulesManager
+ * Test class for rules to be executed only once.
+ * For testing purposes, dependencies on RulesManager are eliminated.
  */
 public class OneTimeRuleTestClass extends RuleTestClass{
         
@@ -21,8 +21,6 @@ public class OneTimeRuleTestClass extends RuleTestClass{
            super.setActive(false);
            return true;
        }else
-           return false;
-       
-    }
-    
+           return false;      
+    }   
 }

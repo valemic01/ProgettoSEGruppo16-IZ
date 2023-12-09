@@ -2,7 +2,6 @@ package progettose_gruppo16.handlerTrigger;
 
 
 import java.io.File;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -16,20 +15,20 @@ import progettose_gruppo16.trigger.ExitStatusTrigger;
 import progettose_gruppo16.trigger.Trigger;
 
 /**
- * Classe che estende la classe BaseHandlerTrigger.
- * @author amost
+ * Handler class for the "ExitStatusTrigger" trigger.
+ * Extends the BaseHandlerTrigger class.
+ * Manages the behavior and GUI elements specific to ExitStatusTrigger.
  */
 public class HandlerExitStatusTrigger extends BaseHandlerTrigger {
     
     /**
-     * Permette all'utente, quando decide di utilizzare ExitStatusTrigger, di selezionare un programma,
-     * scrivere una lista di argomenti da passare a linea di comando e inserire l'exit Status atteso.
-     * @param ap
-     * @param s
-     * @param btn
+     * Allows the user, when choosing ExitStatusTrigger, to select a program,
+     * write a list of command line arguments, and enter the expected exit status.
+     * @param ap AnchorPane to modify
+     * @param cb ComboBox representing the trigger type
      */
     @Override
-    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn){ 
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb){ 
         if(cb.getValue().equals("Exit status")){
             ap.getChildren().clear();
             ap.setId("ExitStatusPane");
@@ -40,8 +39,6 @@ public class HandlerExitStatusTrigger extends BaseHandlerTrigger {
             Label labelErrorExitStatus = new Label();
             TextField textArguments = new TextField();
             Label filePath = new Label();
-            
-
             
             selectFileBtn.setText("Select file");
             ap.getChildren().add(selectFileBtn);
@@ -54,7 +51,6 @@ public class HandlerExitStatusTrigger extends BaseHandlerTrigger {
             labelSelectedFile.setLayoutY(37);
             labelSelectedFile.setPrefWidth(344);
             labelSelectedFile.setTextFill(Color.web("#009999"));
-            
             
             textArguments.setPromptText("Arguments...");
             ap.getChildren().add(textArguments);
@@ -75,7 +71,7 @@ public class HandlerExitStatusTrigger extends BaseHandlerTrigger {
             labelErrorExitStatus.setPrefWidth(344);
             labelErrorExitStatus.setTextFill(Color.RED);
             
-            
+            // invisible label to pass the file path string to the handleBehaviour method
             filePath.setText("");
             filePath.setVisible(false);
             ap.getChildren().add(filePath);
@@ -83,25 +79,27 @@ public class HandlerExitStatusTrigger extends BaseHandlerTrigger {
             selectFileBtn.setOnAction(event -> chooseFile(labelSelectedFile, filePath ));
             
         }else{
-            super.handleGUI(ap, cb, btn);
+            super.handleGUI(ap, cb);
         }      
     }
     
     /**
-     * Se l'utente ha selezionato un file e scritto eventuali argomenti
-     * a linea di comando, allora viene creato un oggetto di tipo ExitStatusTrigger. 
-     * Nel caso in cui l'utente non dovesse scrivere l'exit Status, viene di default selezionato 0;
-     * se l'utente non scrive un numero, l'applicazione lo avvisa con un messaggio e non gli permette
-     * di creare la regola.
-     * @param ap
-     * @return
+     * Creates an ExitStatusTrigger object if the user has selected a file and entered command line arguments.
+     * If the user does not enter an exit status, 0 is selected by default.
+     * If the user does not enter a number, the application notifies them with a message and does not allow
+     * the creation of the rule.
+     * @param ap AnchorPane containing the GUI elements
+     * @param ht HandlerTrigger instance
+     * @param x An integer parameter for trigger behavior
+     * @param notVBox VBox containing "not" CheckBox elements
+     * @return Trigger object representing the exit status trigger
      */
     @Override 
     public Trigger handleBehaviour(AnchorPane ap, HandlerTrigger ht, int x, VBox notVBox){     
         if(ap.getId().equals("ExitStatusPane")){
             boolean not = ((CheckBox) notVBox.getChildren().get(x-1)).isSelected();
             String file= ((Label) ap.getChildren().get(5)).getText();
-            if(file!=null){
+            if(file!=null && !file.isEmpty()){
                 Label labelErrorExitStatus= ((Label) ap.getChildren().get(4));
                 TextField textArguments= ((TextField) ap.getChildren().get(2));
                 TextField textExitStatus= ((TextField) ap.getChildren().get(3));
@@ -123,13 +121,17 @@ public class HandlerExitStatusTrigger extends BaseHandlerTrigger {
         }
     }
 
-    // permette di selezionare un file
+    /**
+     * Allows the user to select a file.
+     * @param labelSelectedFile Label displaying the selected file
+     * @param filePath Label to pass the file path.
+     */
     private void chooseFile(Label labelSelectedFile, Label filePath){
         FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter filter= new FileChooser.ExtensionFilter ("Accepted extensions (*.exe), (*.jar)", "*.exe", "*.jar");
+        FileChooser.ExtensionFilter filter= new FileChooser.ExtensionFilter ("Accepted extensions (*.exe, *.jar, *.bat, *.ps1)", "*.exe", "*.jar", "*.bat", "*.ps1");
         fileChooser.getExtensionFilters().add(filter);
         File file = fileChooser.showOpenDialog(labelSelectedFile.getScene().getWindow());
-        if(file!=null){    
+        if(file!=null && !file.getAbsolutePath().isEmpty()){    
             filePath.setText(file.getAbsolutePath());
             labelSelectedFile.setText("Selected file: " + file.getName());
         }

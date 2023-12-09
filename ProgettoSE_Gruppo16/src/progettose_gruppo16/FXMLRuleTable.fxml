@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ruleListPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="826.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="progettose_gruppo16.ControllerRuleTable">
+<AnchorPane fx:id="ruleListPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="826.0" stylesheets="@stileTab.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="progettose_gruppo16.ControllerRuleTable">
    <children>
       <TabPane layoutX="14.0" layoutY="14.0" onMouseClicked="#deselect" prefHeight="421.0" prefWidth="804.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="246.0">
          <tabs>
-            <Tab style="-fx-background-color: #009999; -fx-color: black; -fx-font-weight: bold;" text="All rules">
+            <Tab style="-fx-color: black; -fx-font-weight: bold;" text="All rules">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -37,7 +37,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab style="-fx-background-color: #009999; -fx-color: black; -fx-font-weight: bold;" text="Active">
+            <Tab style="-fx-color: black; -fx-font-weight: bold;" text="Active">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -60,7 +60,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab style="-fx-background-color: #009999; -fx-color: black; -fx-font-weight: bold;" text="Inactive">
+            <Tab style="-fx-color: black; -fx-font-weight: bold;" text="Inactive">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -85,12 +85,12 @@
             </Tab>
          </tabs>
       </TabPane>
-      <Button layoutX="29.0" layoutY="456.0" mnemonicParsing="false" onAction="#showCreateRule" onMouseClicked="#deselect" prefHeight="44.0" prefWidth="164.0" text="Create a rule">
+      <Button id="createBtn" layoutX="29.0" layoutY="456.0" mnemonicParsing="false" onAction="#showCreateRule" onMouseClicked="#deselect" prefHeight="44.0" prefWidth="164.0" text="Create a rule" textFill="WHITE">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
       </Button>
-      <Button fx:id="delRuleBtn" disable="true" layoutX="211.0" layoutY="456.0" mnemonicParsing="false" onAction="#deleteRuleAction" prefHeight="44.0" prefWidth="86.0" style="-fx-color: #ff362a;" text="Delete">
+      <Button id="deleteBtn" fx:id="delRuleBtn" disable="true" layoutX="211.0" layoutY="456.0" mnemonicParsing="false" onAction="#deleteRuleAction" prefHeight="44.0" prefWidth="86.0" text="Delete" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>

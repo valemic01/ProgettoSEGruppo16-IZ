@@ -2,7 +2,6 @@ package progettose_gruppo16.handlerAction;
 
 import progettose_gruppo16.action.ShowMessageAction;
 import progettose_gruppo16.action.Action;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -19,10 +18,9 @@ public class HandlerShowMessageAction extends BaseHandlerAction{
      * Manages GUI components based on the specified action.
      * @param ap  The AnchorPane where GUI components are positioned.
      * @param cb Combo Box containing the action selected by the user.
-     * @param btn The button associated with the action.
      */
     @Override
-    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn){ 
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb){ 
         if(cb.getValue().equals("Show message")){
             // Clear existing GUI components
             ap.getChildren().clear();
@@ -36,7 +34,7 @@ public class HandlerShowMessageAction extends BaseHandlerAction{
             messTxtBox.setPrefWidth(200);
             messTxtBox.setPrefHeight(30);
         }else{
-            super.handleGUI(ap, cb, btn);
+            super.handleGUI(ap, cb);
         }      
     }
     

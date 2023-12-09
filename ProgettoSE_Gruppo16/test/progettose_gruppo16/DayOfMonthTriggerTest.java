@@ -30,19 +30,43 @@ public class DayOfMonthTriggerTest {
     public void tearDown() {
     }
 
+    /**
+    * Test that a DayOfMonthTrigger with the current day and no negation returns true.
+    */
     @Test
     public void testCheckCondition1() {
-        
-        DayOfMonthTrigger trigger = new DayOfMonthTrigger(LocalDate.now().getDayOfMonth());
+        DayOfMonthTrigger trigger = new DayOfMonthTrigger(LocalDate.now().getDayOfMonth(), false);
 
         assertTrue(trigger.checkCondition());
     }
-    
+
+    /**
+     * Test that a DayOfMonthTrigger with the next day and no negation returns false.
+     */
     @Test
     public void testCheckCondition2() {
-        
-        DayOfMonthTrigger trigger = new DayOfMonthTrigger(1);
+        DayOfMonthTrigger trigger = new DayOfMonthTrigger(LocalDate.now().getDayOfMonth() + 1, false);
+
         assertFalse(trigger.checkCondition());
     }
-    
+
+    /**
+     * Test that a DayOfMonthTrigger with the current day and negation returns false.
+     */
+    @Test
+    public void testCheckCondition3() {
+        DayOfMonthTrigger trigger = new DayOfMonthTrigger(LocalDate.now().getDayOfMonth(), true);
+
+        assertFalse(trigger.checkCondition());
+    }
+
+    /**
+     * Test that a DayOfMonthTrigger with the next day and negation returns true.
+     */
+    @Test
+    public void testCheckCondition4() {
+        DayOfMonthTrigger trigger = new DayOfMonthTrigger(LocalDate.now().getDayOfMonth() + 1, true);
+
+        assertTrue(trigger.checkCondition());
+    }
 }

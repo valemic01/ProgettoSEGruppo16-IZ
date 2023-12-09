@@ -1,7 +1,5 @@
 package progettose_gruppo16;
 
-import progettose_gruppo16.trigger.Trigger;
-import progettose_gruppo16.trigger.DayOfWeekTrigger;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import org.junit.After;
@@ -13,10 +11,7 @@ import org.junit.BeforeClass;
 import progettose_gruppo16.trigger.DayOfWeekTrigger;
 import progettose_gruppo16.trigger.Trigger;
 
-/**
- * Classe test
- * @author alexx
- */
+
 public class RepeatableRuleTest {
     
     private Trigger trigger;
@@ -44,33 +39,33 @@ public class RepeatableRuleTest {
     }
 
     /**
-     * Test per valutare se quando la condizione è vera, l'azione viene eseguita
+     * Test to check if the action is executed when the condition is true.
      */
     @Test
     public void testEvaluate1() {
-        trigger = new DayOfWeekTrigger(LocalDate.now().getDayOfWeek()); 
+        trigger = new DayOfWeekTrigger(LocalDate.now().getDayOfWeek(), false); 
         rule = new RepeatableRuleTestClass("ciao", trigger, action, 0, LocalTime.of(0, 10));
         
         assertTrue(rule.evaluate());    
     } 
     
     /**
-     * Test per valutare se la regola può essere eseguita durante lo sleeping period
+     * Test to check if the rule can be executed during the sleeping period.
      */
     @Test
     public void testEvaluate2() {
-        trigger = new DayOfWeekTrigger(LocalDate.now().getDayOfWeek()); 
+        trigger = new DayOfWeekTrigger(LocalDate.now().getDayOfWeek(), false); 
         rule = new RepeatableRuleTestClass("ciao", trigger, action, 0, LocalTime.of(0, 10));
         rule.evaluate();
         assertFalse(rule.evaluate());  
     } 
     
     /**
-     * Test per valutare se la regola viene di nuovo eseguita al termine dello sleeping period (ore, minuti)
+     * Test to check if the rule is executed again at the end of the sleeping period (hours, minutes).
      */
     @Test
     public void testEvaluate3() {
-        trigger = new DayOfWeekTrigger(LocalDate.now().getDayOfWeek()); 
+        trigger = new DayOfWeekTrigger(LocalDate.now().getDayOfWeek(), false); 
         rule = new RepeatableRuleTestClass("ciao", trigger, action, 0, LocalTime.of(8, 59));
         rule.evaluate();
         rule.setTimeLastFired(rule.getTimeLastFired().minusMinutes(rule.getSleepPeriod().getMinute()).minusHours(rule.getSleepPeriod().getHour()).minusNanos(1));
@@ -78,16 +73,15 @@ public class RepeatableRuleTest {
     } 
     
     /**
-     * Test per valutare se la regola viene di nuovo eseguita al termine dello sleeping period (giorni, ore, minuti)
+     * Test to check if the rule is executed again at the end of the sleeping period (days, hours, minutes).
      */
     @Test
     public void testEvaluate4() {
-        trigger = new DayOfWeekTrigger(LocalDate.now().getDayOfWeek()); 
+        trigger = new DayOfWeekTrigger(LocalDate.now().getDayOfWeek(), false); 
         rule = new RepeatableRuleTestClass("ciao", trigger, action, 1, LocalTime.of(3, 45));
         rule.evaluate();
         rule.setTimeLastFired(rule.getTimeLastFired().minusMinutes(rule.getSleepPeriod().getMinute()).minusHours(rule.getSleepPeriod().getHour()).minusNanos(1));
         rule.setDayLastFired(rule.getDayLastFired().minusDays(rule.getDaysToSleep()));
         assertTrue(rule.evaluate());
     } 
-    
 }

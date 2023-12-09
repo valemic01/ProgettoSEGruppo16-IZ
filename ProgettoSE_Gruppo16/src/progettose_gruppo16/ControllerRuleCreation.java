@@ -161,7 +161,9 @@ public class ControllerRuleCreation implements Initializable {
     private CheckBox not6;
     @FXML
     private CheckBox not7;
-   
+    @FXML
+    private Label errorMessage;
+    
    
     private Time sleepingPeriod;
     private RulesManager ruleManager;   
@@ -224,7 +226,7 @@ public class ControllerRuleCreation implements Initializable {
         sleepingPeriodPane.visibleProperty().bind(repeatableCB.selectedProperty());
         
         //binding to disable the add rule button if the rule name, the action or the trigger are not selected
-        //addRuleBtn.disableProperty().bind(Bindings.isEmpty(ruleNameTxtBox.textProperty()).or(Bindings.isNull(trigDD1.valueProperty())).or(Bindings.isNull(actionDD1.valueProperty())).or((Bindings.isEmpty(slepPerDays.textProperty()).or(Bindings.isEmpty(slepPerHours.textProperty())).or(Bindings.isEmpty(slepPerMins.textProperty()))).and(sleepingPeriodPane.visibleProperty())));
+        addRuleBtn.disableProperty().bind(Bindings.isEmpty(ruleNameTxtBox.textProperty()).or(Bindings.isNull(trigDD1.valueProperty())).or(Bindings.isNull(actionDD1.valueProperty())).or((Bindings.isEmpty(sleepPerDays.textProperty()).or(Bindings.isEmpty(sleepPerHours.textProperty())).or(Bindings.isEmpty(sleepPerMins.textProperty()))).and(sleepingPeriodPane.visibleProperty())));
         
         composite1.visibleProperty().bind(Bindings.createBooleanBinding(() ->"Composite".equals(trigDD1.getSelectionModel().getSelectedItem()),trigDD1.getSelectionModel().selectedItemProperty()));
         triggerPane2.visibleProperty().bind(composite1.visibleProperty());
@@ -255,7 +257,6 @@ public class ControllerRuleCreation implements Initializable {
     }
 
     private void initializeTrigDD(ComboBox<String> cb){
-        int i;
         cb.getItems().add("Time of day");
         cb.getItems().add("Day of the week");
         cb.getItems().add("Day of month");
@@ -331,16 +332,19 @@ public class ControllerRuleCreation implements Initializable {
         //get che selected action from the action handlers chain
         for(int i = 0; i < numAction; i++){
             Action a = startHandlersAction.get(i).handleBehaviour(anchorPanesAction.get(i));
-            if(a==null)
+            if(a==null){
+                errorMessage.setVisible(true);
                 return;
-            else
+            }else
                 action.addAction(a);
             
         }
         
-        if(action.getSequence().isEmpty() || trigger == null)
+            
+        if(action.getSequence().isEmpty() || trigger == null){
+            errorMessage.setVisible(true);
             return;
-
+        }
         
         if(repeatableCB.isSelected()){
             if(!sleepPerHours.getText().matches("^(0?\\d|1\\d|2[0-3])$") || !sleepPerMins.getText().matches("^(0?[0-9]|[1-5][0-9])$") || !sleepPerDays.getText().matches("\\d*")){
@@ -395,31 +399,31 @@ public class ControllerRuleCreation implements Initializable {
                 ap = triggerPane7;
                 break;
         }
-        h15.handleGUI(ap, cb, addRuleBtn);
+        h15.handleGUI(ap, cb);
     }
 
     @FXML
     private void chooseAction1(ActionEvent event) {
         if(actionDD1.getValue() != null)
-            handlerAction1.get(0).handleGUI(actionPane1, actionDD1, addRuleBtn);
+            handlerAction1.get(0).handleGUI(actionPane1, actionDD1);
     }
     
     @FXML
     private void chooseAction2(ActionEvent event) {
         if(actionDD2.getValue() != null)
-            handlerAction2.get(0).handleGUI(actionPane2, actionDD2, addRuleBtn);
+            handlerAction2.get(0).handleGUI(actionPane2, actionDD2);
     }
     
     @FXML
     private void chooseAction3(ActionEvent event) {
         if(actionDD3.getValue() != null)
-            handlerAction3.get(0).handleGUI(actionPane3, actionDD3, addRuleBtn);
+            handlerAction3.get(0).handleGUI(actionPane3, actionDD3);
     }
     
     @FXML
     private void chooseAction4(ActionEvent event) {
         if(actionDD4.getValue() != null)
-            handlerAction4.get(0).handleGUI(actionPane4, actionDD4, addRuleBtn);
+            handlerAction4.get(0).handleGUI(actionPane4, actionDD4);
     }
     
     @FXML

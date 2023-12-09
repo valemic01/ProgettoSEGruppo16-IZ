@@ -28,10 +28,9 @@ public class HandlerAppendStringToFileAction extends BaseHandlerAction{
      * Constructor
      * @param ap AnchorPane where GUI components are positioned.
      * @param cb Combo Box containing the action selected by the user.
-     * @param btn Button associated with the action.
      */
     @Override
-    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn){ 
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb){ 
         if(cb.getValue().equals("Add text to file")){
             // Clear existing GUI components
             ap.getChildren().clear();
@@ -64,7 +63,7 @@ public class HandlerAppendStringToFileAction extends BaseHandlerAction{
             // Associate the "Select file" button with an action to choose a file
             selectFile.setOnAction(event -> filePath = chooseFile(labelSelectedFile));
         }else{
-            super.handleGUI(ap, cb, btn);
+            super.handleGUI(ap, cb);
         }      
     }
     

@@ -2,7 +2,6 @@ package progettose_gruppo16.handlerAction;
 
 import progettose_gruppo16.action.Action;
 import java.io.File;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -31,11 +30,10 @@ public class BaseHandlerAction implements HandlerAction{
      * Method for handling the chain for creating graphical objects.
      * @param ap The anchor pane on which the handler should operate.
      * @param cb The combo box selected by the user.
-     * @param btn The button for adding the rule.
      */
     @Override
-    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn) {
-        if(next != null) next.handleGUI(ap, cb, btn);
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb) {
+        if(next != null) next.handleGUI(ap, cb);
     }
 
     /**

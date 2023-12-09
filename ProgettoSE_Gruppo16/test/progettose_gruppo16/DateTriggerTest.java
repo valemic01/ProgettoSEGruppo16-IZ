@@ -31,19 +31,52 @@ public class DateTriggerTest {
     }
 
     /**
-     * Test of checkCondition method, of class DateTrigger.
-     */
+    * Test that a DateTrigger with the current date and no negation returns true.
+    */
     @Test
     public void testCheckCondition1() {
-        DateTrigger trigger = new DateTrigger(LocalDate.now());
-        
+        DateTrigger trigger = new DateTrigger(LocalDate.now(), false);
+
         assertTrue(trigger.checkCondition());
     }
-    
+
+    /**
+     * Test that a DateTrigger with a future date and no negation returns false.
+     */
     @Test
     public void testCheckCondition2() {
-        DateTrigger trigger = new DateTrigger(LocalDate.of(2001,12 , 19));
-        
+        DateTrigger trigger = new DateTrigger(LocalDate.now().plusDays(1), false);
+
+        assertFalse(trigger.checkCondition());
+    }
+
+    /**
+     * Test that a DateTrigger with the current date and negation returns false.
+     */
+    @Test
+    public void testCheckCondition3() {
+        DateTrigger trigger = new DateTrigger(LocalDate.now(), true);
+
+        assertFalse(trigger.checkCondition());
+    }
+
+    /**
+     * Test that a DateTrigger with a future date and negation returns true.
+     */
+    @Test
+    public void testCheckCondition4() {
+        DateTrigger trigger = new DateTrigger(LocalDate.now().plusDays(1), true);
+
+        assertTrue(trigger.checkCondition());
+    }
+
+    /**
+     * Test that a DateTrigger with a null date throws a NullPointerException.
+     */
+    @Test(expected = NullPointerException.class)
+    public void testCheckCondition5() {
+        DateTrigger trigger = new DateTrigger(null, true);
+
         assertFalse(trigger.checkCondition());
     }
     

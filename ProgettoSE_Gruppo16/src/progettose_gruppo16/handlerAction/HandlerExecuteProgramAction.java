@@ -28,10 +28,9 @@ public class HandlerExecuteProgramAction extends BaseHandlerAction{
      * when deciding to use ExecuteProgramAction.
      * @param ap The AnchorPane where GUI components are positioned.
      * @param cb Combo Box containing the action selected by the user.
-     * @param btn The button associated with the action.
      */
     @Override
-    public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn){ 
+    public void handleGUI(AnchorPane ap, ComboBox<String> cb){ 
         if(cb.getValue().equals("Execute program")){
             ap.getChildren().clear();
             ap.setId("ExecuteProgramPane");
@@ -58,7 +57,7 @@ public class HandlerExecuteProgramAction extends BaseHandlerAction{
             selectFileBtn.setOnAction(event -> file = chooseFile(labelSelectedFile));
             
         }else{
-            super.handleGUI(ap, cb, btn);
+            super.handleGUI(ap, cb);
         }      
     }
     
@@ -85,7 +84,8 @@ public class HandlerExecuteProgramAction extends BaseHandlerAction{
     @Override
     public String chooseFile(Label lbl){
         FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter filter= new FileChooser.ExtensionFilter ("Accepted extensions (*.exe), (*.jar)", "*.exe", "*.jar");
+        String path;
+        FileChooser.ExtensionFilter filter= new FileChooser.ExtensionFilter ("Accepted extensions (*.exe, *.jar, *.bat, *.ps1)", "*.exe", "*.jar", "*.bat", "*.ps1");
         fileChooser.getExtensionFilters().add(filter);
         File filePath = fileChooser.showOpenDialog(selectFileBtn.getScene().getWindow());
         if(filePath!=null){           
