@@ -36,9 +36,10 @@ public class HandlerFileSizeTrigger extends BaseHandlerTrigger{
         long size;
         if(ap.getId().equalsIgnoreCase("FileSizePane")){
             File file = new File(((Label) ap.getChildren().get(4)).getText());
+            System.out.println(file+"ciao");
             TextField fileSize = (((TextField) ap.getChildren().get(1)));
             ComboBox<String> fileUnit = (((ComboBox<String>) ap.getChildren().get(2)));
-            if(file == null || fileSize.getText().isEmpty()){
+            if(fileSize.getText().isEmpty() || file.getName().isEmpty()){
                 return null;
             }
             else{
@@ -115,7 +116,7 @@ public class HandlerFileSizeTrigger extends BaseHandlerTrigger{
         FileChooser fileChooser = new FileChooser();
         File file;
         file = fileChooser.showOpenDialog(labelSelectedFile.getScene().getWindow());
-        if(file!=null){
+        if(file!=null && !file.getAbsolutePath().isEmpty()){
             filePath.setText(file.getAbsolutePath());
             labelSelectedFile.textProperty().set("Selected file: " + file.getName());
         }else{

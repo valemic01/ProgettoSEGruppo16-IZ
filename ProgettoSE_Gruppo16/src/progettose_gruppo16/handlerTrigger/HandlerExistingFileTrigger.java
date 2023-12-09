@@ -82,7 +82,7 @@ public class HandlerExistingFileTrigger extends BaseHandlerTrigger {
     public Trigger handleBehaviour(AnchorPane ap, HandlerTrigger ht, int x, VBox notVBox) {
         if (ap.getId().equals("ExistingFilePane")) {
             String folder = ((Label) ap.getChildren().get(3)).getText();
-            if (folder != null) {
+            if (folder != null && !folder.isEmpty()) {
                 boolean not = ((CheckBox) notVBox.getChildren().get(x - 1)).isSelected();
                 return new ExistingFileTrigger(folder, ((TextField) ap.getChildren().get(0)).getText(), not);
             } else return null;
@@ -102,7 +102,7 @@ public class HandlerExistingFileTrigger extends BaseHandlerTrigger {
         File directory;
 
         directory = directoryChooser.showDialog(labelSelectedFolder.getScene().getWindow());
-        if (directory != null) {
+        if (directory != null && !directory.getAbsolutePath().isEmpty()) {
             filePath.setText(directory.getAbsolutePath());
             labelSelectedFolder.textProperty().set("Destination: " + directory.getName());
         } else {
