@@ -43,6 +43,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import progettose_gruppo16.action.ActionSequence;
 import progettose_gruppo16.handlerAction.BaseHandlerAction;
+import progettose_gruppo16.handlerTrigger.BaseHandlerTrigger;
 import progettose_gruppo16.handlerTrigger.HandlerComposite;
 
 /**
@@ -105,10 +106,7 @@ public class ControllerRuleCreation implements Initializable {
     @FXML
     private Button deleteActionBtn2;   
     @FXML
-    private Button deleteActionBtn3;
-    
-    
-    
+    private Button deleteActionBtn3;     
     @FXML
     private ComboBox<String> trigDD2;
     @FXML
@@ -177,19 +175,9 @@ public class ControllerRuleCreation implements Initializable {
     private List<BaseHandlerAction> startHandlersAction = new LinkedList<>();
     private List<AnchorPane> anchorPanesAction = new LinkedList<>();
     private int numAction = 1;
-
-    private HandlerComposite h15 = new HandlerComposite();
-    private HandlerTimeOfDayTrigger h7 = new HandlerTimeOfDayTrigger();
-    private HandlerDayOfWeekTrigger h8 = new HandlerDayOfWeekTrigger();
-    private HandlerDayOfMonthTrigger h9= new HandlerDayOfMonthTrigger();
-    private HandlerDateTrigger h10= new HandlerDateTrigger();
-    private HandlerFileSizeTrigger h11 = new HandlerFileSizeTrigger();
-    private HandlerExistingFileTrigger h12= new HandlerExistingFileTrigger();
-    private HandlerExitStatusTrigger h13= new HandlerExitStatusTrigger(); 
     
-    
-   
-
+    private List<BaseHandlerTrigger> handlerTrigger = new LinkedList<>();
+    private List<AnchorPane> anchorPanesTrigger = new LinkedList<>();
 
     /**
      *  Inizializzazione delle componenti dell'interfaccia utente
@@ -205,22 +193,13 @@ public class ControllerRuleCreation implements Initializable {
         allRulesList = ruleManager.getAllRulesList();
         
         //inizialization of the combo boxes for trigger and actions
-        initializeTrigDD(trigDD1);
-        initializeTrigDD(trigDD2);
-        initializeTrigDD(trigDD3);
-        initializeTrigDD(trigDD4);
-        initializeTrigDD(trigDD5);
-        initializeTrigDD(trigDD6);
-        initializeTrigDD(trigDD7);
-        
-        initializeLogOpsDD(logicalOpsDD1);
-        initializeLogOpsDD(logicalOpsDD2);
-        initializeLogOpsDD(logicalOpsDD3);
+        initializeHandlerTrigger(handlerTrigger);
+        initializeComboBoxTrigger();      
+        initializeLogOpsDD();
         
         initializeComboBoxAction(actionDD1);
         initializeHandlerAction(handlerAction1);
         anchorPanesAction.add(actionPane1);
-
         
         //binding to show the sleeping period settings when the "Repetable" check box is selected
         sleepingPeriodPane.visibleProperty().bind(repeatableCB.selectedProperty());
@@ -246,32 +225,15 @@ public class ControllerRuleCreation implements Initializable {
         not6.visibleProperty().bind(composite3.visibleProperty());
         not7.visibleProperty().bind(composite3.visibleProperty());
         
-        //trigger
-        h15.setNext(h7);
-        h7.setNext(h8);
-        h8.setNext(h9);
-        h9.setNext(h10);
-        h10.setNext(h11);
-        h11.setNext(h12);
-        h12.setNext(h13);
     }
-
-    private void initializeTrigDD(ComboBox<String> cb){
-        cb.getItems().add("Time of day");
-        cb.getItems().add("Day of the week");
-        cb.getItems().add("Day of month");
-        cb.getItems().add("Date");
-        cb.getItems().add("File size");
-        cb.getItems().add("Existing file");
-        cb.getItems().add("Exit status");
-        if(Integer.parseInt(cb.getId().substring(6))<4)
-            cb.getItems().add("Composite");
-    }
-    
-    private void initializeLogOpsDD(ComboBox<String> cb){
-        cb.getItems().add("AND");
-        cb.getItems().add("OR");
-        cb.setValue("AND");
+ 
+    private void initializeLogOpsDD(){
+        logicalOpsDD1.getItems().addAll("AND", "OR");
+        logicalOpsDD1.setValue("AND");
+        logicalOpsDD2.getItems().addAll("AND", "OR");
+        logicalOpsDD2.setValue("AND");
+        logicalOpsDD3.getItems().addAll("AND", "OR");
+        logicalOpsDD3.setValue("AND");
     }
 
     /**
@@ -327,7 +289,7 @@ public class ControllerRuleCreation implements Initializable {
         int days;
         
         //get che selected trigger from the trigger handlers chain
-        trigger = h15.handleBehaviour(triggerPane1, h15, 1, notVBox);
+        trigger = handlerTrigger.get(0).handleBehaviour(triggerPane1, handlerTrigger.get(0), 1, notVBox);
         
         //get che selected action from the action handlers chain
         for(int i = 0; i < numAction; i++){
@@ -374,32 +336,11 @@ public class ControllerRuleCreation implements Initializable {
     @FXML
     private void chooseTrigger(ActionEvent event) {
         ComboBox<String> cb = (ComboBox<String>) event.getSource();
-        String n = cb.getId().substring(6);
+        Integer i = Integer.parseInt(cb.getId().substring(6));
         AnchorPane ap;
-        switch (n) {
-            case "1":
-                ap = triggerPane1;
-                break;
-            case "2":
-                ap = triggerPane2;
-                break;
-            case "3":
-                ap = triggerPane3;
-                break;
-            case "4":
-                ap = triggerPane4;
-                break;
-            case "5":
-                ap = triggerPane5;
-                break;
-            case "6":
-                ap = triggerPane6;
-                break;
-            default:
-                ap = triggerPane7;
-                break;
-        }
-        h15.handleGUI(ap, cb);
+        
+        ap = anchorPanesTrigger.get(i-1);
+        handlerTrigger.get(0).handleGUI(ap, cb);
     }
 
     @FXML
@@ -498,7 +439,7 @@ public class ControllerRuleCreation implements Initializable {
         numAction--;
     }
     
-    private void initializeComboBoxAction(ComboBox cb){
+    private void initializeComboBoxAction(ComboBox<String> cb){
         cb.getItems().addAll("Show message", "Play audio", "Move file", "Delete file", "Copy file", "Add text to file", "Execute program");
     }
     
@@ -519,5 +460,42 @@ public class ControllerRuleCreation implements Initializable {
         for(int i=0; i<list.size()-1; i++){
             list.get(i).setNext(list.get(i+1));
         }
+    }
+    
+    private void initializeHandlerTrigger(List<BaseHandlerTrigger> list){
+        list.add(new HandlerComposite());
+        list.add(new HandlerTimeOfDayTrigger());
+        list.add(new HandlerDayOfWeekTrigger());
+        list.add(new HandlerDayOfMonthTrigger());
+        list.add(new HandlerDateTrigger());
+        list.add(new HandlerFileSizeTrigger());
+        list.add(new HandlerExistingFileTrigger());
+        list.add(new HandlerExitStatusTrigger());     
+        
+        for(int i=0; i<list.size()-1; i++){
+            list.get(i).setNext(list.get(i+1));
+        }
+    }
+    
+    private void initializeComboBoxTrigger(){
+        trigDD1.getItems().addAll("Time of day", "Day of the week", "Day of month", "Date", "File size", "Existing file", "Exit status", "Composite");
+        trigDD2.getItems().addAll("Time of day", "Day of the week", "Day of month", "Date", "File size", "Existing file", "Exit status", "Composite");
+        trigDD3.getItems().addAll("Time of day", "Day of the week", "Day of month", "Date", "File size", "Existing file", "Exit status", "Composite");
+        trigDD4.getItems().addAll("Time of day", "Day of the week", "Day of month", "Date", "File size", "Existing file", "Exit status");
+        trigDD5.getItems().addAll("Time of day", "Day of the week", "Day of month", "Date", "File size", "Existing file", "Exit status");
+        trigDD6.getItems().addAll("Time of day", "Day of the week", "Day of month", "Date", "File size", "Existing file", "Exit status");
+        trigDD7.getItems().addAll("Time of day", "Day of the week", "Day of month", "Date", "File size", "Existing file", "Exit status");
+        
+        listingAnchorPanesTrigger();
+    }
+    
+    private void listingAnchorPanesTrigger(){
+        anchorPanesTrigger.add(triggerPane1);
+        anchorPanesTrigger.add(triggerPane2);
+        anchorPanesTrigger.add(triggerPane3);
+        anchorPanesTrigger.add(triggerPane4);
+        anchorPanesTrigger.add(triggerPane5);
+        anchorPanesTrigger.add(triggerPane6);
+        anchorPanesTrigger.add(triggerPane7);
     }
 }
