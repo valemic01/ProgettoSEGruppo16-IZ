@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Time;
 import java.time.LocalTime;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
@@ -39,6 +41,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import progettose_gruppo16.action.ActionSequence;
+import progettose_gruppo16.handlerAction.BaseHandlerAction;
 import progettose_gruppo16.handlerTrigger.HandlerComposite;
 
 /**
@@ -57,19 +61,17 @@ public class ControllerRuleCreation implements Initializable {
     @FXML
     private Tab actionTab;
     @FXML
-    private ComboBox<String> actionDD1;
-    @FXML
     private Button addRuleBtn;
-    @FXML
-    private CheckBox repetableCB;
     @FXML
     private AnchorPane sleepingPeriodPane;
     @FXML
-    private TextField slepPerDays;
+    private CheckBox repeatableCB;
     @FXML
-    private TextField slepPerHours;
+    private TextField sleepPerDays;
     @FXML
-    private TextField slepPerMins;
+    private TextField sleepPerHours;
+    @FXML
+    private TextField sleepPerMins;
     @FXML
     private TextField ruleNameTxtBox;
     @FXML
@@ -77,29 +79,34 @@ public class ControllerRuleCreation implements Initializable {
     @FXML
     private Label notValidSleep;
     @FXML
-    private AnchorPane actionPane;
-      
-    private Time sleepingPeriod;
-    private RulesManager ruleManager;   
-    private ObservableList<Rule> allRulesList; //observable list of all rules, created to manage the respective TableView  
-    private Stage stage; 
+    private AnchorPane actionPane1;
+    @FXML
+    private AnchorPane actionPane2;
+    @FXML
+    private AnchorPane actionPane3;
+    @FXML
+    private AnchorPane actionPane4;
+    @FXML
+    private Button addActionBtn1;
+    @FXML
+    private Button addActionBtn2;
+    @FXML
+    private Button addActionBtn3;
+    @FXML
+    private ComboBox<String> actionDD1;
+    @FXML
+    private ComboBox<String> actionDD2;
+    @FXML
+    private ComboBox<String> actionDD3;
+    @FXML
+    private ComboBox<String> actionDD4;
+    @FXML
+    private Button deleteActionBtn1;
+    @FXML
+    private Button deleteActionBtn2;   
+    @FXML
+    private Button deleteActionBtn3;
     
-    private HandlerShowMessageAction h1 = new HandlerShowMessageAction();
-    private HandlerPlayAudioAction h2 = new HandlerPlayAudioAction();
-    private HandlerCopyFileAction h3 = new HandlerCopyFileAction();
-    private HandlerMoveFileAction h4 = new HandlerMoveFileAction();
-    private HandlerDeleteFileAction h5 = new HandlerDeleteFileAction();
-    private HandlerAppendStringToFileAction h6 = new HandlerAppendStringToFileAction();
-    private HandlerExecuteProgramAction h14= new HandlerExecuteProgramAction();
-    
-    private HandlerComposite h15 = new HandlerComposite();
-    private HandlerTimeOfDayTrigger h7 = new HandlerTimeOfDayTrigger();
-    private HandlerDayOfWeekTrigger h8 = new HandlerDayOfWeekTrigger();
-    private HandlerDayOfMonthTrigger h9= new HandlerDayOfMonthTrigger();
-    private HandlerDateTrigger h10= new HandlerDateTrigger();
-    private HandlerFileSizeTrigger h11 = new HandlerFileSizeTrigger();
-    private HandlerExistingFileTrigger h12= new HandlerExistingFileTrigger();
-    private HandlerExitStatusTrigger h13= new HandlerExitStatusTrigger(); 
     
     
     @FXML
@@ -154,6 +161,33 @@ public class ControllerRuleCreation implements Initializable {
     private CheckBox not6;
     @FXML
     private CheckBox not7;
+   
+   
+    private Time sleepingPeriod;
+    private RulesManager ruleManager;   
+    private ObservableList<Rule> allRulesList; //observable list of all rules, created to manage the respective TableView  
+    private Stage stage; 
+    
+    private List<BaseHandlerAction> handlerAction1 = new LinkedList<>();
+    private List<BaseHandlerAction> handlerAction2 = new LinkedList<>();;
+    private List<BaseHandlerAction> handlerAction3 = new LinkedList<>();;
+    private List<BaseHandlerAction> handlerAction4 = new LinkedList<>();;
+    private List<BaseHandlerAction> startHandlers = new LinkedList<>();
+    private List<AnchorPane> anchorPanesAction = new LinkedList<>();
+    private int numAction = 1;
+
+    private HandlerComposite h15 = new HandlerComposite();
+    private HandlerTimeOfDayTrigger h7 = new HandlerTimeOfDayTrigger();
+    private HandlerDayOfWeekTrigger h8 = new HandlerDayOfWeekTrigger();
+    private HandlerDayOfMonthTrigger h9= new HandlerDayOfMonthTrigger();
+    private HandlerDateTrigger h10= new HandlerDateTrigger();
+    private HandlerFileSizeTrigger h11 = new HandlerFileSizeTrigger();
+    private HandlerExistingFileTrigger h12= new HandlerExistingFileTrigger();
+    private HandlerExitStatusTrigger h13= new HandlerExitStatusTrigger(); 
+    
+    
+   
+
 
     /**
      *  Inizializzazione delle componenti dell'interfaccia utente
@@ -181,19 +215,16 @@ public class ControllerRuleCreation implements Initializable {
         initializeLogOpsDD(logicalOpsDD2);
         initializeLogOpsDD(logicalOpsDD3);
         
-        actionDD1.getItems().add("Show message");
-        actionDD1.getItems().add("Play audio");
-        actionDD1.getItems().add("Move file");
-        actionDD1.getItems().add("Delete file");
-        actionDD1.getItems().add("Copy file");
-        actionDD1.getItems().add("Add text to file");
-        actionDD1.getItems().add("Execute program");
+        initializeComboBoxAction(actionDD1);
+        initializeHandlerAction(handlerAction1);
+        anchorPanesAction.add(actionPane1);
+
         
         //binding to show the sleeping period settings when the "Repetable" check box is selected
-        sleepingPeriodPane.visibleProperty().bind(repetableCB.selectedProperty());
+        sleepingPeriodPane.visibleProperty().bind(repeatableCB.selectedProperty());
         
         //binding to disable the add rule button if the rule name, the action or the trigger are not selected
-        addRuleBtn.disableProperty().bind(Bindings.isEmpty(ruleNameTxtBox.textProperty()).or(Bindings.isNull(trigDD1.valueProperty())).or(Bindings.isNull(actionDD1.valueProperty())).or((Bindings.isEmpty(slepPerDays.textProperty()).or(Bindings.isEmpty(slepPerHours.textProperty())).or(Bindings.isEmpty(slepPerMins.textProperty()))).and(sleepingPeriodPane.visibleProperty())));
+        //addRuleBtn.disableProperty().bind(Bindings.isEmpty(ruleNameTxtBox.textProperty()).or(Bindings.isNull(trigDD1.valueProperty())).or(Bindings.isNull(actionDD1.valueProperty())).or((Bindings.isEmpty(slepPerDays.textProperty()).or(Bindings.isEmpty(slepPerHours.textProperty())).or(Bindings.isEmpty(slepPerMins.textProperty()))).and(sleepingPeriodPane.visibleProperty())));
         
         composite1.visibleProperty().bind(Bindings.createBooleanBinding(() ->"Composite".equals(trigDD1.getSelectionModel().getSelectedItem()),trigDD1.getSelectionModel().selectedItemProperty()));
         triggerPane2.visibleProperty().bind(composite1.visibleProperty());
@@ -213,15 +244,6 @@ public class ControllerRuleCreation implements Initializable {
         not6.visibleProperty().bind(composite3.visibleProperty());
         not7.visibleProperty().bind(composite3.visibleProperty());
         
-        //creation of the handlers chains
-        //action
-        h1.setNext(h2);
-        h2.setNext(h3);
-        h3.setNext(h4);
-        h4.setNext(h5);
-        h5.setNext(h6);
-        h6.setNext(h14);
-        
         //trigger
         h15.setNext(h7);
         h7.setNext(h8);
@@ -231,7 +253,7 @@ public class ControllerRuleCreation implements Initializable {
         h11.setNext(h12);
         h12.setNext(h13);
     }
-    
+
     private void initializeTrigDD(ComboBox<String> cb){
         int i;
         cb.getItems().add("Time of day");
@@ -296,9 +318,8 @@ public class ControllerRuleCreation implements Initializable {
     private void addRuleAction(ActionEvent event) throws IOException {
         
         Rule rule;
-        Action action;
+        ActionSequence action = new ActionSequence();
         Trigger trigger;
-        
         String name = ruleNameTxtBox.getText();
         
         LocalTime sleepPeriod;
@@ -308,18 +329,26 @@ public class ControllerRuleCreation implements Initializable {
         trigger = h15.handleBehaviour(triggerPane1, h15, 1, notVBox);
         
         //get che selected action from the action handlers chain
-        action = h1.handleBehaviour(actionPane);
+        for(int i = 0; i < numAction; i++){
+            Action a = startHandlers.get(i).handleBehaviour(anchorPanesAction.get(i));
+            if(a==null)
+                return;
+            else
+                action.addAction(a);
+            
+        }
         
-        if(action == null || trigger == null)
+        if(action.getSequence().isEmpty() || trigger == null)
             return;
+
         
-        if(repetableCB.isSelected()){
-            if(!slepPerHours.getText().matches("^(0?\\d|1\\d|2[0-3])$") || !slepPerMins.getText().matches("^(0?[0-9]|[1-5][0-9])$") || !slepPerDays.getText().matches("\\d*")){
+        if(repeatableCB.isSelected()){
+            if(!sleepPerHours.getText().matches("^(0?\\d|1\\d|2[0-3])$") || !sleepPerMins.getText().matches("^(0?[0-9]|[1-5][0-9])$") || !sleepPerDays.getText().matches("\\d*")){
                 notValidSleep.setVisible(true);
                 return;
             }else{
-                sleepPeriod = LocalTime.of(Integer.parseInt(slepPerHours.getText()), Integer.parseInt(slepPerMins.getText()));
-                days = Integer.parseInt(slepPerDays.getText());
+                sleepPeriod = LocalTime.of(Integer.parseInt(sleepPerHours.getText()), Integer.parseInt(sleepPerMins.getText()));
+                days = Integer.parseInt(sleepPerDays.getText());
                 rule = new RepeatableRule(name, trigger, action, days, sleepPeriod);
             } 
         }else
@@ -336,11 +365,6 @@ public class ControllerRuleCreation implements Initializable {
         ruleManager.addRule(rule);
         goBack(null);
         
-    }
-
-    @FXML
-    private void chooseAction(ActionEvent event) {
-        h1.handleGUI(actionPane, actionDD1, addRuleBtn);
     }
 
     @FXML
@@ -373,5 +397,123 @@ public class ControllerRuleCreation implements Initializable {
         }
         h15.handleGUI(ap, cb, addRuleBtn);
     }
+
+    @FXML
+    private void chooseAction1(ActionEvent event) {
+        if(actionDD1.getValue() != null)
+            handlerAction1.get(0).handleGUI(actionPane1, actionDD1, addRuleBtn);
+    }
     
+    @FXML
+    private void chooseAction2(ActionEvent event) {
+        if(actionDD2.getValue() != null)
+            handlerAction2.get(0).handleGUI(actionPane2, actionDD2, addRuleBtn);
+    }
+    
+    @FXML
+    private void chooseAction3(ActionEvent event) {
+        if(actionDD3.getValue() != null)
+            handlerAction3.get(0).handleGUI(actionPane3, actionDD3, addRuleBtn);
+    }
+    
+    @FXML
+    private void chooseAction4(ActionEvent event) {
+        if(actionDD4.getValue() != null)
+            handlerAction4.get(0).handleGUI(actionPane4, actionDD4, addRuleBtn);
+    }
+    
+    @FXML
+    private void onAddAction1(ActionEvent event) {
+        initializeComboBoxAction(actionDD2);
+        initializeHandlerAction(handlerAction2);
+        anchorPanesAction.add(actionPane2);
+        actionDD2.setVisible(true);
+        addActionBtn2.setVisible(true);
+        addActionBtn1.setVisible(false);
+        deleteActionBtn1.setVisible(true);
+        numAction++;
+    }
+
+    @FXML
+    private void onAddAction2(ActionEvent event) {
+        initializeComboBoxAction(actionDD3);
+        initializeHandlerAction(handlerAction3);
+        anchorPanesAction.add(actionPane3);
+        actionDD3.setVisible(true);
+        addActionBtn3.setVisible(true);
+        addActionBtn2.setVisible(false);
+        deleteActionBtn1.setVisible(false);
+        deleteActionBtn2.setVisible(true);
+        numAction++;
+    }
+    
+    @FXML
+    private void onAddAction3(ActionEvent event) {   
+        initializeComboBoxAction(actionDD4);
+        initializeHandlerAction(handlerAction4);
+        anchorPanesAction.add(actionPane4);
+        actionDD4.setVisible(true);
+        deleteActionBtn3.setVisible(true);
+        addActionBtn3.setVisible(false);
+        deleteActionBtn2.setVisible(false);
+        numAction++;
+    }
+    
+    @FXML
+    private void onDeleteAction1(ActionEvent event) {
+        actionPane2.getChildren().clear();
+        actionDD2.setVisible(false);
+        actionDD2.getSelectionModel().clearSelection();
+        deleteActionBtn1.setVisible(false);
+        addActionBtn2.setVisible(false);
+        addActionBtn1.setVisible(true);
+        numAction--;
+    }
+  
+    @FXML
+    private void onDeleteAction2(ActionEvent event) {
+        actionPane3.getChildren().clear();
+        actionDD3.setVisible(false);
+        actionDD3.getSelectionModel().clearSelection();
+        deleteActionBtn2.setVisible(false);
+        addActionBtn3.setVisible(false);
+        addActionBtn2.setVisible(true);
+        deleteActionBtn1.setVisible(true);
+        numAction--;
+    }
+
+
+    @FXML
+    private void onDeleteAction3(ActionEvent event) {
+        actionPane4.getChildren().clear();
+        actionDD4.getSelectionModel().clearSelection();
+        actionDD4.setVisible(false);
+        deleteActionBtn3.setVisible(false);
+        deleteActionBtn2.setVisible(true);
+        addActionBtn3.setVisible(true);
+        numAction--;
+    }
+    
+    private void initializeComboBoxAction(ComboBox cb){
+        cb.getItems().addAll("Show message", "Play audio", "Move file", "Delete file", "Copy file", "Add text to file", "Execute program");
+    }
+    
+    private void initializeHandlerAction(List<BaseHandlerAction> list){
+        list.add(new HandlerShowMessageAction());
+        list.add(new HandlerPlayAudioAction());
+        list.add(new HandlerCopyFileAction());
+        list.add(new HandlerMoveFileAction());
+        list.add(new HandlerDeleteFileAction());
+        list.add(new HandlerAppendStringToFileAction());
+        list.add(new HandlerExecuteProgramAction());
+        
+        setNextHandlerAction(list);
+        startHandlers.add(list.get(0));
+    }
+    
+    private void setNextHandlerAction(List<BaseHandlerAction> list){
+        for(int i=0; i<list.size()-1; i++){
+            list.get(i).setNext(list.get(i+1));
+        }
+    }
 }

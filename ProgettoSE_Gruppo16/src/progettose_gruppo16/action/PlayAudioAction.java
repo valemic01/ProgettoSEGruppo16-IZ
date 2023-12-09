@@ -1,51 +1,66 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package progettose_gruppo16.action;
 
 import java.io.File;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
 
-/**Classe che implementa l'interfaccia Action per permettere all'utente di scegliere come azione
- * la riproduzione di un audio scelto in fase di creazione della regola.
- *
- * @author valentina <your.name at your.org>
+/**
+ * Class that implements the Action interface to allow the user to choose playing audio
+ * as an action when creating a rule.
+ * @author valentina
  */
 public class PlayAudioAction implements Action{
     private final String filePath;
     private transient Media audioFile;
     private transient MediaPlayer player;
+    private File file;
     
     /**
-     * Costruttore della classe che inizializza il percorso del file audio da riprodurre.
-     * @param fileAudio Il percorso del file audio da riprodurre.
+     * Constructor of the class that initializes the path of the audio file to play.
+     * @param fileAudio The path of the audio file to play.
      */
     public PlayAudioAction(String fileAudio) {
         this.filePath = fileAudio;
+        this.file = new File(filePath);
     }
     
     /**
-     * Esegue l'azione di riproduzione audio utilizzando JavaFX Media e MediaPlayer.
-     * Crea un oggetto Media e un oggetto MediaPlayer associato al file audio specificato,
-     * quindi avvia la riproduzione del file audio.
+     * Executes the audio playback action using JavaFX Media and MediaPlayer.
+     * Creates a Media object and a MediaPlayer object associated with the specified audio file,
+     * then starts playing the audio file.
      */
     @Override
-    public void executeAction() {
-            audioFile = new Media(new File(filePath).toURI().toString());
-            player = new MediaPlayer(audioFile);
-            player.play();
+    public void executeAction() {  
+        
+        if(file.exists()){            
+            synchronized(file){               
+                audioFile = new Media(file.toURI().toString());
+                player = new MediaPlayer(audioFile);              
+                player.play();  
+            }
+        }else{
+            Platform.runLater(() -> {
+                Alert dialogBox = new Alert(Alert.AlertType.ERROR, file.getName() + " doesn't exist" , ButtonType.OK);
+                Stage stage = (Stage) dialogBox.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image(getClass().getResourceAsStream("messageAlert.png")));
+                dialogBox.setTitle(" PLAY AUDIO");
+                dialogBox.show();
+            });
+        }
     }
 
     /**
-     * Restituisce una rappresentazione testuale della classe.
-     * @return Una stringa che rappresenta l'oggetto PlayAudioAction.
+     * Returns a textual representation of the class.
+     * @return A string representing the PlayAudioAction object.
      */
     @Override
     public String toString() {
-        return "PlayAudioAction: " + filePath;
+        return "PlayAudioAction: " + file.getName() + '\n';
     }
-    
     
 }

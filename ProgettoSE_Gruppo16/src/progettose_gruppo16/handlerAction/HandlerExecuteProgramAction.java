@@ -1,4 +1,3 @@
-
 package progettose_gruppo16.handlerAction;
 
 import java.io.File;
@@ -14,23 +13,22 @@ import progettose_gruppo16.action.Action;
 import progettose_gruppo16.action.ExecuteProgramAction;
 
 /**
- * Classe che estende la classe BaseHandlerAction.
+ * Class that manages the GUI and functionalities necessary for
+ * executing an external program. It extends the BaseHandlerAction class.
  */
 public class HandlerExecuteProgramAction extends BaseHandlerAction{
     
-    private Label labelFile = new Label();
     private Button selectFileBtn = new Button();
     private Label labelSelectedFile = new Label();
-    private Label labelArguments = new Label();
     private TextField textArguments = new TextField();
     private String file;
     
     /**
-     * Permette all'utente di selezionare un programma e scrivere una lista di argomenti da passare a linea
-     * di comando quando decide di utlizzare ExecuteProgramAction.
-     * @param ap
-     * @param s
-     * @param btn
+     * Allows the user to select a program and write a list of command-line arguments
+     * when deciding to use ExecuteProgramAction.
+     * @param ap The AnchorPane where GUI components are positioned.
+     * @param cb Combo Box containing the action selected by the user.
+     * @param btn The button associated with the action.
      */
     @Override
     public void handleGUI(AnchorPane ap, ComboBox<String> cb, Button btn){ 
@@ -38,38 +36,24 @@ public class HandlerExecuteProgramAction extends BaseHandlerAction{
             ap.getChildren().clear();
             ap.setId("ExecuteProgramPane");
             
-            labelFile.setText("Select a file");
-            ap.getChildren().add(labelFile);
-            labelFile.setLayoutX(-5);
-            labelFile.setLayoutY(30);
-            labelFile.setPrefWidth(400);
-            labelFile.setAlignment(Pos.CENTER);
-            
-            selectFileBtn.setText("Select file");
+            selectFileBtn.setText("Select Program to Execute");
             ap.getChildren().add(selectFileBtn);
-            selectFileBtn.setLayoutX(152);
-            selectFileBtn.setLayoutY(57);
+            selectFileBtn.setLayoutX(0);
+            selectFileBtn.setLayoutY(5);
             
             labelSelectedFile.setText("");
             ap.getChildren().add(labelSelectedFile);
             labelSelectedFile.setLayoutX(0);
-            labelSelectedFile.setLayoutY(95);
+            labelSelectedFile.setLayoutY(40);
             labelSelectedFile.setPrefWidth(400);
             labelSelectedFile.setAlignment(Pos.CENTER);
             labelSelectedFile.setTextFill(Color.web("#009999"));
             
-            labelArguments.setText("Command Line Arguments ");
-            ap.getChildren().add(labelArguments);
-            labelArguments.setLayoutX(0);
-            labelArguments.setLayoutY(132);
-            labelArguments.setPrefWidth(400);
-            labelArguments.setAlignment(Pos.CENTER);
-            
-            textArguments.setPromptText("Arguments...");
+            textArguments.setPromptText("Command Line Arguments...");
             ap.getChildren().add(textArguments);
-            textArguments.setLayoutX(106);
-            textArguments.setLayoutY(153);
-            
+            textArguments.setLayoutX(200);
+            textArguments.setLayoutY(5);
+            textArguments.setPrefWidth(200);
             
             selectFileBtn.setOnAction(event -> file = chooseFile(labelSelectedFile));
             
@@ -79,18 +63,17 @@ public class HandlerExecuteProgramAction extends BaseHandlerAction{
     }
     
     /**
-     * Se l'utente ha selezionato un file e scritto eventuali argomenti
-     * a linea di comando, allora viene creato un oggetto di tipo ExecuteProgramAction
-     * @param ap
-     * @return
+     * If the user has selected a file and written any command-line arguments,
+     * an object of type ExecuteProgramAction is created.
+     * @param ap The AnchorPane representing the current state.
+     * @return An instance of Action based on the current state.
      */
     @Override 
     public Action handleBehaviour(AnchorPane ap){     
         if(ap.getId().equals("ExecuteProgramPane")){
-            if(file!=null){
+            if(file!=null && !file.isEmpty()){
                 if(textArguments.getText().isEmpty())
                     textArguments.setText("");
- 
                 return new ExecuteProgramAction(file, textArguments.getText());
             }else
                 return null;
@@ -102,7 +85,6 @@ public class HandlerExecuteProgramAction extends BaseHandlerAction{
     @Override
     public String chooseFile(Label lbl){
         FileChooser fileChooser = new FileChooser();
-        String path;
         FileChooser.ExtensionFilter filter= new FileChooser.ExtensionFilter ("Accepted extensions (*.exe), (*.jar)", "*.exe", "*.jar");
         fileChooser.getExtensionFilters().add(filter);
         File filePath = fileChooser.showOpenDialog(selectFileBtn.getScene().getWindow());

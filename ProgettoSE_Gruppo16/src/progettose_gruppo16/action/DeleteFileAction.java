@@ -1,47 +1,76 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package progettose_gruppo16.action;
 
 import java.io.File;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import static javafx.scene.control.Alert.AlertType.ERROR;
+import static javafx.scene.control.Alert.AlertType.INFORMATION;
+import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 /**
- *Classe che implementa l'azione che consiste di eliminare un file
- * specificato dall'utente.
- * @author valentina <your.name at your.org>
+ * Class that implements the action of deleting a specified file by the user.
+ * @author valentina
  */
-public class DeleteFileAction implements Action{
+public class DeleteFileAction implements Action {
     private final String filePath;
+    private final File file;
+    private final String filename;
 
     /**
-     * Costruttore della classe che inizializza il percorso del file da eliminare.
-     * @param filePath Il percorso del file da eliminare.
+     * Constructor of the class that initializes the path of the file to delete.
+     * @param filePath The path of the file to delete.
      */
     public DeleteFileAction(String filePath) {
         this.filePath = filePath;
+        this.file = new File(filePath);
+        this.filename = file.getName();
     }
     
     /**
-     *Metodo che implementa l'eliminazione di un file.
-     * Utilizza il metodo delete() della classe File per eliminare il file dal sistema.
+     * Method that implements the deletion of a file.
+     * Uses the delete() method of the File class to delete the file from the system.
      */
     @Override
-    public void executeAction() {
-        if(new File(filePath).delete())
-            System.out.println("File deleted successfully.");
-        else
-            System.out.println("Error while deleting the file.");
+    public void executeAction() {    
+        String message;
+        Alert.AlertType alert;
+        boolean deleted;
+        
+        if(file.exists()){
+            synchronized(file){
+                deleted = file.delete();
+            }
+            if(!deleted){                
+                message = "Error while deleting " + filename;
+                alert = ERROR;
+            }else{           
+                message = filename + " has been deleted successfully";
+                alert = INFORMATION;
+            }
+        }else{
+            message = "Error while deleting: \n" + filename + " \n  doesn't exist";
+            alert = ERROR;
+        }
+        
+        Platform.runLater(() -> {
+            Alert dialogBox = new Alert(alert, message, ButtonType.OK);
+            Stage stage = (Stage) dialogBox.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("messageAlert.png")));
+            dialogBox.setTitle(" FILE DELETING");
+            dialogBox.show();
+        });
+        
     }
     
     /**
-     * Restituisce una rappresentazione testuale della classe.
-     * @return Una stringa che rappresenta l'oggetto DeleteFileAction.
+     * Returns a textual representation of the class.
+     * @return A string representing the DeleteFileAction object.
      */
     @Override
     public String toString() {
-        return "DeleteFileAction: " + filePath;
+        return "DeleteFileAction: " + filename + '\n';
     }
-    
     
 }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package progettose_gruppo16.handlerAction;
 
 import progettose_gruppo16.action.Action;
@@ -9,7 +5,7 @@ import javafx.scene.layout.AnchorPane;
 import progettose_gruppo16.Handler;
 
 /**
- *
+ * Base interface for using the Chain of Responsibility pattern.
  * @author raffa
  */
 public interface HandlerAction extends Handler{

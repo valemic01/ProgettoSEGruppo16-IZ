@@ -76,34 +76,70 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <AnchorPane fx:id="actionPane" layoutX="415.0" layoutY="26.0" prefHeight="253.0" prefWidth="398.0" />
-                        <ComboBox fx:id="actionDD1" layoutX="88.0" layoutY="71.0" onAction="#chooseAction" prefHeight="31.0" prefWidth="140.0" promptText="Action..." />
-                        <Button fx:id="addRuleBtn" layoutX="344.0" layoutY="420.0" mnemonicParsing="false" onAction="#addRuleAction" prefHeight="45.0" prefWidth="138.0" text="Add rule">
+                        <ComboBox fx:id="actionDD1" layoutX="85.0" layoutY="40.0" onAction="#chooseAction1" prefHeight="30.0" prefWidth="140.0" promptText="Action..." />
+                        <Button fx:id="addActionBtn1" layoutX="245.0" layoutY="40.0" mnemonicParsing="false" onAction="#onAddAction1" prefHeight="30.0" prefWidth="30.0" text="+">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <AnchorPane fx:id="actionPane1" layoutX="400.0" layoutY="35.0" prefHeight="75.0" prefWidth="400.0" />
+                        <ComboBox fx:id="actionDD2" layoutX="85.0" layoutY="115.0" onAction="#chooseAction2" prefHeight="30.0" prefWidth="140.0" promptText="Action..." visible="false" />
+                        <Button fx:id="addActionBtn2" layoutX="245.0" layoutY="115.0" mnemonicParsing="false" onAction="#onAddAction2" prefHeight="30.0" prefWidth="30.0" text="+" visible="false">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="deleteActionBtn1" layoutX="35.0" layoutY="115.0" mnemonicParsing="false" onAction="#onDeleteAction1" prefHeight="30.0" prefWidth="30.0" text="-" visible="false">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <AnchorPane fx:id="actionPane2" layoutX="400.0" layoutY="110.0" prefHeight="75.0" prefWidth="400.0" />
+                        <ComboBox fx:id="actionDD3" layoutX="85.0" layoutY="190.0" onAction="#chooseAction3" prefHeight="30.0" prefWidth="140.0" promptText="Action..." visible="false" />
+                        <Button fx:id="addActionBtn3" layoutX="245.0" layoutY="190.0" mnemonicParsing="false" onAction="#onAddAction3" prefHeight="30.0" prefWidth="30.0" text="+" visible="false">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="deleteActionBtn2" layoutX="35.0" layoutY="190.0" mnemonicParsing="false" onAction="#onDeleteAction2" prefHeight="30.0" prefWidth="30.0" text="-" visible="false">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <AnchorPane fx:id="actionPane3" layoutX="400.0" layoutY="185.0" prefHeight="75.0" prefWidth="400.0" />
+                        <ComboBox fx:id="actionDD4" layoutX="85.0" layoutY="265.0" onAction="#chooseAction4" prefHeight="30.0" prefWidth="140.0" promptText="Action..." visible="false" />
+                        <Button fx:id="deleteActionBtn3" layoutX="35.0" layoutY="265.0" mnemonicParsing="false" onAction="#onDeleteAction3" prefHeight="30.0" prefWidth="30.0" text="-" visible="false">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <AnchorPane fx:id="actionPane4" layoutX="400.0" layoutY="260.0" prefHeight="75.0" prefWidth="400.0" />
+                        <Button fx:id="addRuleBtn" layoutX="340.0" layoutY="430.0" mnemonicParsing="false" onAction="#addRuleAction" prefHeight="45.0" prefWidth="138.0" text="Add rule">
                            <font>
                               <Font name="System Bold" size="21.0" />
                            </font>
                         </Button>
-                        <CheckBox fx:id="repetableCB" layoutX="367.0" layoutY="386.0" mnemonicParsing="false" text="Repeatable" />
-                        <Button layoutX="773.0" layoutY="443.0" mnemonicParsing="false" onAction="#goBack" text="X" />
-                        <Label layoutX="729.0" layoutY="448.0" text="Close" />
-                        <AnchorPane fx:id="sleepingPeriodPane" layoutX="509.0" layoutY="397.0">
+                        <Button layoutX="773.0" layoutY="445.0" mnemonicParsing="false" onAction="#goBack" text="X" />
+                        <Label layoutX="729.0" layoutY="450.0" text="Close" />
+                        <CheckBox fx:id="repeatableCB" layoutX="500.0" layoutY="385.0" mnemonicParsing="false" text="Repeatable" />
+                        <AnchorPane fx:id="sleepingPeriodPane" layoutX="510.0" layoutY="380.0" prefHeight="100.0">
                            <children>
-                              <Label layoutX="38.0" text="Sleeping period:" />
-                              <TextField fx:id="slepPerDays" layoutY="38.0" prefHeight="31.0" prefWidth="51.0" promptText="days" />
-                              <TextField fx:id="slepPerHours" layoutX="68.0" layoutY="38.0" prefHeight="31.0" prefWidth="56.0" promptText="hours" />
-                              <TextField fx:id="slepPerMins" layoutX="140.0" layoutY="38.0" prefHeight="31.0" prefWidth="51.0" promptText="mins" />
-                              <Label layoutX="57.0" layoutY="42.0" text=":" />
-                              <Label layoutX="130.0" layoutY="42.0" text=":" />
+                              <Label layoutX="50.0" layoutY="40.0" text="Sleeping period" />
+                              <TextField fx:id="sleepPerDays" layoutY="65.0" prefHeight="31.0" prefWidth="51.0" promptText="days" />
+                              <TextField fx:id="sleepPerHours" layoutX="68.0" layoutY="65.0" prefHeight="31.0" prefWidth="56.0" promptText="hours" />
+                              <TextField fx:id="sleepPerMins" layoutX="140.0" layoutY="65.0" prefHeight="31.0" prefWidth="51.0" promptText="mins" />
+                              <Label layoutX="57.0" layoutY="70.0" text=":" />
+                              <Label layoutX="130.0" layoutY="70.0" text=":" />
                               <Label fx:id="notValidSleep" layoutX="67.0" layoutY="18.0" text="Not Valid" textFill="RED" visible="false" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="333.0" layoutY="313.0">
+                        <AnchorPane layoutX="335.0" layoutY="350.0" prefHeight="30.0">
                            <children>
-                              <TextField fx:id="ruleNameTxtBox" layoutY="30.0" prefHeight="31.0" prefWidth="164.0" />
-                              <Label layoutX="45.0" text="Rule name:" />
+                              <TextField fx:id="ruleNameTxtBox" layoutY="30.0" prefHeight="30.0" prefWidth="150.0" />
+                              <Label layoutX="45.0" layoutY="5.0" text="Rule name" />
                            </children>
                         </AnchorPane>
-                        <Button layoutX="29.0" layoutY="428.0" mnemonicParsing="false" onAction="#toTrigger" prefHeight="31.0" prefWidth="80.0" text="Back" />
+                        <Button layoutX="29.0" layoutY="440.0" mnemonicParsing="false" onAction="#toTrigger" prefHeight="31.0" prefWidth="80.0" text="Back" />
                         <Label fx:id="notValidName" layoutX="516.0" layoutY="353.0" prefHeight="21.0" prefWidth="177.0" text="This name already exists." textFill="#e40808" visible="false" />
                      </children>
                   </AnchorPane>

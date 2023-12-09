@@ -1,6 +1,5 @@
 package progettose_gruppo16.action;
 
-import progettose_gruppo16.action.Action;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -9,31 +8,32 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
- *  Classe che implementa l'interfaccia Action che permette di mostrare un messaggio
- *  scritto dall'utente a schermo all'attivazione del trigger. Il messaggio deve essere
- *  esplicitamente chiuso dall'utente.
+ * Class that implements the Action interface to display a message
+ * written by the user on the screen when the trigger is activated.
+ * The message must be explicitly closed by the user.
  */
 public class ShowMessageAction implements Action{
     
     private final String message;
 
     /**
-     *  Costruttore
-     * @param message -> messaggio scritto dall'utente tramite GUI
+     * Constructor of the class that implements the action of displaying a 
+     * message specified by the user on the screen.
+     * @param message -> Message written by the user through the GUI.
      */
     public ShowMessageAction(String message) {
         this.message = message;
     }
 
     /**
-     *  Metodo implementato dall'interfaccia Action. Crea un Alert contenente il messaggio dell'utente
-     *  e il bottone per chiuderlo. Platform.runLater serve per mettere il metodo contenente l'alert
-     *  in una coda di eventi sul JavaFX Application Thread in modo che venga schedulato ed eseguito, quando possibile.
-     *  Questo è necessario poiché ogni interazione con l'interfaccia deve avvenire attraverso l'Application Thread.
+     * Method implemented by the Action interface. Creates an Alert containing the user's message
+     * and a button to close it. Platform.runLater is used to place the method containing the alert
+     * in an event queue on the JavaFX Application Thread to be scheduled and executed when possible.
+     * This is necessary because every interaction with the interface must happen through the Application Thread.
      */
     @Override
     public void executeAction() {    
-     
+        
         Platform.runLater(() -> {
             Alert dialogBox = new Alert(AlertType.NONE, message, ButtonType.OK);
             Stage stage = (Stage) dialogBox.getDialogPane().getScene().getWindow();
@@ -44,9 +44,13 @@ public class ShowMessageAction implements Action{
         
     }
 
+    /**
+     * Returns a textual representation of the class.
+     * @return A string representing the ShowMessageAction object.
+     */
     @Override
     public String toString() {
-        return "Show the message: " + message;
+        return "Show the message: " + message + '\n';
     }
     
 }
