@@ -57,16 +57,10 @@ public class ExistingFileTriggerTest {
 
     @Before
     public void setUp() {
-        // Setup tasks that run before each test method
-        // This method is annotated with @Before
-        // No additional setup needed in this case
     }
 
     @After
     public void tearDown() {
-        // Teardown tasks that run after each test method
-        // This method is annotated with @After
-        // No additional teardown needed in this case
     }
 
     /**
