@@ -67,7 +67,7 @@ public class ExitStatusTrigger implements Trigger{
             int exitStatusProcess= process.waitFor();   // Wait for the process to complete and get the exit status
             if (exitStatusProcess == exitStatus){
                 return !not;
-            }           
+            } 
         } catch (IOException | InterruptedException ex) {
             ex.printStackTrace();
         }

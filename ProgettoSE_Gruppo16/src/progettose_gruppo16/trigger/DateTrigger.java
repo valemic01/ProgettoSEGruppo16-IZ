@@ -30,8 +30,9 @@ public class DateTrigger implements Trigger{
      */
     @Override
     public boolean checkCondition() {
-        if(not) return !date.equals(LocalDate.now());
-            return date.equals(LocalDate.now());
+        if(not) 
+            return !date.equals(LocalDate.now());
+        return date.equals(LocalDate.now());
     }
 
     /**

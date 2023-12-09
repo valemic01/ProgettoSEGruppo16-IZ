@@ -6,9 +6,8 @@ import progettose_gruppo16.action.Action;
 import progettose_gruppo16.trigger.Trigger;
 
 /**
- *  Classe test per le regole ripetibili.
- *  Per il testing vengono eliminate le dipendenze dal RulesManager e vengono aggiunti i metodi per 
- *  settare lo sleepingPeriod.
+ * Test class for repeatable rules.
+ * For testing purposes, dependencies on RulesManager are removed, and methods for setting the sleepingPeriod are added.
  */
 public class RepeatableRuleTestClass extends RuleTestClass{
     

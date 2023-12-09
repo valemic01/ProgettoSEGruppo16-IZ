@@ -30,9 +30,8 @@ public class TimeOfDayTrigger implements Trigger{
      */
     @Override
     public boolean checkCondition(){
-        if (not){
+        if (not)
             return !(this.time.getHour() == LocalTime.now().getHour() && this.time.getMinute() == LocalTime.now().getMinute());
-        }
         return this.time.getHour() == LocalTime.now().getHour() && this.time.getMinute() == LocalTime.now().getMinute();
     }   
 

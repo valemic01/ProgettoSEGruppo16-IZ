@@ -42,7 +42,8 @@ public class FileSizeTrigger implements Trigger{
         if(exp != 0){
            s = (long) (size*(Math.pow(1024, exp)));
         }
-        if(not) return !(file.length()>=s);
+        if(not) 
+            return !(file.length()>=s);
         return file.length()>=s;
     }
 

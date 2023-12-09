@@ -13,79 +13,123 @@ import progettose_gruppo16.trigger.TimeOfDayTrigger;
 import progettose_gruppo16.trigger.Trigger;
 
 /**
- *  Test Class for One Time Rule
+ * Test Class for One Time Rule
  */
-
 public class OneTimeRuleTest {
-    
+
     private Trigger trigger;
     private ActionTest action;
     private OneTimeRuleTestClass rule;
-    
+
     public OneTimeRuleTest() {
     }
 
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
         action = new ActionTest();
     }
-    
+
     @After
     public void tearDown() {
     }
 
     /**
-     * Test per valutare se quando la condizione è vera, l'azione viene eseguita
+     * Test if the rule executes the action when the condition is true.
      */
     @Test
     public void testEvaluate1() {
-        trigger = new TimeOfDayTrigger(LocalTime.now()); 
+        trigger = new TimeOfDayTrigger(LocalTime.now(), false);
         rule = new OneTimeRuleTestClass("ciao", trigger, action);
-        
-        assertTrue(rule.evaluate());    
-    } 
-    
+
+        assertTrue(rule.evaluate());
+    }
+
     /**
-     * Test per valutare se la regola viene disattivata dopo la sua esecuzione
+     * Test if the rule is deactivated after its execution.
      */
     @Test
     public void testEvaluate2() {
-        trigger = new TimeOfDayTrigger(LocalTime.now()); 
+        trigger = new TimeOfDayTrigger(LocalTime.now(), false);
         rule = new OneTimeRuleTestClass("ciao", trigger, action);
         rule.evaluate();
-        assertFalse(rule.isActive());   
-    } 
-    
+        assertFalse(rule.isActive());
+    }
+
     /**
-     * Test per valutare se quando la condizione è falsa, l'azione non viene eseguita
+     * Test if the action is not executed when the condition is false.
      */
     @Test
     public void testEvaluate3() {
-        trigger = new TimeOfDayTrigger(LocalTime.now().minusHours(1));      //different time
+        trigger = new TimeOfDayTrigger(LocalTime.now().minusHours(1), false);
         rule = new OneTimeRuleTestClass("ciao", trigger, action);
-        
-        assertFalse(rule.evaluate());     
-    } 
-    
+
+        assertFalse(rule.evaluate());
+    }
+
     /**
-     * Test per valutare se dopo che la regola è stata riattivata è di nuovo eseguibile
+     * Test if the rule is executable again after being reactivated.
      */
     @Test
     public void testEvaluate4() {
-        trigger = new DayOfWeekTrigger(LocalDate.now().getDayOfWeek());
+        trigger = new DayOfWeekTrigger(LocalDate.now().getDayOfWeek(), false);
         rule = new OneTimeRuleTestClass("ciao", trigger, action);
         rule.evaluate();
         rule.setActive(true);
-        
-        assertTrue(rule.evaluate());     
-    } 
-    
+
+        assertTrue(rule.evaluate());
+    }
+
+    /**
+     * Test if the action is not executed when the condition is true with negation.
+     */
+    @Test
+    public void testEvaluate5() {
+        trigger = new TimeOfDayTrigger(LocalTime.now(), true);
+        rule = new OneTimeRuleTestClass("ciao", trigger, action);
+
+        assertFalse(rule.evaluate());
+    }
+
+    /**
+     * Test if the rule remains active after execution with negation.
+     */
+    @Test
+    public void testEvaluate6() {
+        trigger = new TimeOfDayTrigger(LocalTime.now(), true);
+        rule = new OneTimeRuleTestClass("ciao", trigger, action);
+        rule.evaluate();
+        assertTrue(rule.isActive());
+    }
+
+    /**
+     * Test if the action is executed when the condition is false with negation.
+     */
+    @Test
+    public void testEvaluate7() {
+        trigger = new TimeOfDayTrigger(LocalTime.now().minusHours(1), true);
+        rule = new OneTimeRuleTestClass("ciao", trigger, action);
+
+        assertTrue(rule.evaluate());
+    }
+
+    /**
+     * Test if the rule becomes inactive after execution when reactivated with negation.
+     */
+    @Test
+    public void testEvaluate8() {
+        trigger = new DayOfWeekTrigger(LocalDate.now().getDayOfWeek(), true);
+        rule = new OneTimeRuleTestClass("ciao", trigger, action);
+        rule.evaluate();
+        rule.setActive(true);
+
+        assertFalse(rule.evaluate());
+    }
 }
