@@ -6,8 +6,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
- *  Classe per le regole ripetibili.
- *  Dopo che la regola viene attivata, può essere ri-eseguita dopo lo sleep period specificato dall'utente.
+ * Class for repeatable rules.
+ * After the rule is activated, it can be re-executed after the sleep period specified by the user.
  */
 public class RepeatableRule extends Rule{
     
@@ -16,16 +16,15 @@ public class RepeatableRule extends Rule{
     private LocalDate dayLastFired;
     private LocalTime timeLastFired;
     private boolean fireable;
-    private transient RulesManager rm;
     
     /**
-     *  Costruttore che richiama il costruttore del padre, aggiungendo gli attributi utili
-     *  al controllo del periodo di sleep.
+     * Constructor that calls the parent constructor, adding attributes useful
+     * for controlling the sleep period.
      * @param name
      * @param trigger
      * @param action
-     * @param daysToSleep -> giorni di sleep
-     * @param sleepPeriod -> ore e minuti di sleep
+     * @param daysToSleep -> sleep days
+     * @param sleepPeriod -> sleep hours and minutes
      */
     public RepeatableRule(String name, Trigger trigger, Action action, int daysToSleep, LocalTime sleepPeriod) {
         super(name, trigger, action);
@@ -37,15 +36,14 @@ public class RepeatableRule extends Rule{
     }
     
     /**
-     * Il metodo esegue l'azione selezionata dall'utente quando la condizione del trigger è verificata.
-     * Se la condizione del trigger è vera, l'azione non viene eseguita se non è ancora passato il periodo di sleep.
-     * @return -> restituisce true se l'azione viene eseguita; false altrimenti
+     * The method performs the action selected by the user when the trigger condition is met.
+     * If the trigger condition is true, the action is not executed if the sleep period has not passed yet.
+     * @return -> returns true if the action is executed; false otherwise
      */
-    /***********************************VALUTARE ISTANZA RULES MANAGER***************************************/
     @Override
     public boolean evaluate(){
         
-        rm = RulesManager.getInstance();
+        RulesManager rm = super.getRm();
         
         if(!fireable){
             LocalDate today = LocalDate.now();

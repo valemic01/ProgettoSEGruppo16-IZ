@@ -5,14 +5,15 @@ import progettose_gruppo16.action.Action;
 import java.io.Serializable;
 
 /**
- *  Classe astratta Rule
+ *  Abstract class Rule
  */
 public abstract class Rule implements Serializable{
     
     private final String name;
-    private Trigger trigger;
-    private Action action;
+    private final Trigger trigger;
+    private final Action action;
     private boolean active; 
+    private transient RulesManager rm;
     
     public Rule(String name, Trigger trigger, Action action) {
         this.name = name;
@@ -22,8 +23,8 @@ public abstract class Rule implements Serializable{
     }
     
     /**
-     * Metodo astratto per la valutazione delle regole.
-     * @return -> true se l'azione è stata eseguita; false altrimenti
+     * Abstract method for rule evaluation.
+     * @return -> true if the action is performed; false otherwise
      */
     public abstract boolean evaluate();
 
@@ -41,6 +42,10 @@ public abstract class Rule implements Serializable{
 
     public boolean isActive() {
         return active;
+    }
+
+    public RulesManager getRm() {
+        return RulesManager.getInstance();
     }
     
     public void setActive(boolean active) {

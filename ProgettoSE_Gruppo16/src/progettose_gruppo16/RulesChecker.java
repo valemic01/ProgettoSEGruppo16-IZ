@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 
 /**
- *  RulesChecker rappresenta il thread eseguito in background per il controllo automatico delle regole ogni 5 secondi.
+ * RulesChecker represents the background-executed thread for automatic rule checking every 5 seconds.
  */
 public class RulesChecker implements Runnable{
     
@@ -16,8 +16,8 @@ public class RulesChecker implements Runnable{
     private List<Rule> rulesList;
 
     /**
-     *  Costruttore
-     * @param rules -> Lista delle regole da verificare
+     * Constructor
+     * @param rules -> List of rules to be checked
      */
     public RulesChecker(ObservableList<Rule> rules) {
         this.rules = rules;
@@ -25,9 +25,9 @@ public class RulesChecker implements Runnable{
     }
 
     /**
-     * Metodo run implementato dall'interfaccia Runnable
-     * Si salva l'istanza attuale della tabella delle regole attive e le controlla.
-     * Poi, si mette in attesa per il tempo specificato
+     * Run method implemented from the Runnable interface
+     * Saves the current instance of the active rules table and checks them.
+     * Then, it waits for the specified time.
      */
     @Override
     public void run() {

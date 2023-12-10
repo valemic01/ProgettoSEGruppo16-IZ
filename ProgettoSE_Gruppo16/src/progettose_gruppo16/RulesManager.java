@@ -13,7 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- *  Classe singleton per la gestione delle regole.
+ * Singleton class for rule management.
  */
 public class RulesManager {
     
@@ -51,9 +51,9 @@ public class RulesManager {
     }
     
     /**
-     *  Metodo per gestire l'unica istanza del RulesManager.
-     *  Se l'istanza esiste già viene restituita, altrimenti viene creata.
-     * @return instance -> l'unica istanza del RulesManager
+     * Method to manage the singleton instance of RulesManager.
+     * If the instance already exists, it is returned; otherwise, it is created.
+     * @return instance -> the only instance of RulesManager
      */
     public static RulesManager getInstance(){
         if (instance == null)
@@ -62,7 +62,7 @@ public class RulesManager {
     }
     
     /**
-     *  Metodo che importa le regole dal file di backup all'avvio dell'applicazione.
+     * Method that imports rules from the backup file when the application starts.
      */
     private void importRulesFromFile() throws IOException{
         
@@ -89,8 +89,8 @@ public class RulesManager {
     }
     
     /**
-     * Metodo che crea il service che salva le regole sul file di backup
-     * ad ogni modifica sulla tabella delle regole.
+     * Method that creates the service to save rules to the backup file
+     * every time there is a modification on the rule table.
      */
     private void saveRules(){
         BackupFileService backupService = new BackupFileService(allRulesList, backupFile);
@@ -98,9 +98,9 @@ public class RulesManager {
     }
     
     /**
-     * Metodo che cancella una regola selezionata dalla lista delle regole e aggiorna le tabelle correlate.
-     * Invoca il metodo saveRules() per aggiornare la lista delle regole presente sul file di backup.
-     * @param r -> la regola che l'utente vuole eliminare
+     * Method that deletes a selected rule from the rule list and updates related tables.
+     * Invokes the saveRules() method to update the list of rules on the backup file.
+     * @param r -> the rule the user wants to delete
      */
     public void deleteRule(Rule r) {
         
@@ -117,10 +117,10 @@ public class RulesManager {
     }
     
     /**
-     * Metodo che consente di aggiornare tutte le tabelle 
-     * quando l'utente sceglie di attivare o disattivare una regola.
-     * Invoca il metodo corrispondente in base all'azione da compiere.
-     * @param r -> la regola che l'utente vuole attivare/disattivare
+     * Method that allows updating all tables 
+     * when the user chooses to activate or deactivate a rule.
+     * Invokes the corresponding method based on the action to be performed.
+     * @param r -> the rule the user wants to activate/deactivate
      */
     public void activeInactivateRule(Rule r) {
         
@@ -135,9 +135,9 @@ public class RulesManager {
     }
     
     /**
-     * Metodo che consente di aggiornare tutte le tabelle quando l'utente sceglie
-     * di disattivare una regola dalla tabella delle regole attive.
-     * @param r -> la regola che l'utente vuole disattivare
+     * Method that allows updating all tables when the user chooses
+     * to deactivate a rule from the active rule table.
+     * @param r -> the rule the user wants to deactivate
      */
     public void inactivateRule(Rule r) {
 
@@ -149,9 +149,9 @@ public class RulesManager {
     }
     
     /**
-     * Metodo che consente di aggiornare tutte le tabelle quando l'utente sceglie
-     * di attivare una regola dalla tabella delle regole disattivate.
-     * @param r -> la regola che l'utente vuole attivare
+     * Method that allows updating all tables when the user chooses
+     * to activate a rule from the inactive rule table.
+     * @param r -> the rule the user wants to activate
      */
     public void activateRule(Rule r) {
       
@@ -165,9 +165,9 @@ public class RulesManager {
     }
     
     /**
-     * Metodo che consente di aggiungere una regola all'interno della lista delle regole
-     * e salva il nuovo contenuto
-     * @param r -> la regola che l'utente vuole aggiungere
+     * Method that allows adding a rule to the rule list
+     * and saves the new content
+     * @param r -> the rule the user wants to add
      */
     public void addRule(Rule r) {
   
@@ -178,9 +178,9 @@ public class RulesManager {
     }
     
     /**
-     * Metodo per cambiare il valore del parametro fireable delle regole ripetibili.
-     * Quando una regola ripetibile viene attivata, fireable viene settato a false.
-     * Quando lo sleeping period termina, fireable viene settato a true.
+     * Method to change the value of the "fireable" parameter for repeatable rules.
+     * When a repeatable rule is activated, "fireable" is set to false.
+     * When the sleeping period ends, "fireable" is set to true.
      * @param r 
      */
     public void changeFireable(RepeatableRule r){

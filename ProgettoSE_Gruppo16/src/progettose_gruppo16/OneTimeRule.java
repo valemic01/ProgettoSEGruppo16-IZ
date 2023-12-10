@@ -4,26 +4,23 @@ import progettose_gruppo16.trigger.Trigger;
 import progettose_gruppo16.action.Action;
 
 /**
- *  Classe per le regole da eseguire una sola volta. 
- *  Dopo che l'azione viene eseguita, la regola viene disattivata.
+ * Class for rules to be executed only once.
+ * After the action is performed, the rule is deactivated.
  */
 public class OneTimeRule extends Rule{
-    
-    private transient RulesManager rm;
-    
+        
     public OneTimeRule(String name, Trigger trigger, Action action) {
         super(name, trigger, action);
     }
     
     /**
-    * Il metodo esegue l'azione selezionata dall'utente quando la condizione del trigger è verificata.
-    * @return  -> restituisce true se l'azione viene eseguita; false altrimenti
+    * The method performs the action selected by the user when the trigger condition is met.
+    * @return  -> returns true if the action is executed; false otherwise
     */
-    /***********************************VALUTARE ISTANZA RULES MANAGER***************************************/
     @Override
     public boolean evaluate(){
         
-        rm = RulesManager.getInstance();
+        RulesManager rm = super.getRm();
         
        if(super.getTrigger().checkCondition()){
            super.getAction().executeAction();
