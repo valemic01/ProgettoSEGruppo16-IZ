@@ -16,28 +16,6 @@ import javafx.scene.layout.VBox;
 public class HandlerTimeOfDayTrigger extends BaseHandlerTrigger{
     
     /**
-     * When the user adds the rule, the values of hours and minutes are taken from their respective combo boxes
-     * and passed to the trigger constructor.
-     * @param ap AnchorPane containing the GUI elements
-     * @param ht HandlerTrigger instance
-     * @param x Integer parameter for trigger behavior
-     * @param notVBox VBox containing "not" CheckBox elements
-     * @return Trigger object representing the time of day trigger
-     */
-    @Override
-    public Trigger handleBehaviour(AnchorPane ap, HandlerTrigger ht, int x, VBox notVBox) {
-        boolean not;
-        LocalTime time;
-        
-        if(ap.getId().equalsIgnoreCase("TimeOfDayPane")){   
-            not = ((CheckBox) notVBox.getChildren().get(x-1)).isSelected();
-            time = LocalTime.of(Integer.parseInt(((ComboBox<String>) ap.getChildren().get(0)).getValue()), Integer.parseInt(((ComboBox<String>) ap.getChildren().get(2)).getValue()));
-            return new TimeOfDayTrigger(time, not);
-        }
-        else return super.handleBehaviour(ap, ht, x, notVBox);
-    }
-
-    /**
      * When the "Time of day" trigger is selected, dynamically creates elements
      * to set the activation time of the trigger (default: 00:00).
      * @param ap AnchorPane to modify
@@ -79,6 +57,28 @@ public class HandlerTimeOfDayTrigger extends BaseHandlerTrigger{
         else{
             super.handleGUI(ap, cb);        
         }
+    }
+    
+    /**
+     * When the user adds the rule, the values of hours and minutes are taken from their respective combo boxes
+     * and passed to the trigger constructor.
+     * @param ap AnchorPane containing the GUI elements
+     * @param ht HandlerTrigger instance
+     * @param x Integer parameter for trigger behavior
+     * @param notVBox VBox containing "not" CheckBox elements
+     * @return Trigger object representing the time of day trigger
+     */
+    @Override
+    public Trigger handleBehaviour(AnchorPane ap, HandlerTrigger ht, int x, VBox notVBox) {
+        boolean not;
+        LocalTime time;
+        
+        if(ap.getId().equalsIgnoreCase("TimeOfDayPane")){   
+            not = ((CheckBox) notVBox.getChildren().get(x-1)).isSelected();
+            time = LocalTime.of(Integer.parseInt(((ComboBox<String>) ap.getChildren().get(0)).getValue()), Integer.parseInt(((ComboBox<String>) ap.getChildren().get(2)).getValue()));
+            return new TimeOfDayTrigger(time, not);
+        }
+        else return super.handleBehaviour(ap, ht, x, notVBox);
     }
     
     /**

@@ -3,7 +3,6 @@ package progettose_gruppo16.handlerTrigger;
 import progettose_gruppo16.trigger.Trigger;
 import progettose_gruppo16.trigger.FileSizeTrigger;
 import java.io.File;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -65,7 +64,6 @@ public class HandlerFileSizeTrigger extends BaseHandlerTrigger{
             ap.getChildren().add(labelSelectedFile);
             labelSelectedFile.setLayoutX(0);
             labelSelectedFile.setLayoutY(37);
-            labelSelectedFile.setPrefWidth(344);
             labelSelectedFile.setTextFill(Color.web("#009999"));
             
             // invisible label to pass the file path string to the handleBehaviour method
@@ -75,9 +73,10 @@ public class HandlerFileSizeTrigger extends BaseHandlerTrigger{
             
             labelErrorSize.setText("");
             ap.getChildren().add(labelErrorSize);
-            labelErrorSize.setLayoutX(220);
-            labelErrorSize.setLayoutY(37);
-            labelErrorSize.setPrefWidth(344);
+            labelErrorSize.setLayoutX(290);
+            labelErrorSize.setLayoutY(0);
+            labelErrorSize.setPrefSize(100,50);
+            labelErrorSize.setWrapText(true);
             labelErrorSize.setTextFill(Color.RED);
             
             selectFile.setOnAction(event -> chooseFile(labelSelectedFile, filePath));
@@ -113,10 +112,10 @@ public class HandlerFileSizeTrigger extends BaseHandlerTrigger{
             
             labelErrorSize = (Label)ap.getChildren().get(5);
             labelErrorSize.setText("");
-             if(!fileSize.getText().matches("\\d*")){
-                    labelErrorSize.setText("You must write a number!");
-                    return null;
-                }
+            if(!fileSize.getText().matches("\\d*")){
+                labelErrorSize.setText("You must write a number!");
+                return null;
+            }
              
             if(fileSize.getText().isEmpty() || file.getName().isEmpty()){
                 return null;
