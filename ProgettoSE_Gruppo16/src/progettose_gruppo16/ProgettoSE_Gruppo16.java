@@ -8,8 +8,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
- *  Classe principale che lancia l'applicazione.
- * @author valentina <your.name at your.org>
+ * Main class that launches the application.
  */
 public class ProgettoSE_Gruppo16 extends Application {
     

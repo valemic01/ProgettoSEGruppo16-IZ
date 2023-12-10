@@ -18,7 +18,6 @@ import progettose_gruppo16.handlerAction.HandlerAppendStringToFileAction;
 import progettose_gruppo16.action.Action;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Time;
 import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,7 +46,7 @@ import progettose_gruppo16.handlerTrigger.BaseHandlerTrigger;
 import progettose_gruppo16.handlerTrigger.HandlerComposite;
 
 /**
- *  Implementazione del controller che gestisce la schermata di creazione delle regole
+ * Implementation of the controller that manages the rule creation screen
  */
 public class ControllerRuleCreation implements Initializable {
 
@@ -161,8 +160,7 @@ public class ControllerRuleCreation implements Initializable {
     private CheckBox not7;
     @FXML
     private Label errorMessage;
-    
-    private Time sleepingPeriod;
+       
     private RulesManager ruleManager;   
     private ObservableList<Rule> allRulesList; //observable list of all rules, created to manage the respective TableView  
     private Stage stage;   
@@ -177,7 +175,7 @@ public class ControllerRuleCreation implements Initializable {
     private int numAction = 1;
     
     /**
-     *  Inizializzazione delle componenti dell'interfaccia utente
+     * Initialization of the user interface components
      * @param url
      * @param rb
      */
@@ -234,8 +232,7 @@ public class ControllerRuleCreation implements Initializable {
     }
 
     /**
-     * Metodo che consente di passare dalla schermata di creazione delle regole alla
-     * schermata che mostra tutte le regole definite dall'utente. 
+     * Method to transition from the rule creation screen to the one showing all rules defined by the user.
      * @param event 
      */
     @FXML
@@ -251,7 +248,7 @@ public class ControllerRuleCreation implements Initializable {
 
     }
     /**
-     * Metodo che consente di passare dalla schermata dei trigger a quella delle azioni.
+     * Method to transition from the trigger screen to the action screen.
      * @param event 
      */
     @FXML
@@ -260,7 +257,7 @@ public class ControllerRuleCreation implements Initializable {
     }
     
     /**
-     * Metodo che consente di passare dalla schermata delle azioni a quella dei trigger.
+     * Method to transition from the action screen to the trigger screen.
      * @param event 
      */
     @FXML
@@ -269,9 +266,8 @@ public class ControllerRuleCreation implements Initializable {
     }
 
     /**
-     * Metodo che recupera le informazioni necessarie per la creazione della regola e invoca il
-     * corrispettivo metodo di RulesManager.
-     * Controlla che tutti i campi siano stati riempiti correttamente e che i nomi assegnati alle regole siano identificatori univoci.
+     * Method to retrieve the necessary information for rule creation and invoke the corresponding method of RulesManager.
+     * Checks that all fields are filled in correctly and that the names assigned to the rules are unique identifiers.
      * @param event 
      */
     @FXML
@@ -297,7 +293,6 @@ public class ControllerRuleCreation implements Initializable {
                 action.addAction(a);
             
         }
-        
             
         if(action.getSequence().isEmpty() || trigger == null){
             errorMessage.setVisible(true);
@@ -329,6 +324,10 @@ public class ControllerRuleCreation implements Initializable {
         
     }
 
+    /**
+     * Method to handle the user's choice of trigger.
+     * @param event 
+     */
     @FXML
     private void chooseTrigger(ActionEvent event) {
         ComboBox<String> cb = (ComboBox<String>) event.getSource();
@@ -339,30 +338,50 @@ public class ControllerRuleCreation implements Initializable {
         handlerTrigger.get(0).handleGUI(ap, cb);
     }
 
+    /**
+     * Method to handle the user's choice of the first action.
+     * @param event 
+     */
     @FXML
     private void chooseAction1(ActionEvent event) {
         if(actionDD1.getValue() != null)
             handlerAction1.get(0).handleGUI(actionPane1, actionDD1);
     }
     
+    /**
+     * Method to handle the user's choice of the second action.
+     * @param event 
+     */
     @FXML
     private void chooseAction2(ActionEvent event) {
         if(actionDD2.getValue() != null)
             handlerAction2.get(0).handleGUI(actionPane2, actionDD2);
     }
     
+    /**
+     * Method to handle the user's choice of the third action.
+     * @param event 
+     */
     @FXML
     private void chooseAction3(ActionEvent event) {
         if(actionDD3.getValue() != null)
             handlerAction3.get(0).handleGUI(actionPane3, actionDD3);
     }
     
+    /**
+    * Method to handle the user's choice of the fourth action.
+    * @param event 
+    */
     @FXML
     private void chooseAction4(ActionEvent event) {
         if(actionDD4.getValue() != null)
             handlerAction4.get(0).handleGUI(actionPane4, actionDD4);
     }
     
+    /**
+    * Method to handle the first button to add a new action.
+    * @param event 
+    */
     @FXML
     private void onAddAction1(ActionEvent event) {
         initializeHandlerAction(handlerAction2);
@@ -374,6 +393,10 @@ public class ControllerRuleCreation implements Initializable {
         numAction++;
     }
 
+    /**
+    * Method to handle the second button to add a new action.
+    * @param event 
+    */
     @FXML
     private void onAddAction2(ActionEvent event) {
         initializeHandlerAction(handlerAction3);
@@ -386,6 +409,10 @@ public class ControllerRuleCreation implements Initializable {
         numAction++;
     }
     
+    /**
+    * Method to handle the third button to add a new action.
+    * @param event 
+    */
     @FXML
     private void onAddAction3(ActionEvent event) {   
         initializeHandlerAction(handlerAction4);
@@ -397,6 +424,10 @@ public class ControllerRuleCreation implements Initializable {
         numAction++;
     }
     
+    /**
+    * Method to handle the first button to delete an action.
+    * @param event 
+    */
     @FXML
     private void onDeleteAction1(ActionEvent event) {
         actionPane2.getChildren().clear();
@@ -408,6 +439,10 @@ public class ControllerRuleCreation implements Initializable {
         numAction--;
     }
   
+    /**
+    * Method to handle the second button to delete an action.
+    * @param event 
+    */
     @FXML
     private void onDeleteAction2(ActionEvent event) {
         actionPane3.getChildren().clear();
@@ -420,7 +455,10 @@ public class ControllerRuleCreation implements Initializable {
         numAction--;
     }
 
-
+    /**
+    * Method to handle the third button to delete an action.
+    * @param event 
+    */
     @FXML
     private void onDeleteAction3(ActionEvent event) {
         actionPane4.getChildren().clear();
@@ -432,6 +470,9 @@ public class ControllerRuleCreation implements Initializable {
         numAction--;
     }
     
+    /**
+    * Method to initialize the ComboBoxes for actions.
+    */
     private void initializeComboBoxAction(){
         actionDD1.getItems().addAll("Show message", "Play audio", "Move file", "Delete file", "Copy file", "Add text to file", "Execute program");
         actionDD2.getItems().addAll("Show message", "Play audio", "Move file", "Delete file", "Copy file", "Add text to file", "Execute program");
@@ -439,6 +480,10 @@ public class ControllerRuleCreation implements Initializable {
         actionDD4.getItems().addAll("Show message", "Play audio", "Move file", "Delete file", "Copy file", "Add text to file", "Execute program");
     }
     
+    /**
+    * Method to initialize the lists containing action handlers.
+    * @param list -> the list of handlers to initialize
+    */
     private void initializeHandlerAction(List<BaseHandlerAction> list){
         list.add(new HandlerShowMessageAction());
         list.add(new HandlerPlayAudioAction());
@@ -452,12 +497,20 @@ public class ControllerRuleCreation implements Initializable {
         startHandlersAction.add(list.get(0));
     }
     
+    /**
+    * Method to set the chain of actions.
+    * @param list 
+    */
     private void setNextHandlerAction(List<BaseHandlerAction> list){
         for(int i=0; i<list.size()-1; i++){
             list.get(i).setNext(list.get(i+1));
         }
     }
     
+    /**
+    * Method to initialize the lists containing trigger handlers.
+    * @param list -> the list of handlers to initialize
+    */
     private void initializeHandlerTrigger(List<BaseHandlerTrigger> list){
         list.add(new HandlerComposite());
         list.add(new HandlerTimeOfDayTrigger());
@@ -473,6 +526,9 @@ public class ControllerRuleCreation implements Initializable {
         }
     }
     
+    /**
+    * Method to initialize the ComboBoxes for triggers.
+    */
     private void initializeComboBoxTrigger(){
         trigDD1.getItems().addAll("Time of day", "Day of the week", "Day of month", "Date", "File size", "Existing file", "Exit status", "Composite");
         trigDD2.getItems().addAll("Time of day", "Day of the week", "Day of month", "Date", "File size", "Existing file", "Exit status", "Composite");
@@ -485,6 +541,9 @@ public class ControllerRuleCreation implements Initializable {
         listingAnchorPanesTrigger();
     }
     
+    /**
+    * Method to initialize the list of AnchorPanes.
+    */
     private void listingAnchorPanesTrigger(){
         anchorPanesTrigger.add(triggerPane1);
         anchorPanesTrigger.add(triggerPane2);
