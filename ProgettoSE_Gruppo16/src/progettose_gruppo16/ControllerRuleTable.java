@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,7 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
- *  Controller che gestisce la schermata delle tabelle
+ * Controller that manages the rules table screen.
  */
 public class ControllerRuleTable implements Initializable {
 
@@ -75,7 +74,7 @@ public class ControllerRuleTable implements Initializable {
     private Stage stage;
     
     /**
-     *  Inizializzazione delle componenti dell'interfaccia utente
+     * Initialization of user interface components.
      * @param url
      * @param rb
      */
@@ -89,7 +88,7 @@ public class ControllerRuleTable implements Initializable {
         activeRulesList = ruleManager.getActiveRulesList();
         inactRulesList = ruleManager.getInactRulesList();
         
-         //setup process of the three TableView, linked with the respective observable list
+        //setup process of the three TableView, linked with the respective observable list
         inizializeTables();
         
         //binding to disable the delete button and context menus when no rule is selected
@@ -103,8 +102,8 @@ public class ControllerRuleTable implements Initializable {
     }    
     
     /**
-    * Metodo che inizializza le tabelle delle regole, in modo da renderle visibili nell'applicazione. 
-    */
+     * Method that initializes the rule tables to make them visible in the application.
+     */
     private void inizializeTables(){
         allRulesNameClm.setCellValueFactory(new PropertyValueFactory("name"));
         allRulesTrigClm.setCellValueFactory(new PropertyValueFactory("trigger"));
@@ -123,10 +122,10 @@ public class ControllerRuleTable implements Initializable {
         
     }
 
-     /**
-     * Metodo che consente di recuperare la regola che l'utente vuole eliminare.
-     * Viene poi invocato il rispettivo metodo di RulesManager per l'effettiva eliminazione.
-     * @param event 
+    /**
+     * Method to retrieve the rule the user wants to delete. The respective method
+     * of RulesManager is then invoked for the actual deletion.
+     * @param event
      */
     @FXML
     private void deleteRuleAction(ActionEvent event) {
@@ -144,9 +143,10 @@ public class ControllerRuleTable implements Initializable {
     }
 
     /**
-     * Metodo che consente di recuperare la regola che l'utente vuole attivare/disattivare.
-     * Viene poi invocato il rispettivo metodo di RulesManager per l'effettiva attivazione/disattivazione.
-     * @param event 
+     * Method to retrieve the rule the user wants to activate/deactivate. The
+     * respective method of RulesManager is then invoked for the actual
+     * activation/deactivation.
+     * @param event
      */
     @FXML
     private void activeInactivateRuleAction(ActionEvent event) {
@@ -163,10 +163,12 @@ public class ControllerRuleTable implements Initializable {
         ruleManager.activeInactivateRule(rule);
     }
 
-    /**Metodo che consente di cambiare dinamicamente il nome del comando nel Context Menu.
-     * Se la regola è attiva, si setta il menu item su "Disable Rule" per disattivarla.
-     * Se la regole è disattivata, si setta il menu item su "Activate Rule" per attivarla.
-     * @param event 
+    /**
+     * Method to dynamically change the name of the command in the Context Menu.
+     * If the rule is active, set the menu item to "Disable Rule" to deactivate
+     * it. If the rule is inactive, set the menu item to "Activate Rule" to
+     * activate it.
+     * @param event
      */
     @FXML
     private void setActiveInactive(MouseEvent event) {
@@ -180,8 +182,8 @@ public class ControllerRuleTable implements Initializable {
     }
 
     /**
-     * Metodo che consente di deselezionare una regola quando si clicca al di fuori delle tabelle.
-     * @param event 
+     * Method to deselect a rule when clicked outside the tables.
+     * @param event
      */
     @FXML
     private void deselect(MouseEvent event) {
@@ -191,8 +193,8 @@ public class ControllerRuleTable implements Initializable {
     }
 
     /**
-     * Metodo che mostra la schermata di creazione delle regole.
-     * @param event 
+     * Method to show the rule creation screen.
+     * @param event
      */
     @FXML
     private void showCreateRule(ActionEvent event) throws IOException {
@@ -207,5 +209,4 @@ public class ControllerRuleTable implements Initializable {
         
     }
 
-    
 }

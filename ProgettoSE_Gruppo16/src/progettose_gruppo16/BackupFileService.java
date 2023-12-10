@@ -10,16 +10,16 @@ import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
 /**
- *  Classe che realizza il salvataggio delle regole su un file predefinito nel controller.
+ * Class that performs the saving of rules to a predefined file in the controller.
  */
 public class BackupFileService extends Service<ObservableList<Rule>>{
     private List<Rule> rulesList = new ArrayList();
-    private String backupFile;
+    private final String backupFile;
 
     /**
-     *  Costruttore 
-     * @param rulesList lista delle regole attualmente presenti nell'applicazione
-     * @param backupFile file di backup predefinito nel controller (non scelto dall'utente)
+     * Constructor
+     * @param rulesList list of rules currently present in the application
+     * @param backupFile predefined backup file in the controller (not chosen by the user)
      */
     public BackupFileService(ObservableList<Rule> rulesList, String backupFile) {
         this.rulesList.addAll(rulesList);
@@ -27,7 +27,7 @@ public class BackupFileService extends Service<ObservableList<Rule>>{
     }
     
     /**
-     *  Creazione di un task che si occupa di scrivere sul file la lista delle regole ricevute dal controller.
+     * Creation of a task that writes the list of rules received from the controller to the file.
      * @return
      */
     @Override
