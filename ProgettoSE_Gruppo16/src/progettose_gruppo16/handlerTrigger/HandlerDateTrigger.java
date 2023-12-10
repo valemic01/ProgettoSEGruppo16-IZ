@@ -32,7 +32,7 @@ public class HandlerDateTrigger extends BaseHandlerTrigger {
             date = new DatePicker();
             ap.getChildren().add(date);
             date.setLayoutX(40);
-            date.setLayoutY(0);
+            date.setLayoutY(10);
             date.setValue(LocalDate.now());
 
             date.valueProperty().addListener((ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) -> {

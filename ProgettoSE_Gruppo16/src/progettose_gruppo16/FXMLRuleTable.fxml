@@ -18,7 +18,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="allRulesTable" onMouseClicked="#setActiveInactive" prefHeight="383.0" prefWidth="804.0">
+                        <TableView fx:id="allRulesTable" onKeyPressed="#deleteRuleShortcut" onMouseClicked="#setActiveInactive" prefHeight="383.0" prefWidth="804.0">
                            <columns>
                               <TableColumn fx:id="allRulesNameClm" prefWidth="238.0" text="Name" />
                               <TableColumn fx:id="allRulesTrigClm" minWidth="0.0" prefWidth="248.0" text="Trigger" />
@@ -41,7 +41,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="activeRulesTable" prefHeight="383.0" prefWidth="804.0">
+                        <TableView fx:id="activeRulesTable" onKeyPressed="#deleteRuleShortcut" prefHeight="383.0" prefWidth="804.0">
                            <columns>
                               <TableColumn fx:id="activeRulesNameClm" prefWidth="238.0" text="Name" />
                               <TableColumn fx:id="activeRulesTrigClm" minWidth="0.0" prefWidth="248.0" text="Trigger" />
@@ -64,7 +64,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="inactRulesTable" prefHeight="383.0" prefWidth="804.0">
+                        <TableView fx:id="inactRulesTable" onKeyPressed="#deleteRuleShortcut" prefHeight="383.0" prefWidth="804.0">
                            <columns>
                               <TableColumn fx:id="inactRulesNameClm" prefWidth="238.0" text="Name" />
                               <TableColumn fx:id="inactRulesTrigClm" minWidth="0.0" prefWidth="248.0" text="Trigger" />
