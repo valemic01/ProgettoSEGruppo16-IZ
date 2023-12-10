@@ -10,6 +10,8 @@ import progettose_gruppo16.trigger.ExitStatusTrigger;
 
 /**
  * Test class for the ExitStatusTrigger.
+ * On git in the "Programs for testing" folder there are the programs used to test this class.
+ * N.B. Download them and change the path to test it on your device.
  */
 public class ExitStatusTriggerTest {
     
