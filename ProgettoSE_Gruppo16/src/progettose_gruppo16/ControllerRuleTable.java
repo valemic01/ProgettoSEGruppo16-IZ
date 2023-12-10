@@ -15,6 +15,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -205,6 +206,17 @@ public class ControllerRuleTable implements Initializable {
         stage.setScene(scene);
         stage.show();
         
+    }
+
+    /**
+     * Method to implement a rule deletion shortcut.
+     * @param event KeyEvent with the key pressed info.
+     */
+    @FXML
+    private void deleteRuleShortcut(KeyEvent event) {
+        if(event.getCode().getName().equalsIgnoreCase("delete")){
+            deleteRuleAction(null);
+        }
     }
 
 }
