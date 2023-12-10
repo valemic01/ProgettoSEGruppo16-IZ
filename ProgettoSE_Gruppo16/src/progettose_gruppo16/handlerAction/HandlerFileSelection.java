@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package progettose_gruppo16.handlerAction;
 
 import java.io.File;
@@ -9,9 +5,9 @@ import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 
 /**
- *
- * @author valentina <your.name at your.org>
- */
+* This class defines a chooseFile method than will be inherited by different classes.
+*/
+
 public class HandlerFileSelection extends BaseHandlerAction{
     /**
      * General method for choosing files.
