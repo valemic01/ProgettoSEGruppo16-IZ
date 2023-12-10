@@ -1,5 +1,6 @@
 package progettose_gruppo16.handlerAction;
 
+import java.io.File;
 import progettose_gruppo16.action.CopyFileAction;
 import progettose_gruppo16.action.Action;
 import javafx.geometry.Pos;
@@ -8,13 +9,14 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.stage.DirectoryChooser;
 
 /**
  * Class that manages the GUI and functionalities necessary for
  * allowing the copying of a file. It extends the BaseHandlerAction class.
  * @author valentina
  */
-public class HandlerCopyFileAction extends BaseHandlerAction{
+public class HandlerCopyFileAction extends HandlerFileSelection{
     private Button selectSourceFile = new Button();
     private Label selectedFile = new Label();
     private Button selectDestinationFile = new Button();
@@ -93,4 +95,23 @@ public class HandlerCopyFileAction extends BaseHandlerAction{
             return super.handleBehaviour(ap);
         }
     }     
+    
+    /**
+     * General method for choosing directories.
+     * @param lbl The label for displaying the selected directory.
+     * @return The path of the selected directory or null.
+     */
+    public String chooseDirectory(Label lbl){
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File directory;
+        
+        directory = directoryChooser.showDialog(lbl.getScene().getWindow());
+        if(directory!=null){
+            lbl.textProperty().set("Destination: " + directory.getName());
+            return directory.getAbsolutePath();
+        }else{
+            lbl.textProperty().set("Destination not selected");
+            return null;
+        }   
+    }
 }

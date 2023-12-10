@@ -16,7 +16,7 @@ import progettose_gruppo16.action.ExecuteProgramAction;
  * Class that manages the GUI and functionalities necessary for
  * executing an external program. It extends the BaseHandlerAction class.
  */
-public class HandlerExecuteProgramAction extends BaseHandlerAction{
+public class HandlerExecuteProgramAction extends HandlerFileSelection{
     
     private Button selectFileBtn = new Button();
     private Label labelSelectedFile = new Label();

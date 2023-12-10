@@ -46,44 +46,6 @@ public class BaseHandlerAction implements HandlerAction{
     public Action handleBehaviour(AnchorPane ap) {
         if(next != null) return next.handleBehaviour(ap);
         return null;
+        }      
     }
     
-    /**
-     * General method for choosing files.
-     * @param lbl The label for displaying the selected file.
-     * @return The path of the selected file or null.
-     */
-    public String chooseFile(Label lbl){
-        FileChooser fileChooser = new FileChooser();
-        File file;
-        
-        file = fileChooser.showOpenDialog(lbl.getScene().getWindow());
-        if(file!=null){
-            lbl.textProperty().set("Selected file: " + file.getName());
-            return file.getAbsolutePath();
-        }else{
-            lbl.textProperty().set("File not selected");
-            return null;
-        }
-    }
-    
-    /**
-     * General method for choosing directories.
-     * @param lbl The label for displaying the selected directory.
-     * @return The path of the selected directory or null.
-     */
-    public String chooseDirectory(Label lbl){
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        File directory;
-        
-        directory = directoryChooser.showDialog(lbl.getScene().getWindow());
-        if(directory!=null){
-            lbl.textProperty().set("Destination: " + directory.getName());
-            return directory.getAbsolutePath();
-        }else{
-            lbl.textProperty().set("Destination not selected");
-            return null;
-        }       
-    }
-    
-}

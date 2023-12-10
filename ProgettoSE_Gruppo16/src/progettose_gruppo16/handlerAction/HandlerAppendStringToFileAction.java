@@ -17,7 +17,7 @@ import javafx.stage.FileChooser;
  * It extends the BaseHandlerAction class.
  * @author valentina
  */
-public class HandlerAppendStringToFileAction extends BaseHandlerAction{
+public class HandlerAppendStringToFileAction extends HandlerFileSelection{
     private TextField textToAppend = new TextField();
     private Label labelTextField = new Label();
     private Button selectFile = new Button();

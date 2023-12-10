@@ -16,7 +16,7 @@ import javafx.stage.FileChooser;
  * Extends the BaseHandlerAction class.
  * @author valentina
  */
-public class HandlerPlayAudioAction extends BaseHandlerAction{
+public class HandlerPlayAudioAction extends HandlerFileSelection{
     private Button selectAudioBtn = new Button();
     private Label labelAudioSelected = new Label();
     private String filePath;

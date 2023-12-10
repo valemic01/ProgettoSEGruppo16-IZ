@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
  * deleting a file. It extends the BaseHandlerAction class.
  * @author valentina
  */
-public class HandlerDeleteFileAction extends BaseHandlerAction{
+public class HandlerDeleteFileAction extends HandlerFileSelection{
     private Button selectFile = new Button();
     private Label labelSelectedFile = new Label();
     private String filePath;
