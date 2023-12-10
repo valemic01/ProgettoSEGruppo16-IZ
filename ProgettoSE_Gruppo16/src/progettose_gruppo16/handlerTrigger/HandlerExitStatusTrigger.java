@@ -29,16 +29,23 @@ public class HandlerExitStatusTrigger extends BaseHandlerTrigger {
      */
     @Override
     public void handleGUI(AnchorPane ap, ComboBox<String> cb){ 
+        TextField textExitStatus;
+        Button selectFileBtn;
+        Label labelSelectedFile;
+        Label labelErrorExitStatus;
+        TextField textArguments;
+        Label filePath;
+            
         if(cb.getValue().equals("Exit status")){
             ap.getChildren().clear();
             ap.setId("ExitStatusPane");
             
-            TextField textExitStatus = new TextField();
-            Button selectFileBtn = new Button();
-            Label labelSelectedFile = new Label();
-            Label labelErrorExitStatus = new Label();
-            TextField textArguments = new TextField();
-            Label filePath = new Label();
+            textExitStatus = new TextField();
+            selectFileBtn = new Button();
+            labelSelectedFile = new Label();
+            labelErrorExitStatus = new Label();
+            textArguments = new TextField();
+            filePath = new Label();
             
             selectFileBtn.setText("Select file");
             ap.getChildren().add(selectFileBtn);
@@ -96,13 +103,19 @@ public class HandlerExitStatusTrigger extends BaseHandlerTrigger {
      */
     @Override 
     public Trigger handleBehaviour(AnchorPane ap, HandlerTrigger ht, int x, VBox notVBox){     
+        boolean not;
+        String file;
+        Label labelErrorExitStatus;
+        TextField textArguments;
+        TextField textExitStatus;
+                
         if(ap.getId().equals("ExitStatusPane")){
-            boolean not = ((CheckBox) notVBox.getChildren().get(x-1)).isSelected();
-            String file= ((Label) ap.getChildren().get(5)).getText();
+            not = ((CheckBox) notVBox.getChildren().get(x-1)).isSelected();
+            file= ((Label) ap.getChildren().get(5)).getText();
             if(file!=null && !file.isEmpty()){
-                Label labelErrorExitStatus= ((Label) ap.getChildren().get(4));
-                TextField textArguments= ((TextField) ap.getChildren().get(2));
-                TextField textExitStatus= ((TextField) ap.getChildren().get(3));
+                labelErrorExitStatus= ((Label) ap.getChildren().get(4));
+                textArguments= ((TextField) ap.getChildren().get(2));
+                textExitStatus= ((TextField) ap.getChildren().get(3));
                 
                 labelErrorExitStatus.setText("");
                 if(textArguments.getText().isEmpty())
@@ -129,8 +142,10 @@ public class HandlerExitStatusTrigger extends BaseHandlerTrigger {
     private void chooseFile(Label labelSelectedFile, Label filePath){
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter filter= new FileChooser.ExtensionFilter ("Accepted extensions (*.exe, *.jar, *.bat, *.ps1)", "*.exe", "*.jar", "*.bat", "*.ps1");
+        File file;
+        
         fileChooser.getExtensionFilters().add(filter);
-        File file = fileChooser.showOpenDialog(labelSelectedFile.getScene().getWindow());
+        file = fileChooser.showOpenDialog(labelSelectedFile.getScene().getWindow());
         if(file!=null && !file.getAbsolutePath().isEmpty()){    
             filePath.setText(file.getAbsolutePath());
             labelSelectedFile.setText("Selected file: " + file.getName());

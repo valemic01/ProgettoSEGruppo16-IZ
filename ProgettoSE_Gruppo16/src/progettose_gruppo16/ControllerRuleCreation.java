@@ -162,23 +162,20 @@ public class ControllerRuleCreation implements Initializable {
     @FXML
     private Label errorMessage;
     
-   
     private Time sleepingPeriod;
     private RulesManager ruleManager;   
     private ObservableList<Rule> allRulesList; //observable list of all rules, created to manage the respective TableView  
-    private Stage stage; 
-    
+    private Stage stage;   
     private List<BaseHandlerAction> handlerAction1 = new LinkedList<>();
     private List<BaseHandlerAction> handlerAction2 = new LinkedList<>();;
     private List<BaseHandlerAction> handlerAction3 = new LinkedList<>();;
     private List<BaseHandlerAction> handlerAction4 = new LinkedList<>();;
     private List<BaseHandlerAction> startHandlersAction = new LinkedList<>();
-    private List<AnchorPane> anchorPanesAction = new LinkedList<>();
-    private int numAction = 1;
-    
+    private List<AnchorPane> anchorPanesAction = new LinkedList<>();  
     private List<BaseHandlerTrigger> handlerTrigger = new LinkedList<>();
     private List<AnchorPane> anchorPanesTrigger = new LinkedList<>();
-
+    private int numAction = 1;
+    
     /**
      *  Inizializzazione delle componenti dell'interfaccia utente
      * @param url
@@ -197,7 +194,7 @@ public class ControllerRuleCreation implements Initializable {
         initializeComboBoxTrigger();      
         initializeLogOpsDD();
         
-        initializeComboBoxAction(actionDD1);
+        initializeComboBoxAction();
         initializeHandlerAction(handlerAction1);
         anchorPanesAction.add(actionPane1);
         
@@ -283,8 +280,7 @@ public class ControllerRuleCreation implements Initializable {
         Rule rule;
         ActionSequence action = new ActionSequence();
         Trigger trigger;
-        String name = ruleNameTxtBox.getText();
-        
+        String name = ruleNameTxtBox.getText();        
         LocalTime sleepPeriod;
         int days;
         
@@ -369,7 +365,6 @@ public class ControllerRuleCreation implements Initializable {
     
     @FXML
     private void onAddAction1(ActionEvent event) {
-        initializeComboBoxAction(actionDD2);
         initializeHandlerAction(handlerAction2);
         anchorPanesAction.add(actionPane2);
         actionDD2.setVisible(true);
@@ -381,7 +376,6 @@ public class ControllerRuleCreation implements Initializable {
 
     @FXML
     private void onAddAction2(ActionEvent event) {
-        initializeComboBoxAction(actionDD3);
         initializeHandlerAction(handlerAction3);
         anchorPanesAction.add(actionPane3);
         actionDD3.setVisible(true);
@@ -394,7 +388,6 @@ public class ControllerRuleCreation implements Initializable {
     
     @FXML
     private void onAddAction3(ActionEvent event) {   
-        initializeComboBoxAction(actionDD4);
         initializeHandlerAction(handlerAction4);
         anchorPanesAction.add(actionPane4);
         actionDD4.setVisible(true);
@@ -439,8 +432,11 @@ public class ControllerRuleCreation implements Initializable {
         numAction--;
     }
     
-    private void initializeComboBoxAction(ComboBox<String> cb){
-        cb.getItems().addAll("Show message", "Play audio", "Move file", "Delete file", "Copy file", "Add text to file", "Execute program");
+    private void initializeComboBoxAction(){
+        actionDD1.getItems().addAll("Show message", "Play audio", "Move file", "Delete file", "Copy file", "Add text to file", "Execute program");
+        actionDD2.getItems().addAll("Show message", "Play audio", "Move file", "Delete file", "Copy file", "Add text to file", "Execute program");
+        actionDD3.getItems().addAll("Show message", "Play audio", "Move file", "Delete file", "Copy file", "Add text to file", "Execute program");
+        actionDD4.getItems().addAll("Show message", "Play audio", "Move file", "Delete file", "Copy file", "Add text to file", "Execute program");
     }
     
     private void initializeHandlerAction(List<BaseHandlerAction> list){

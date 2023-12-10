@@ -22,10 +22,10 @@ import javafx.stage.Stage;
 public class MoveFileAction implements Action{
     private final String fileSourcePath;
     private String fileDestinationPath;
-    private String filename;
-    private String fileExtension;
-    private int fileExtensionIndex;
-    private String pathBase;
+    private final String filename;
+    private final String fileExtension;
+    private final int fileExtensionIndex;
+    private final String pathBase;
 
 
     /**
@@ -51,13 +51,12 @@ public class MoveFileAction implements Action{
         String message;
         Alert.AlertType alert;
         File file = new File(fileSourcePath);
+        int counterCopy = 0; 
         
         System.out.println("ciaoo " + file.exists() + " " + new File(pathBase).exists());
-        if(file.exists() && new File(pathBase).exists()){
-            int counterCopy = 1;          
-            
-            fileDestinationPath = pathBase.concat(filename + fileExtension);
-            
+        if(file.exists() && new File(pathBase).exists()){          
+            counterCopy = 1;
+            fileDestinationPath = pathBase.concat(filename + fileExtension); 
             synchronized(file){
                 while(new File(fileDestinationPath).exists()){
                     fileDestinationPath = pathBase.concat(filename + '(' + counterCopy +')' +fileExtension);

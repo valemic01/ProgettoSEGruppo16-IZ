@@ -26,10 +26,12 @@ public class HandlerTimeOfDayTrigger extends BaseHandlerTrigger{
      */
     @Override
     public Trigger handleBehaviour(AnchorPane ap, HandlerTrigger ht, int x, VBox notVBox) {
-        if(ap.getId().equalsIgnoreCase("TimeOfDayPane")){
-    
-            boolean not = ((CheckBox) notVBox.getChildren().get(x-1)).isSelected();
-            LocalTime time = LocalTime.of(Integer.parseInt(((ComboBox<String>) ap.getChildren().get(0)).getValue()), Integer.parseInt(((ComboBox<String>) ap.getChildren().get(2)).getValue()));
+        boolean not;
+        LocalTime time;
+        
+        if(ap.getId().equalsIgnoreCase("TimeOfDayPane")){   
+            not = ((CheckBox) notVBox.getChildren().get(x-1)).isSelected();
+            time = LocalTime.of(Integer.parseInt(((ComboBox<String>) ap.getChildren().get(0)).getValue()), Integer.parseInt(((ComboBox<String>) ap.getChildren().get(2)).getValue()));
             return new TimeOfDayTrigger(time, not);
         }
         else return super.handleBehaviour(ap, ht, x, notVBox);
@@ -43,14 +45,17 @@ public class HandlerTimeOfDayTrigger extends BaseHandlerTrigger{
      */
     @Override
     public void handleGUI(AnchorPane ap, ComboBox<String> cb) {
+        ComboBox<String> hoursCB;
+        ComboBox<String> minutesCB;
+        Label lbl;
         
         if(cb.getValue().equalsIgnoreCase("Time of day")){
             ap.getChildren().clear();
             ap.setId("TimeOfDayPane");
             
-            ComboBox<String> hoursCB = new ComboBox<>();
-            ComboBox<String> minutesCB = new ComboBox<>();
-            Label lbl = new Label(":");
+            hoursCB = new ComboBox<>();
+            minutesCB = new ComboBox<>();
+            lbl = new Label(":");
             
             initializeCBs(hoursCB, minutesCB);
             hoursCB.setValue("00");

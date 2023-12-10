@@ -27,8 +27,10 @@ public class HandlerDayOfWeekTrigger extends BaseHandlerTrigger {
      */
     @Override
     public Trigger handleBehaviour(AnchorPane ap, HandlerTrigger ht, int x, VBox notVBox) {
+        boolean not;
+        
         if (ap.getId().equalsIgnoreCase("DayOfWeekPane")) {
-            boolean not = ((CheckBox) notVBox.getChildren().get(x - 1)).isSelected();
+            not = ((CheckBox) notVBox.getChildren().get(x - 1)).isSelected();
             return new DayOfWeekTrigger(DayOfWeek.valueOf(((ComboBox<String>) ap.getChildren().get(0)).getValue().toUpperCase()), not);
         }
         return super.handleBehaviour(ap, ht, x, notVBox);

@@ -45,8 +45,14 @@ public class ExitStatusTrigger implements Trigger{
      */
     @Override
     public boolean checkCondition(){
+        List<String> list;
+        StringTokenizer st;
+        ProcessBuilder pb;
+        int exitStatusProcess;
+        Process process;
+        
         try {            
-            List<String> list= new LinkedList<>();
+            list = new LinkedList<>();
             if (path.substring(path.lastIndexOf('.')+1).equals("jar")){  // JAR file
                 list.add("java");
                 list.add("-jar");
@@ -57,14 +63,14 @@ public class ExitStatusTrigger implements Trigger{
             }
             // Otherwise, it's an EXE or BAT file
             list.add(path);
-            StringTokenizer st= new StringTokenizer(args);
+            st = new StringTokenizer(args);
             while(st.hasMoreTokens()){
                 list.add(st.nextToken(" "));  // Add arguments to the command list
             }
              // Build and start the process
-            ProcessBuilder pb= new ProcessBuilder(list); 
-            Process process= pb.start();          
-            int exitStatusProcess= process.waitFor();   // Wait for the process to complete and get the exit status
+            pb = new ProcessBuilder(list); 
+            process = pb.start();          
+            exitStatusProcess= process.waitFor();   // Wait for the process to complete and get the exit status
             if (exitStatusProcess == exitStatus){
                 return !not;
             } 

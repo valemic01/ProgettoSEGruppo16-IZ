@@ -18,7 +18,7 @@ public class PlayAudioAction implements Action{
     private final String filePath;
     private transient Media audioFile;
     private transient MediaPlayer player;
-    private File file;
+    private final File file;
     
     /**
      * Constructor of the class that initializes the path of the audio file to play.

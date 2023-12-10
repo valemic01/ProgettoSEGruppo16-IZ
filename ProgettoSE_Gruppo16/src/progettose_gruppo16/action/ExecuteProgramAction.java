@@ -44,10 +44,13 @@ public class ExecuteProgramAction implements Action{
     public void executeAction() {        
         String message;
         Alert.AlertType alert;
+        List<String> list;
+        StringTokenizer st;
+        ProcessBuilder pb;
         
         if(new File(path).exists()){
             try {            
-                 List<String> list = new LinkedList<>();
+                 list = new LinkedList<>();
                  if (path.substring(path.lastIndexOf('.')+1).equals("jar")){
                      list.add("java");
                      list.add("-jar");
@@ -58,11 +61,11 @@ public class ExecuteProgramAction implements Action{
                 }
                  //altrimenti file exe
                  list.add(path);
-                 StringTokenizer st= new StringTokenizer(args);
+                 st= new StringTokenizer(args);
                  while(st.hasMoreTokens()){
                      list.add(st.nextToken(" "));
                  }
-                 ProcessBuilder pb= new ProcessBuilder(list); 
+                 pb= new ProcessBuilder(list); 
                  pb.start();
              } catch (IOException ex) {
                  ex.printStackTrace();

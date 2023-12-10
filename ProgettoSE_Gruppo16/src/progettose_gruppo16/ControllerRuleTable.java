@@ -68,10 +68,8 @@ public class ControllerRuleTable implements Initializable {
     
     private ObservableList<Rule> allRulesList; //observable list of all rules, created to manage the respective TableView
     private ObservableList<Rule> activeRulesList; //observable list of active rules, created to manage the respective TableView
-    private ObservableList<Rule> inactRulesList; //observable list of inactive rules, created to manage the respective TableView 
-    
-    private RulesManager ruleManager;
-    
+    private ObservableList<Rule> inactRulesList; //observable list of inactive rules, created to manage the respective TableView    
+    private RulesManager ruleManager; 
     private Stage stage;
     
     /**

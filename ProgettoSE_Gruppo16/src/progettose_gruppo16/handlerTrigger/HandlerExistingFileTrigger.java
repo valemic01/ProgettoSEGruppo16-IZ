@@ -29,14 +29,19 @@ public class HandlerExistingFileTrigger extends BaseHandlerTrigger {
      */
     @Override
     public void handleGUI(AnchorPane ap, ComboBox<String> cb) {
+        TextField textFile;
+        Button selectFolderBtn;
+        Label labelSelectedFolder;
+        Label filePath;
+         
         if (cb.getValue().equals("Existing file")) {
             ap.getChildren().clear();
             ap.setId("ExistingFilePane");
 
-            TextField textFile = new TextField();
-            Button selectFolderBtn = new Button();
-            Label labelSelectedFolder = new Label();
-            Label filePath = new Label();
+            textFile = new TextField();
+            selectFolderBtn = new Button();
+            labelSelectedFolder = new Label();
+            filePath = new Label();
 
             textFile.setPromptText("Your file...");
             ap.getChildren().add(textFile);
@@ -80,10 +85,13 @@ public class HandlerExistingFileTrigger extends BaseHandlerTrigger {
      */
     @Override
     public Trigger handleBehaviour(AnchorPane ap, HandlerTrigger ht, int x, VBox notVBox) {
+        boolean not;
+        String folder;
+        
         if (ap.getId().equals("ExistingFilePane")) {
-            String folder = ((Label) ap.getChildren().get(3)).getText();
+            folder = ((Label) ap.getChildren().get(3)).getText();
             if (folder != null && !folder.isEmpty()) {
-                boolean not = ((CheckBox) notVBox.getChildren().get(x - 1)).isSelected();
+                not = ((CheckBox) notVBox.getChildren().get(x - 1)).isSelected();
                 return new ExistingFileTrigger(folder, ((TextField) ap.getChildren().get(0)).getText(), not);
             } else return null;
         } else {

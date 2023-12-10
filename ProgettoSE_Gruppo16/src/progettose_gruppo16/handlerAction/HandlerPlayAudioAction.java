@@ -87,7 +87,7 @@ public class HandlerPlayAudioAction extends BaseHandlerAction{
         fileChooser.getExtensionFilters().add(filter);
         fileAudio = fileChooser.showOpenDialog(selectAudioBtn.getScene().getWindow());
         
-        if(fileAudio!=null){
+        if(fileAudio!=null && !fileAudio.getName().isEmpty()){
             lbl.textProperty().set("Selected audio: " + fileAudio.getName());
             return fileAudio.getAbsolutePath();
         }else{

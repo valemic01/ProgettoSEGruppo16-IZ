@@ -22,10 +22,10 @@ import javafx.stage.Stage;
 public class CopyFileAction implements Action {
     private final String fileToCopyPath;
     private String fileDestinationPath;
-    private String filename;
-    private String fileExtension;
-    private int fileExtensionIndex;
-    private String pathBase;
+    private final String filename;
+    private final String fileExtension;
+    private final int fileExtensionIndex;
+    private final String pathBase;
     
     /**
      * Constructor of the class that initializes the paths of the file to copy and the destination path.
@@ -51,12 +51,12 @@ public class CopyFileAction implements Action {
         String message;
         Alert.AlertType alert;
         File file = new File(fileToCopyPath);
+        int counterCopy = 0;
         
-        if(file.exists() && new File(pathBase).exists()){
-            int counterCopy = 1;
-      
+        
+        if(file.exists() && new File(pathBase).exists()){     
             fileDestinationPath = pathBase.concat(filename+fileExtension);
-            
+            counterCopy = 1;
             synchronized(file){
                 while(new File(fileDestinationPath).exists()){           
                     fileDestinationPath = pathBase.concat(filename + '(' + counterCopy +')' +fileExtension);

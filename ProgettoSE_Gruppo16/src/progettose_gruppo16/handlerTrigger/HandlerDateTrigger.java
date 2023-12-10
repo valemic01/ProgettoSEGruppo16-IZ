@@ -24,10 +24,12 @@ public class HandlerDateTrigger extends BaseHandlerTrigger {
      */
     @Override
     public void handleGUI(AnchorPane ap, ComboBox<String> cb) {
+        DatePicker date;
+         
         if (cb.getValue().equals("Date")) {
             ap.getChildren().clear();
             ap.setId("DatePane");
-            DatePicker date = new DatePicker();
+            date = new DatePicker();
             ap.getChildren().add(date);
             date.setLayoutX(40);
             date.setLayoutY(0);
@@ -55,9 +57,12 @@ public class HandlerDateTrigger extends BaseHandlerTrigger {
      */
     @Override
     public Trigger handleBehaviour(AnchorPane ap, HandlerTrigger ht, int x, VBox notVBox) {
+        boolean not;
+        LocalDate date;
+        
         if (ap.getId().equals("DatePane")) {
-            boolean not = ((CheckBox) notVBox.getChildren().get(x - 1)).isSelected();
-            LocalDate date = ((DatePicker) ap.getChildren().get(0)).getValue();
+            not = ((CheckBox) notVBox.getChildren().get(x - 1)).isSelected();
+            date = ((DatePicker) ap.getChildren().get(0)).getValue();
             return new DateTrigger(date, not);
         } else {
             return super.handleBehaviour(ap, ht, x, notVBox);

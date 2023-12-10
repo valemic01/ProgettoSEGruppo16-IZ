@@ -22,6 +22,7 @@ public class HandlerDayOfMonthTrigger extends BaseHandlerTrigger {
     @Override
     public void handleGUI(AnchorPane ap, ComboBox<String> cb) {
         ComboBox<String> dayOfMonthBox = new ComboBox<>();
+        
         if (cb.getValue().equals("Day of month")) {
             ap.getChildren().clear();
             ap.setId("DayOfMonthPane");
@@ -48,8 +49,10 @@ public class HandlerDayOfMonthTrigger extends BaseHandlerTrigger {
      */
     @Override
     public Trigger handleBehaviour(AnchorPane ap, HandlerTrigger ht, int x, VBox notVBox) {
+        boolean not;
+        
         if (ap.getId().equals("DayOfMonthPane")) {
-            boolean not = ((CheckBox) notVBox.getChildren().get(x - 1)).isSelected();
+            not = ((CheckBox) notVBox.getChildren().get(x - 1)).isSelected();
             return new DayOfMonthTrigger(Integer.parseInt(((ComboBox<String>) ap.getChildren().get(0)).getValue()), not);
         } else {
             return super.handleBehaviour(ap, ht, x, notVBox);

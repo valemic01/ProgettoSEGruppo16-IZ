@@ -84,11 +84,12 @@ public class HandlerExecuteProgramAction extends BaseHandlerAction{
     @Override
     public String chooseFile(Label lbl){
         FileChooser fileChooser = new FileChooser();
-        String path;
         FileChooser.ExtensionFilter filter= new FileChooser.ExtensionFilter ("Accepted extensions (*.exe, *.jar, *.bat, *.ps1)", "*.exe", "*.jar", "*.bat", "*.ps1");
+        File filePath;
+         
         fileChooser.getExtensionFilters().add(filter);
-        File filePath = fileChooser.showOpenDialog(selectFileBtn.getScene().getWindow());
-        if(filePath!=null){           
+        filePath = fileChooser.showOpenDialog(selectFileBtn.getScene().getWindow());
+        if(filePath!=null && !filePath.getName().isEmpty()){           
             lbl.setText("Selected file: " + filePath.getName());
             return filePath.getAbsolutePath();
         }

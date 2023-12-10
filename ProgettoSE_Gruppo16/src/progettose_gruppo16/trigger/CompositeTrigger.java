@@ -40,6 +40,7 @@ public class CompositeTrigger implements Trigger{
     @Override
     public boolean checkCondition(){
         boolean cond;
+        
         if(logicalOp.equalsIgnoreCase("and")){
             cond = left.checkCondition() && right.checkCondition();
         }

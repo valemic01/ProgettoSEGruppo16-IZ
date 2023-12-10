@@ -44,10 +44,12 @@ public class RepeatableRule extends Rule{
     public boolean evaluate(){
         
         RulesManager rm = super.getRm();
+        LocalDate today;
+        LocalTime now;
         
         if(!fireable){
-            LocalDate today = LocalDate.now();
-            LocalTime now = LocalTime.now();
+            today = LocalDate.now();
+            now = LocalTime.now();
             if((today.isEqual(dayLastFired.plusDays(daysToSleep)) || today.isAfter(dayLastFired.plusDays(daysToSleep))) && (now.isAfter(timeLastFired.plusHours(sleepPeriod.getHour()).plusMinutes(sleepPeriod.getMinute()))))
                 rm.changeFireable(this);
             
